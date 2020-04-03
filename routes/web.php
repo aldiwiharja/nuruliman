@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'HomeCtrl@index')->name('home.index');
+
+Route::get('/program/{q}', 'HomeCtrl@program')->name('program');
