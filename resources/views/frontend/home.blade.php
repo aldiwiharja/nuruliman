@@ -1,4 +1,6 @@
-@extends('frontend.layouts.app') @section('content')
+@extends('frontend.layouts.app') 
+
+@section('content')
 <!-- ======= Hero Section ======= -->
 <section id="hero">
     <div class="carousel slide" data-ride="carousel">

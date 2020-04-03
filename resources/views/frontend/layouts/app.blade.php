@@ -99,9 +99,12 @@
     <script src="{{ url('frontend') }}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/owl.carousel/owl.carousel.min.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/aos/aos.js"></script>
+    
 
     <!-- Template Main JS File -->
     <script src="{{ url('frontend') }}/assets/js/main.js"></script>
+
+    @yield('script')
 
 </body>
 

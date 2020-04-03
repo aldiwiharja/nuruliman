@@ -2,7 +2,7 @@
 
 @section('content')
     <section id="header-program-{{$query}}">
-        <div class="title-program">
+        <div class="title">
             <h1>{{\Str::upper($query)}}</h1>
         </div>
     </section>
