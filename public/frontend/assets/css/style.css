@@ -404,6 +404,22 @@ h6 {
     padding: 0;
 }
 
+#header-profile {
+    width: 100%;
+    height: 70vh;
+    background-size: cover;
+    position: relative;
+    background-image: url('../img/program/mts.jpeg');
+}
+
+#header-ekskul {
+    width: 100%;
+    height: 70vh;
+    background-size: cover;
+    position: relative;
+    background-image: url('../img/program/mts.jpeg');
+}
+
 #header-program-smp {
     width: 100%;
     height: 70vh;
@@ -428,7 +444,7 @@ h6 {
     background-image: url('../img/program/smk.jpeg');
 }
 
-.title-program {
+.title {
     position: absolute;
     bottom: 0;
     top: 0;

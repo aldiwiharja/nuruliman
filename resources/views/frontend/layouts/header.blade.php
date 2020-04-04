@@ -1,4 +1,6 @@
-
+@php
+    $uri = Request::segment(1);
+@endphp
 
 <!-- ======= Header ======= -->
 <header id="header">
@@ -14,21 +16,17 @@
 
     <nav class="nav-menu d-none d-lg-block">
     <ul>
-        <li class="active"><a href="{{ route('home.index') }}">Beranda</a></li>
-        <li><a href="#about">Profile</a></li>
-        <li class="drop-down"><a href="">Program</a>
-        <ul>
-            <li><a href="{{ route('program','smp') }}">SMP</a></li>
-            <li><a href="{{ route('program','mts') }}">MTS</a></li>
-            <li><a href="{{ route('program','smk') }}">SMK</a></li>
-            <li><a href="{{ route('program','ma') }}">MA</a></li>
-            <li><a href="{{ route('program','tahfiz') }}">TAHFIZ</a></li>
-            <li><a href="{{ route('program','kitab_kuning') }}">KITAB KUNING</a></li>
-            <li><a href="{{ route('program','multimedia') }}">MULTIMEDIA</a></li>
-        </ul>
+        <li @if ($uri == null) class="active" @endif><a href="{{ route('home.index') }}">Beranda</a></li>
+        <li @if ($uri == "profile") class="active" @endif><a href="{{ route('profile.index') }}">Profile</a></li>
+        <li @if ($uri == "program") class="active drop-down" @endif class="drop-down"><a href="">Program</a>
+            <ul>
+                @foreach (\App\Program::all() as $program)
+                    <li><a href="{{ route('program.index',\Str::lower($program->name)) }}">{{ $program->name }}</a></li>
+                @endforeach
+            </ul>
         </li>
-        <li><a href="#portfolio">Extra Kulikuler</a></li>
-        <li><a href="#why-us">Pendaftaran</a></li>
+        <li @if ($uri == "ekskul") class="active" @endif><a href="{{ route('ekskul.index') }}">Extra Kulikuler</a></li>
+        <li @if ($uri == "pendaftaran") class="active" @endif><a href="{{ route('pendaftaran.index') }}">Pendaftaran</a></li>
 
     </ul>
     </nav><!-- .nav-menu -->

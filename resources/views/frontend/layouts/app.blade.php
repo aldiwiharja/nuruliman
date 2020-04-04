@@ -51,7 +51,7 @@
                 <div class="row  justify-content-center">
                     <div class="col-lg-6">
                         <h3>Nurul Iman</h3>
-                        <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+                        <p>Alamat: Jl.Leuwiliang Km. 3, Kampung Sawah Kulon, Leuwiliang, Barengkok, Kec. Leuwiliang, Bogor, Jawa Barat 16640</p>
                     </div>
                 </div>
 
@@ -99,9 +99,12 @@
     <script src="{{ url('frontend') }}/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/owl.carousel/owl.carousel.min.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/aos/aos.js"></script>
+    
 
     <!-- Template Main JS File -->
     <script src="{{ url('frontend') }}/assets/js/main.js"></script>
+
+    @yield('script')
 
 </body>
 
