@@ -4,16 +4,21 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero">
     <div class="carousel slide" data-ride="carousel">
+        @php
+            $value = json_decode($banner_setting->value);
+        @endphp
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="{{ url('frontend/assets/img/hero-bg.jpg') }}" alt="First slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="{{ url('frontend/assets/img/hero-bg.jpg') }}" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="{{ url('frontend/assets/img/hero-bg.jpg') }}" alt="Third slide">
-            </div>
+            @foreach ($value as $key => $v)
+                @if ($key === 0)
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{ url($v) }}" alt="{{ $key }}">
+                    </div>
+                @else 
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{ url($v) }}" alt="{{ $key }}">
+                    </div>
+                @endif
+            @endforeach
         </div>
     </div>
     <div class="hero-container">
@@ -332,74 +337,6 @@
         </div>
     </section>
     <!-- End Team Section -->
-
-    <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-
-            <div class="section-title" data-aos="zoom-in">
-                <h1>Daftar Harga</h1>
-            </div>
-
-            <div class="row">
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="box" data-aos="zoom-in" data-aos-delay="200">
-                        <h3>Free</h3>
-                        <h4><sup>$</sup>0<span> / month</span></h4>
-                        <ul>
-                            <li>Aida dere</li>
-                            <li>Nec feugiat nisl</li>
-                            <li>Nulla at volutpat dola</li>
-                            <li class="na">Pharetra massa</li>
-                            <li class="na">Massa ultricies mi</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
-                    <div class="box recommended" data-aos="zoom-in" data-aos-delay="100">
-                        <span class="recommended-badge">Recommended</span>
-                        <h3>Business</h3>
-                        <h4><sup>$</sup>19<span> / month</span></h4>
-                        <ul>
-                            <li>Aida dere</li>
-                            <li>Nec feugiat nisl</li>
-                            <li>Nulla at volutpat dola</li>
-                            <li>Pharetra massa</li>
-                            <li class="na">Massa ultricies mi</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
-                    <div class="box" data-aos="zoom-in" data-aos-delay="200">
-                        <h3>Developer</h3>
-                        <h4><sup>$</sup>29<span> / month</span></h4>
-                        <ul>
-                            <li>Aida dere</li>
-                            <li>Nec feugiat nisl</li>
-                            <li>Nulla at volutpat dola</li>
-                            <li>Pharetra massa</li>
-                            <li>Massa ultricies mi</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#" class="btn-buy">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-    <!-- End Pricing Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
