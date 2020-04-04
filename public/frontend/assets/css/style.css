@@ -420,28 +420,11 @@ h6 {
     background-image: url('../img/program/mts.jpeg');
 }
 
-#header-program-smp {
+#header-program {
     width: 100%;
     height: 70vh;
     background-size: cover;
     position: relative;
-    background-image: url('../img/program/smp.jpeg');
-}
-
-#header-program-mts {
-    width: 100%;
-    height: 70vh;
-    background-size: cover;
-    position: relative;
-    background-image: url('../img/program/mts.jpeg');
-}
-
-#header-program-smk {
-    width: 100%;
-    height: 70vh;
-    background-size: cover;
-    position: relative;
-    background-image: url('../img/program/smk.jpeg');
 }
 
 .title {

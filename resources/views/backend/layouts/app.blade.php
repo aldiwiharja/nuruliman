@@ -26,6 +26,7 @@
     <script type="text/javascript">$('#table').DataTable();</script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="{{ url('backend/docs/js/plugins/pace.min.js') }}"></script>
+    @yield('script');
     <!-- Page specific javascripts-->
   </body>
 </html>
