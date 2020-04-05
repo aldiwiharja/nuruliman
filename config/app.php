@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'vapid' => env('VAPID_PUBLIC_KEY', 'BG4FmadFvE0Dac6vOY6Q3O9jYQ1xIQ1Sms9qa5p7jqDkKHVlCLd8PKVrfXPehEV2br5F4DHIE7qoeiPilDRknKU'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

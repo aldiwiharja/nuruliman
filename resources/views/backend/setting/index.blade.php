@@ -19,6 +19,9 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#about">Sambutan Kepsek</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#program">Program Tampilan</a>
+                        </li>
                       </ul>
                       <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="slide">
@@ -70,7 +73,9 @@
                                         <tr>
                                             <td>Photo</td>
                                             <td>:</td>
-                                            <td>{{ $kepsek_setting->photo }}</td>
+                                            <td>
+                                                <img src="{{ url($kepsek_setting->photo) }}" width="100">    
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Sambutan</td>
@@ -84,11 +89,11 @@
                                         @csrf
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" class="form-control" name="nama">
+                                            <input type="text" class="form-control" name="nama" value="{{ $kepsek_setting->nama }}">
                                         </div>
                                         <div class="form-group">
                                             <label>Jabatan</label>
-                                            <input type="text" class="form-control" name="jabatan">
+                                            <input type="text" class="form-control" name="jabatan" value="{{ $kepsek_setting->jabatan }}">
                                         </div>
                                         <div class="form-group">
                                             <label>Upload Foto Kepala Sekolah</label>
@@ -96,7 +101,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Sambutan</label>
-                                            <textarea id="" cols="10" rows="5" name="sambutan" class="form-control"></textarea>
+                                            <textarea id="" cols="10" rows="5" name="sambutan" class="form-control">{{ $kepsek_setting->sambutan }}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-block btn-primary">
@@ -104,6 +109,47 @@
                                             </button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="program">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nama Program</th>
+                                                <th>Banner</th>
+                                                <td>Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($programs as $key => $p)
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>{{ $p->name }}</td>
+                                                    <td>
+                                                        <img src="{{ url((string)$p->banner) }}" class="img-fluid" width="200">
+                                                    </td>
+                                                    <td>
+                                                        <form action="{{ route('admin.program.upload') }}" enctype="multipart/form-data" method="POST">
+                                                            @csrf
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <input type="file" class="form-control" name="banner{{$p->id}}" id="banner{{$p->id}}">
+                                                                    <input type="hidden" name="program_id" value="{{ $p->id }}">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="submit" class="btn btn-success">Upload</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

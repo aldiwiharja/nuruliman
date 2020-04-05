@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
         <div class="pb-2">
-            <a href="" class="btn btn-primary">
+            <a href="{{ route('admin.program.add') }}" class="btn btn-primary">
                 <i class="fa fa-plus"></i> Tambah Program
             </a>
         </div>
@@ -36,7 +36,7 @@
                                     <a href="#" class="btn btn-primary btn-sm">
                                         <i class="fa fa-edit"></i> Edit
                                     </a>
-                                    <a href="#" class="btn btn-danger btn-sm">
+                                    <a href="{{ route('admin.program.delete', $p->id) }}" class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash"></i> Hapus
                                     </a>
                                 </td>

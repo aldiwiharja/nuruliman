@@ -28,6 +28,18 @@
         </a>
     </li>
     <li>
+        <a class="app-menu__item" href={{ route('admin.ekskul') }}>
+            <i class="app-menu__icon fa fa-file"></i>
+            <span class="app-menu__label">Ekskul</span>
+        </a>
+    </li>
+    <li>
+        <a class="app-menu__item" href={{ route('admin.teacher') }}>
+            <i class="app-menu__icon fa fa-user"></i>
+            <span class="app-menu__label">Tenaga Pendidik</span>
+        </a>
+    </li>
+    <li>
         <a class="app-menu__item" href={{ route('admin.setting') }}>
             <i class="app-menu__icon fa fa-cogs"></i>
             <span class="app-menu__label">Setting</span>
