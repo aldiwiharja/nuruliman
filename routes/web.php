@@ -11,6 +11,11 @@
 |
 */
 
+// //make a push notification.
+// Route::get('/push','PushController@push')->name('push');
+// //store a push subscriber.
+// Route::post('/push-store','PushController@store');
+
 Route::get('/', 'HomeCtrl@index')->name('home.index');
 
 Route::get('/profile', 'HomeCtrl@profile')->name('profile.index');

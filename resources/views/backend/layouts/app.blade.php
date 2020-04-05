@@ -5,6 +5,7 @@
     <title>{{ config('app.name') }}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url('backend/docs/css/main.css') }}">
     <!-- Font-icon css-->
@@ -26,6 +27,11 @@
     <script type="text/javascript">$('#table').DataTable();</script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="{{ url('backend/docs/js/plugins/pace.min.js') }}"></script>
+    {{-- <script>
+      var vapidkey = '{{ config('app.vapid') }}';
+    </script>
+
+    <script src="{{ asset('js/enable-push.js') }}" defer></script> --}}
     @yield('script');
     <!-- Page specific javascripts-->
   </body>

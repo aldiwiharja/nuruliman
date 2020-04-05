@@ -8,6 +8,8 @@
     <title>{{ config('app.name') }}</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicons -->
     <link href="{{ url('frontend') }}/assets/img/favicon.png" rel="icon">
@@ -41,24 +43,34 @@
     @include('frontend.layouts.header') 
     
     @yield('content')
-    
+
     <!-- ======= Footer ======= -->
     <footer id="footer">
 
         <div class="footer-top">
 
             <div class="container">
+                <div class="section-title" data-aos="zoom-in">
+                    <h1>Temukan kami</h2>
+                </div>
 
-                <div class="row  justify-content-center">
+                <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <h3>Nurul Iman</h3>
+                        <h3>Nurul Iman Al Hasanah</h3>
                         <p>Alamat: Jl.Leuwiliang Km. 3, Kampung Sawah Kulon, Leuwiliang, Barengkok, Kec. Leuwiliang, Bogor, Jawa Barat 16640</p>
+                    </div>
+                </div>
+    
+                <div class="row mt-3">
+                    <div class="col">
+                        <iframe style="border:0; width: 100%; height: 300px;" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=-6.597545,106.642116&amp;q=Salafi%20Modern%20Pondok%20Pesantren%20Nurul%20Iman%20Al%20Hasanah+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=18&amp;iwloc=B&amp;output=embed"
+                            frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <div class="row footer-newsletter justify-content-center">
                     <div class="col-lg-6">
-                        <form action="" method="post">
+                        <form action="#" method="post">
                             <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
                         </form>
                     </div>
@@ -76,11 +88,13 @@
         </div>
 
         <div class="container footer-bottom clearfix">
-            <div class="copyright">
-                &copy; 2020 Copyright <strong><span>Nurul Iman</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                Dev @ Deodex Team
+            <div class="row">
+                <div class="col">
+                    <div class="text-center">
+                        &copy; 2020 Copyright <strong><span>Nurul Iman Al Hasanah</span></strong>. All Rights Reserved <br>
+                        Dev @ Deodex Team
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
@@ -103,6 +117,11 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
+    {{-- <script>
+        var vapidkey = '{{ config('app.vapid') }}';
+    </script>
+
+    <script src="{{ asset('js/enable-push.js') }}" defer></script> --}}
     
 
     <!-- Template Main JS File -->
