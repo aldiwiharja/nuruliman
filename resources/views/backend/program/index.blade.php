@@ -19,6 +19,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nama Program</th>
+                            <th>Kategori Program</th>
                             <th>Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
@@ -28,6 +29,7 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $p->name }}</td>
+                                <td>{{ $p->kategori }}</td>
                                 <td>{{ $p->description }}</td>
                                 <td>
                                     <a href="#" class="btn btn-info btn-sm">

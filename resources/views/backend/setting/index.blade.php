@@ -14,13 +14,16 @@
                     <div class="bs-component">
                       <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#slide">Banner Atas</a>
+                            <a class="nav-link active" data-toggle="tab" href="#slide">Banner</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#about">Sambutan Kepsek</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#program">Program Tampilan</a>
+                            <a class="nav-link" data-toggle="tab" href="#program">Program Banner</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
                         </li>
                       </ul>
                       <div class="tab-content" id="myTabContent">
@@ -31,21 +34,26 @@
                                 @php
                                     $banner_setting = json_decode($banner_setting->value);
                                 @endphp
-                                @foreach ($banner_setting as $key => $bs)
-                                    <div class="card mt-2" style="background-size: cover; height: 40vh;background: url({{ url($bs) }})">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-10">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <a href="{{ route('admin.hapus.banner', $key) }}" class="btn btn-trash btn-danger btn-sm text-white">
-                                                        <i class="fa fa-times"></i> Hapus Banner
-                                                    </a>
+                                <div class="row">
+                                    @foreach ($banner_setting as $key => $bs)
+                                        <div class="col-md-6">
+                                            <div class="card mt-2" style="background-size: cover; height: 30vh;background: url({{ url($bs) }})">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a href="{{ route('admin.hapus.banner', $key) }}" class="btn btn-trash btn-danger btn-sm text-white">
+                                                                <i class="fa fa-times"></i> Hapus Banner
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
+                                
                                 <form class="text-center dropzone mt-4" method="POST" enctype="multipart/form-data" action="{{ route('admin.upload.banner') }}">
                                     @csrf
                                     <div class="dz-message">Klik disini untuk upload banner<br><small class="text-info">Tinggal seret file yang mau di upload</small></div>
@@ -126,30 +134,58 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($programs as $key => $p)
-                                                <tr>
-                                                    <td>{{ $key+1 }}</td>
-                                                    <td>{{ $p->name }}</td>
-                                                    <td>
-                                                        <img src="{{ url((string)$p->banner) }}" class="img-fluid" width="200">
-                                                    </td>
-                                                    <td>
-                                                        <form action="{{ route('admin.program.upload') }}" enctype="multipart/form-data" method="POST">
-                                                            @csrf
-                                                            <div class="row">
-                                                                <div class="col-md-10">
-                                                                    <input type="file" class="form-control" name="banner{{$p->id}}" id="banner{{$p->id}}">
-                                                                    <input type="hidden" name="program_id" value="{{ $p->id }}">
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <button type="submit" class="btn btn-success">Upload</button>
-                                                                </div>
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>{{ $p->name }}</td>
+                                                <td>
+                                                    <img src="{{ url((string)$p->banner) }}" class="img-fluid" width="200">
+                                                </td>
+                                                <td>
+                                                    <form action="{{ route('admin.program.upload') }}" enctype="multipart/form-data" method="POST">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <div class="col-md-10">
+                                                                <input type="file" class="form-control" name="banner{{$p->id}}" id="banner{{$p->id}}">
+                                                                <input type="hidden" name="program_id" value="{{ $p->id }}">
                                                             </div>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                                            <div class="col-md-2">
+                                                                <button type="submit" class="btn btn-success">Upload</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile">
+                            <div class="row">
+                                @php
+                                    $p = json_decode($profile_setting->value);
+                                @endphp
+                                <div class="col-md-12">
+                                    <form action="{{ route('admin.profile.update') }}" enctype="multipart/form-data" method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label>Banner</label>
+                                            <input type="file" name="profile_bg" class="form-control">
+                                            <img src="{{ url($p->profile_bg) }}" alt="" height="40" class="img-fluid">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Sejarah Singkat</label>
+                                            <textarea name="profile_sejarah" class="form-control" cols="8" rows="5">{{ $p->profile_sejarah }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Visi Misi</label>
+                                            <textarea name="profile_visi_misi" class="form-control" cols="8" rows="5">{{ $p->profile_visi_misi }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -161,4 +197,12 @@
         </div>
     </div>
     </main>
+@endsection
+
+@section('script')
+<script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('profile_visi_misi');
+    CKEDITOR.replace('profile_sejarah');
+</script>
 @endsection

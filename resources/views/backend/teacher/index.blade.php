@@ -38,7 +38,7 @@
                                         <a href="#" class="btn btn-primary btn-sm">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
-                                        <a href="#" class="btn btn-danger btn-sm">
+                                        <a href="{{ route('admin.teacher.delete', $t->id) }}" class="btn btn-danger btn-sm">
                                             <i class="fa fa-trash"></i> Hapus
                                         </a>
                                     </td>

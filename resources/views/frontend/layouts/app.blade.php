@@ -12,8 +12,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicons -->
-    <link href="{{ url('frontend') }}/assets/img/favicon.png" rel="icon">
-    <link href="{{ url('frontend') }}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ url('uploads/admin/favicon/favicon.ico') }}" rel="icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -38,12 +37,108 @@
   ======================================================== -->
 </head>
 
-<body>
+<style>
+    .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:17px;
+        left:40px;
+        background-color:#25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:30px;
+        box-shadow: 1px 1px 2px #999;
+        z-index:100;
+    }
 
+    .float:hover {
+        color: #333;
+    }
+
+    .my-float{
+        margin-top:16px;
+    }
+</style>
+
+<body>
+    
     @include('frontend.layouts.header') 
     
     @yield('content')
 
+    @if(Session::has('harusadmin'))
+        @section('script')
+            <script>
+                Swal.fire(
+                    'Mohon maaf anda bukan admin',
+                    'Anda adalah siswa',
+                    'error'
+                );
+            </script>
+        @endsection
+    @endif
+
+    @if(Session::has('keluar'))
+        @section('script')
+            <script>
+                Swal.fire(
+                    'Anda telah keluar sesi',
+                    'Jika anda ingin melihat formulir harus login lagi',
+                    'success'
+                );
+            </script>
+        @endsection
+    @endif
+
+    @if(Session::has('masuk'))
+        @section('script')
+            <script>
+                Swal.fire(
+                    'Berhasil',
+                    'Anda berhasil masuk',
+                    'success'
+                );
+            </script>
+        @endsection
+    @endif
+
+    @if(Session::has('anda_tdk_berhak'))
+        @section('script')
+            <script>
+                Swal.fire(
+                    'Error',
+                    'Anda bukan siswa!',
+                    'error'
+                );
+            </script>
+        @endsection
+    @endif
+
+    @if(Session::has('pass_salah'))
+        @section('script')
+            <script>
+                Swal.fire(
+                    'Error',
+                    'Password anda salah!',
+                    'error'
+                );
+            </script>
+        @endsection
+    @endif
+
+    @if(Session::has('user_tdk_ada'))
+        @section('script')
+            <script>
+                Swal.fire(
+                    'Error',
+                    'User belum terdaftar!',
+                    'error'
+                );
+            </script>
+        @endsection
+    @endif
     <!-- ======= Footer ======= -->
     <footer id="footer">
 
@@ -70,8 +165,8 @@
 
                 <div class="row footer-newsletter justify-content-center">
                     <div class="col-lg-6">
-                        <form action="#" method="post">
-                            <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
+                        <form action="#">
+                            <input type="email" name="email" placeholder="Enter your Email"><input type="button" value="Subscribe">
                         </form>
                     </div>
                 </div>
@@ -98,9 +193,96 @@
             </div>
         </div>
     </footer>
+
+    {{-- <a href="https://api.whatsapp.com/send?phone=628568029330&text=Assalamualaikum%0ASaya%20mau%20daftar%20di%20ponpes%20nurul%20iman" class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a> --}}
+
     <!-- End Footer -->
 
     <a href="#" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="width: 350px" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-11">
+                        <form action="{{ route('siswa.masuk') }}" method="POST">
+                            @csrf
+                            <h5 class="text-center">Masuk sebagi siswa</h5>
+                            <hr>
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="text" class="form-control" name="email_siswa">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Password</label>
+                                <input type="password" class="form-control" name="pass_siswa">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block">MASUK</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <a href="#" id="openBoxWa" class="float">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+    <style>
+        #boxWa {
+            position:fixed;
+            width:250px;
+            height:auto;
+            bottom:17px;
+            left:40px;
+            background-color: #29A744;
+            color:#FFF;
+            border-radius:6px;
+            text-align:center;
+            box-shadow: 1px 1px 2px #999;
+            z-index:100;
+            display: none;
+        }
+    </style>
+    <div id="boxWa">
+        <p class="text-right mr-2" style="cursor: pointer" onclick="closeWa()">x</p>
+        <div class="row p-2">
+            <div class="col">
+                @php
+                    $wa = json_decode(\App\Setting::where('key', 'whatsapp_setting')->first()->value);
+                @endphp
+                <ul class="list-group bg-transparent" id="wa-list">
+                    @foreach ($wa as $key => $wa)
+                        @php
+                            $url = "https://api.whatsapp.com/send?phone=".$wa."&text=Assalamualaikum%0ASaya%20mau%20daftar%20di%20ponpes%20nurul%20iman"
+                        @endphp
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a href="#"><i class="fa fa-user"></i></a>
+                                </div>
+                                <div class="col-md-9 text-left">
+                                    <a href="{{ $url }}" target="_blank">Admin / CS {{ $key+1 }}</a>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <!-- Vendor JS Files -->
     <script src="{{ url('frontend') }}/assets/vendor/jquery/jquery.min.js"></script>
@@ -116,6 +298,18 @@
     <script src="{{ url('frontend') }}/assets/vendor/aos/aos.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script>
+        $('#openBoxWa').on('click', function(){
+            $('#boxWa').fadeToggle();
+        });
+
+        function closeWa(){
+            $('#boxWa').hide();
+        }
+    </script>
+
 
     {{-- <script>
         var vapidkey = '{{ config('app.vapid') }}';

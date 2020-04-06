@@ -19,6 +19,14 @@
                             <input type="text" name="nama_program" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label>Kategori Program</label>
+                            <select name="kategori_program" class="form-control">
+                                <option value="">--Pilih Category--</option>
+                                <option value="sekolah">Sekolah</option>
+                                <option value="pesantren">Pesantren</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Deskripsi Program</label>
                             <textarea name="desc_program" id="" cols="10" rows="5" class="form-control"></textarea>
                         </div>

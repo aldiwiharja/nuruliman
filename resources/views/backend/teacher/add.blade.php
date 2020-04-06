@@ -15,7 +15,7 @@
                     <form action="{{ route('admin.teacher.add.proses') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label>Nama Program</label>
+                            <label>Nama Guru</label>
                             <input type="text" name="nama_teacher" class="form-control">
                         </div>
                         <div class="form-group">
@@ -23,7 +23,7 @@
                             <input type="file" name="photo" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Nama Program</label>
+                            <label>Nama Pelajaran</label>
                             <input type="text" name="matpel" class="form-control">
                         </div>
                         <div class="form-group">

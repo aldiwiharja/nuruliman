@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app') 
 
 @section('content')
+
 <!-- ======= Hero Section ======= -->
 <section id="hero">
     <div class="carousel slide" data-ride="carousel">
@@ -24,10 +25,9 @@
     <div class="hero-container">
         <div class="row">
             <div class="col-md-12">
-                <h2>PENDAFATARAN SANTRI BARU</h2>
-                <h1>NURUL IMAN</h1>
-                <h1>AL HASANAH</h1>
-                <a href="" class="btn-get-started">DAFTAR</a>
+                <h1>PENDAFATARAN SANTRI BARU</h1>
+                <h2>NURUL IMAN <br>AL HASANAH</h2>
+                <a href="{{ route('pendaftaran.index') }}" class="btn btn-success">DAFTAR</a>
             </div>
         </div>
     </div>
@@ -40,23 +40,23 @@
             @php
                 $kepsek_setting = json_decode($kepsek_setting->value);
             @endphp
-            <div class="row">
-                <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-                    <div class="member" data-aos="fade-up">
-                        <div class="member-img">
-                            <img src="{{ url($kepsek_setting->photo) }}" class="img-fluid img-responsive">
-                        </div>
-                        <div class="member-info text-center">
-                            <h4>{{ $kepsek_setting->nama }}</h4>
-                            <span>{{ $kepsek_setting->jabatan }}</span>
+            <section class="p-3" style="border-radius: 10px; background: #fafafa; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+                <div class="row">
+                    <div class="col-lg-2 col-md-6 col-3">
+                        <div class="member" data-aos="fade-up">
+                            <div class="member-img">
+                                <img src="{{ url($kepsek_setting->photo) }}" class="img-fluid img-responsive" width="150">
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-8 col-8">
+                        <h5>Sambutan</h5>
+                        <b>{{ $kepsek_setting->nama }}</b>
+                        <p>{{ $kepsek_setting->sambutan }}</p>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <h2>Sambutan</h2>
-                    <p>{{ $kepsek_setting->sambutan }}</p>
-                </div>
-            </div>
+            </section>
+            
 
             <div class="row mt-3">
                 <div class="col-md-12">
@@ -65,33 +65,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://pngimage.net/wp-content/uploads/2018/06/sekolah-png-3.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Hallo</h3>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                @foreach ($berita as $key => $b)
+                    <div class="col-md-6">
+                        <div class="card" id="berita">
+                            <div class="card-body p-2">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3">
+                                        <div class="member" data-aos="fade-up">
+                                            <div class="member-img">
+                                                <img src="{{ url($b->image) }}" width="100" height="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <b>{{ $b->title }}</b><br>
+                                        <small class="text-justify">{{ $b->desc }}</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://pngimage.net/wp-content/uploads/2018/06/sekolah-png-3.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Hallo</h3>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://pngimage.net/wp-content/uploads/2018/06/sekolah-png-3.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h3 class="card-title">Hallo</h3>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
         </div>
@@ -104,7 +98,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card register-now">
+                    <div class="card register-now" style="border-radius: 10px">
                         <div class="card-body">
                             <div class="row py-5">
                                 <div class="col-md-12">
@@ -119,7 +113,7 @@
                                                 <div class="card-body">
                                                     <div class="text-center">
                                                         <h3 class="card-title">TAHUN PELAJARAN</h3>
-                                                        <h1>2021-2022</h1>
+                                                        <h1>2020-2021</h1>
                                                         <a href="{{ route('pendaftaran.index') }}" class="text-white btn btn-block btn-success">FORMULIR PENDAFTARAN</a>
                                                     </div>
                                                 </div>
@@ -163,7 +157,7 @@
                         $galeri = json_decode($es->galeri);
                     @endphp
                     @foreach ($galeri as $key => $g)
-                        <div class="col-lg-4 col-md-6 portfolio-item {{ \Str::lower($es->name) }}">
+                        <div class="col-lg-4 col-6 portfolio-item {{ \Str::lower($es->name) }}">
                             <img src="{{ url($g) }}" class="img-fluid" alt="">
                             <div class="portfolio-info">
                                 <h4>{{ $es->name }}</h4>
@@ -189,7 +183,7 @@
             <div class="row">
 
                 @foreach ($tenaga_pendidik as $key => $tp)    
-                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                    <div class="col-lg-3 col-6 d-flex align-items-stretch">
                         <div class="member" data-aos="fade-up">
                             <div class="member-img">
                                 <img src="{{ url($tp->avatar) }}" class="img-fluid" alt="">

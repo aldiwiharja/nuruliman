@@ -26,7 +26,8 @@
                             <div class="card" style="background-size: cover; height: 30vh;background-image: url({{ url($bg[0]) }})">
                                 <div class="card-body">
                                     <h2 class="card-title text-white" style="text-shadow: 2px 1px #009688">{{ $e->name }}</h2>
-                                    <a href="#" class="btn btn-primary">Detail</a>
+                                    <a href="{{ route('admin.ekskul.detail', encrypt($e->id)) }}" class="btn btn-primary">Detail</a>
+                                    <a href="{{ route('admin.ekskul.delete', encrypt($e->id)) }}" class="btn btn-danger">Hapus</a>
                                 </div>
                             </div>
                         </div>
