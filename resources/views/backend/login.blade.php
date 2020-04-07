@@ -16,7 +16,7 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>PONPES NURUL IMAN AL HASANAH</h1>
+        <h4 class="text-center">PONPES <br> NURUL IMAN AL HASANAH</h4>
       </div>
       <div class="login-box">
         <form class="login-form" action="{{ route('admin.login.proses') }}" method="POST">
