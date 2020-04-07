@@ -12,9 +12,10 @@
                 <div class="row">
                     <div class="col">
                         @if(Session::has('msg'))
-                            <div class="alert alert-success">{{ Session::get('msg') }}</div>
+                            @section('script')
+                                {!! Session::get('msg') !!}
+                            @endsection
                         @endif
-
                         <table class="table" id="table">
                             <thead>
                                 <tr>
@@ -58,16 +59,36 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-info btn-sm">
+                                            <a href="{{ route('admin.payment.invoice', encrypt($p->id)) }}" class="btn btn-info btn-sm">
                                                 <i class="fa fa-eye"></i> Lihat
                                             </a>
                                             @if ($p->status !== 1)
-                                                <a href="{{ route('admin.payment.approve', encrypt($p->id)) }}" class="btn btn-success btn-sm">
+                                                <a href="" data-toggle="modal" data-target="#approve{{ $p->id }}" class="btn btn-success btn-sm">
                                                     <i class="fa fa-check"></i> Approve
                                                 </a>
                                             @endif
                                         </td>
                                     </tr>
+                                    <div class="modal fade" id="approve{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" style="width: 400px" role="document">
+                                        <div class="modal-content border-0">
+                                            <div class="modal-header" style="background: #009688">
+                                                <h5 class="modal-title text-white" id="exampleModalLongTitle">Approval</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-11">
+                                                        <h5>Apakah anda yakin untuk approve pembayaran ini ?</h5>
+                                                        <a href="{{ route('admin.payment.approve', encrypt($p->id)) }}" class="btn btn-block btn-success">Ya Approve</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

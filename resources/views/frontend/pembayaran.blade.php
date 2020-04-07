@@ -95,13 +95,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form action="{{ route('konfirmasi.pembayaran') }}" enctype="multipart/form-data" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="student_id" value="{{ $payment->student_id }}">
-                                    <div id="form-cp">
-    
-                                    </div>  
-                                </form>
                                 
                             </div>
                         </div>
@@ -110,6 +103,46 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="confirmPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="width: 350px" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">KONFIRMASI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-11">
+                        <form action="{{ route('konfirmasi.pembayaran') }}" enctype="multipart/form-data" method="POST">
+                            @csrf
+                            <input type="hidden" name="student_id" value="{{ $payment->student_id }}">
+                            <div class="row justify-content-center " id="form-content">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h4>Upload Bukti Transfer</h4>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nama Anda</label>
+                                        <input type="text" class="form-control" value="{{ $siswa->nama_siswa }}" name="nama_byr">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bukti Transfer</label>
+                                        <input type="file" class="form-control" name="bukti_byr">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
     @if(Session::has('msg'))
         @section('script')
             <script>
@@ -125,32 +158,9 @@
     @section('script')
         <script>
             function confirmPayment(){
-                let form = `<div class="row justify-content-center p-5" id="form-content">
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        <button type="button" onclick="cancelPayment()" class="btn btn-sm btn-danger">Batalkan</button>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control" name="nama_byr">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="file" class="form-control" name="bukti_byr">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </div>
-                            </div>`;
-
-                $('#form-cp').html(form);
+                $('#confirmPayment').modal();
             }
 
-            function cancelPayment(){
-                $('#form-content').hide();
-            }
         </script>
     @endsection
 @endsection

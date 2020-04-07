@@ -82,10 +82,6 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    @php
-                                        $day = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
-                                        $month = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-                                    @endphp
                                     <div class="row">
                                         <div class="col-md-5">
                                             <label>Tanggal Daftar</label>
@@ -137,8 +133,8 @@
                                             <h3>1. IDENTITAS CALON SANTRI/PESERTA DIDIK</h3>
                                             <table class="table">
                                                 <tr>
-                                                    <td>a. Nama Lengkap</td>
-                                                    <td>:</td>
+                                                    <td width="300">a. Nama Lengkap</td>
+                                                    <td width="20">:</td>
                                                     <td>
                                                         <input type="text" class="form-control" value="{{ old('nama_siswa') }}" name="nama_siswa">
                                                         @error('nama_siswa')
@@ -179,13 +175,29 @@
                                                                 <input type="text" value="{{ old('tmpt_lahir_siswa') }}" class="form-control" name="tmpt_lahir_siswa" placeholder="Contoh: Bogor" >
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" class="form-control" value="{{ old('tgl_lahir_siswa') }}" name="tgl_lahir_siswa" id="tglLahirSiswa" >
+                                                                <div class="input-group input-group">
+                                                                    <select name="hari_lahir_siswa" id="hari_lahir_siswa" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Hari--</option>
+                                                                    </select>
+                                                                    <select name="bulan_lahir_siswa" id="bulan_lahir_siswa" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Bulan--</option>
+                                                                    </select>
+                                                                    <select name="tahun_lahir_siswa" id="tahun_lahir_siswa" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Tahun--</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         @error('tmpt_lahir_siswa')
                                                             <small class="text-danger">{{ $message }}</small>
                                                         @enderror
-                                                        @error('tgl_lahir_siswa')
+                                                        @error('hari_lahir_siswa')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                        @error('bulan_lahir_siswa')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                        @error('tahun_lahir_siswa')
                                                             <small class="text-danger">{{ $message }}</small>
                                                         @enderror
                                                     </td>
@@ -250,8 +262,8 @@
                                             <h3>2. ASAL SEKOLAH</h3>
                                             <table class="table">
                                                 <tr>
-                                                    <td>a. Nama Sekolah</td>
-                                                    <td>:</td>
+                                                    <td width="300">a. Nama Sekolah</td>
+                                                    <td width="20">:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="asal_sekolah" value="{{ old('asal_sekolah') }}">
                                                         @error('asal_sekolah')
@@ -291,6 +303,9 @@
                                                         <select name="prov_sekolah" onchange="getKota(this.value)" id="prov_sekolah" class="form-control">
                                                             <option value="">--Pilih Provinsi--</option>
                                                         </select>
+                                                        @error('prov_sekolah')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -329,8 +344,8 @@
                                             <h3>3. IDENTITAS ORANG TUA</h3>
                                             <table class="table">
                                                 <tr>
-                                                    <td>1. Nama Ayah</td>
-                                                    <td>:</td>
+                                                    <td width="300">1. Nama Ayah</td>
+                                                    <td width="20">:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="nama_ayah" value="{{ old('nama_ayah') }}">
                                                             @error('nama_ayah')
@@ -350,8 +365,27 @@
                                                                 @enderror
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" class="form-control" name="tgl_lahir_ayah" id="tglLahirAyah" value="{{ old('tgl_lahir_ayah') }}" >
-                                                                @error('tgl_lahir_ayah')
+                                                                <div class="input-group input-group">
+                                                                    <select name="hari_lahir_ayah" id="hari_lahir_ayah" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Hari--</option>
+                                                                    </select>
+                                                                    <select name="bulan_lahir_ayah" id="bulan_lahir_ayah" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Bulan--</option>
+                                                                    </select>
+                                                                    <select name="tahun_lahir_ayah" id="tahun_lahir_ayah" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Tahun--</option>
+                                                                    </select>
+                                                                </div>
+                                                                @error('tmpt_lahir_ayah')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                @error('hari_lahir_ayah')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                @error('bulan_lahir_ayah')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                @error('tahun_lahir_ayah')
                                                                     <small class="text-danger">{{ $message }}</small>
                                                                 @enderror
                                                             </div>
@@ -390,8 +424,27 @@
                                                                 @enderror
                                                             </div>
                                                             <div class="col-md-8">
-                                                                <input type="text" class="form-control" name="tgl_lahir_ibu" id="tglLahirIbu" value="{{ old('tgl_lahir_ibu') }}">
-                                                                @error('tgl_lahir_ibu')
+                                                                <div class="input-group input-group">
+                                                                    <select name="hari_lahir_ibu" id="hari_lahir_ibu" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Hari--</option>
+                                                                    </select>
+                                                                    <select name="bulan_lahir_ibu" id="bulan_lahir_ibu" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Bulan--</option>
+                                                                    </select>
+                                                                    <select name="tahun_lahir_ibu" id="tahun_lahir_ibu" class="form-control">
+                                                                        <option value="" disabled selected>--Pilih Tahun--</option>
+                                                                    </select>
+                                                                </div>
+                                                                @error('tmpt_lahir_ibu')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                @error('hari_lahir_ibu')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                @error('bulan_lahir_ibu')
+                                                                    <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                                @error('tahun_lahir_ibu')
                                                                     <small class="text-danger">{{ $message }}</small>
                                                                 @enderror
                                                             </div>
@@ -452,6 +505,9 @@
                                                         <select name="prov_org_tua" onchange="getKotaOrg(this.value)" id="prov_org_tua" class="form-control">
                                                             <option value="">--Pilih Provinsi--</option>
                                                         </select>
+                                                        @error('prov_org_tua')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -810,23 +866,32 @@
         }
         
         
-        $('#tglLahirSiswa').datepicker({
-            calendarWeeks: true,
-            format: 'dd mmm yyyy', 
-            uiLibrary: 'bootstrap4'
-        });
+        function selectTempatTglLahir(id_hari, id_bulan, id_tahun) {
+            // Hari
+            for (let i = 1; i < 32; i++) {
+                $(id_hari).append(`<option value="`+i+`">`+i+`</option>`);
+            }
+            // Bulan
+            var bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Noverber","Desember"];
+            bulan.forEach(b => {
+                $(id_bulan).append(`<option value="`+b+`">`+b+`</option>`);
+            });
+            // Tahun
+            var tahun_mulai = 1960;
+            var data_tahun = [];
+            for (let a = 0; a < 60; a++) {
+                tahun_mulai++;
+                data_tahun.push(tahun_mulai);
+            }
+            data_tahun.reverse();
+            data_tahun.forEach(dt => {
+                $(id_tahun).append(`<option value="`+dt+`">`+dt+`</option>`);
+            });
+        }
 
-        $('#tglLahirAyah').datepicker({
-            calendarWeeks: true,
-            format: 'dd mmm yyyy', 
-            uiLibrary: 'bootstrap4'
-        });
-
-        $('#tglLahirIbu').datepicker({
-            calendarWeeks: true,
-            format: 'dd mmm yyyy', 
-            uiLibrary: 'bootstrap4'
-        });
+        selectTempatTglLahir("#hari_lahir_siswa","#bulan_lahir_siswa","#tahun_lahir_siswa");
+        selectTempatTglLahir("#hari_lahir_ayah","#bulan_lahir_ayah","#tahun_lahir_ayah");
+        selectTempatTglLahir("#hari_lahir_ibu","#bulan_lahir_ibu","#tahun_lahir_ibu");
 
         $('#tanggalMasuk').datepicker({
             calendarWeeks: true,

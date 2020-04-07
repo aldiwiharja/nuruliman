@@ -531,6 +531,12 @@ h6 {
     #hero {
         height: auto;
     }
+    #hero .hero-container h1 {
+        font-size: 20px;
+    }
+    #hero .hero-container h2 {
+        font-size: 15px;
+    }
     #header .logo img {
         padding: 0;
         margin: 0;

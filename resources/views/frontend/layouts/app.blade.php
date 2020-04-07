@@ -166,7 +166,7 @@
                 <div class="row footer-newsletter justify-content-center">
                     <div class="col-lg-6">
                         <form action="#">
-                            <input type="email" name="email" placeholder="Enter your Email"><input type="button" value="Subscribe">
+                            <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
                         </form>
                     </div>
                 </div>
@@ -243,7 +243,7 @@
     <style>
         #boxWa {
             position:fixed;
-            width:250px;
+            width:300px;
             height:auto;
             bottom:17px;
             left:40px;
@@ -263,20 +263,13 @@
                 @php
                     $wa = json_decode(\App\Setting::where('key', 'whatsapp_setting')->first()->value);
                 @endphp
-                <ul class="list-group bg-transparent" id="wa-list">
+                <ul class="list-group p-0 bg-transparent" id="wa-list">
                     @foreach ($wa as $key => $wa)
                         @php
                             $url = "https://api.whatsapp.com/send?phone=".$wa."&text=Assalamualaikum%0ASaya%20mau%20daftar%20di%20ponpes%20nurul%20iman"
                         @endphp
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <a href="#"><i class="fa fa-user"></i></a>
-                                </div>
-                                <div class="col-md-9 text-left">
-                                    <a href="{{ $url }}" target="_blank">Admin / CS {{ $key+1 }}</a>
-                                </div>
-                            </div>
+                        <li class="list-group-item p-0">
+                            <a href="{{ $url }}" target="_blank">Admin / CS {{ $key+1 }}</a>
                         </li>
                     @endforeach
                 </ul>

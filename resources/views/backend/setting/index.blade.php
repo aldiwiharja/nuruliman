@@ -10,6 +10,11 @@
         <div class="tile">
             <div class="tile-body">
                 <div class="col-lg-12">
+                    @if(Session::has('msg'))
+                        @section('script')
+                            {!! Session::get('msg') !!}
+                        @endsection
+                    @endif
                     <h3>Setting Frontend</h3>
                     <div class="bs-component">
                       <ul class="nav nav-tabs">
@@ -138,7 +143,11 @@
                                                 <td>{{ $key+1 }}</td>
                                                 <td>{{ $p->name }}</td>
                                                 <td>
-                                                    <img src="{{ url((string)$p->banner) }}" class="img-fluid" width="200">
+                                                    @if ($p->banner !== null)
+                                                        <img src="{{ url((string)$p->banner) }}" class="img-fluid" width="100">
+                                                    @else 
+                                                        <b class="text-danger">Tidak ada banner silahkan upload!</b>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <form action="{{ route('admin.program.upload') }}" enctype="multipart/form-data" method="POST">
@@ -172,7 +181,7 @@
                                         <div class="form-group">
                                             <label>Banner</label>
                                             <input type="file" name="profile_bg" class="form-control">
-                                            <img src="{{ url($p->profile_bg) }}" alt="" height="40" class="img-fluid">
+                                            <img src="{{ url($p->profile_bg) }}" alt="" height="100">
                                         </div>
                                         <div class="form-group">
                                             <label>Sejarah Singkat</label>

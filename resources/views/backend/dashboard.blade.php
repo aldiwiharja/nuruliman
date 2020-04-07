@@ -21,7 +21,7 @@
                         <div class="info">
                             <h4>Pembayaran Masuk</h4>
                             <p>
-                                <b>{{ \App\Payment::all()->count() }}</b>
+                                <b>{{ \App\Payment::where('status','1')->count() }}</b>
                             </p>
                         </div>
                     </div>

@@ -1,3 +1,6 @@
+@php
+    $user = Auth::user();
+@endphp
 <!-- Navbar-->
 <header class="app-header"><a class="app-header__logo" href="{{ route('admin.dashboard') }}">ADMIN PANEL</a>
     <!-- Sidebar toggle button-->
@@ -6,30 +9,57 @@
     <ul class="app-nav">
         <!--Notification Menu-->
         <li class="dropdown">
-            <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
-                <i class="fa fa-bell-o fa-lg"></i>
+            <a class="app-nav__item" href="#" style="text-decoration: none" data-toggle="dropdown" aria-label="Show notifications">
+                <i class="fa fa-bell-o fa-lg"></i> 
+                @if ($user->unreadNotifications->count() > 0)
+                    <div class="badge badge-danger">
+                        {{ $user->unreadNotifications->count() }}
+                    </div>
+                @endif
             </a>
             <ul class="app-notification dropdown-menu dropdown-menu-right">
-                <li class="app-notification__title">You have 4 new notifications.</li>
+                <li class="app-notification__title">{{ $user->unreadNotifications->count() }} pemberitahuan baru</li>
                 <div class="app-notification__content">
-                    <li>
-                        <a class="app-notification__item" href="javascript:;">
-                            <span class="app-notification__icon">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </span>
-                            <div>
-                                <p class="app-notification__message">Lisa sent you a mail</p>
-                                <p class="app-notification__meta">2 min ago</p>
-                            </div>
-                        </a>
-                    </li>
+                    @foreach ($user->notifications as $n)
+                        @php
+                            $data = $n->data
+                        @endphp
+                        @if ($n->read_at !== null)
+                            <li>
+                                <a onclick="markAsRead(event)" data-id="{{ $n->id }}" data-url="{{ $data['url'] }}" class="app-notification__item" href="#">
+                                    <span class="app-notification__icon">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </span>
+                                    <div>
+                                        <p class="app-notification__message" style="color: #999;">{{ $data['title'] }}</p>
+                                        <p class="app-notification__meta">{{ $n->created_at->diffForHumans() }}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @else 
+                            <li>
+                                <a onclick="markAsRead(event)" data-id="{{ $n->id }}" data-url="{{ $data['url'] }}" class="app-notification__item" href="#">
+                                    <span class="app-notification__icon">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </span>
+                                    <div>
+                                        <p class="app-notification__message" style="color: black; font-weight: bold">{{ $data['title'] }}</p>
+                                        <p class="app-notification__meta">{{ $n->created_at->diffForHumans() }}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
                 </div>
                 </div>
                 <li class="app-notification__footer">
-                    <a href="#">See all notifications.</a>
+                    <a href="#">Tandai semua untuk di baca.</a>
                 </li>
             </ul>
         </li>
@@ -51,3 +81,20 @@
         </li>
     </ul>
 </header>
+
+@section('script')
+    <script>
+        function markAsRead(e) {
+            e.stopPropagation();
+            var a = e.target.parentElement.parentElement;
+            var id = $(a).attr('data-id')
+            var url = $(a).attr('data-url')
+            var base_url = {!! json_encode(url('/')) !!}
+            var mark_url = base_url+'/mark-as-read/'+id;
+            $.get(mark_url);
+            setTimeout(() => {
+                location.href = url;
+            }, 1000);
+        }
+    </script>
+@endsection

@@ -49,7 +49,7 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <h5 class="card-title">TAHUN PELAJARAN</h5>
-                                            <h2>2021-2022</h2>
+                                            <h2>2020-2021</h2>
                                             <a href="{{ route('pendaftaran.index') }}" class="btn btn-block btn-success text-white mt-4">FORMULIR PENDAFTARAN</a>
                                         </div>
                                     </div>

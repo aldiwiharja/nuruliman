@@ -16,8 +16,6 @@
 // //store a push subscriber.
 // Route::post('/push-store','PushController@store');
 
-
-
 Route::post('/masuk', 'HomeCtrl@siswa_masuk')->name('siswa.masuk');
 
 Route::group(['middleware' => ['siswa']], function () {
@@ -52,18 +50,28 @@ Route::group(['middleware' => ['guest']], function () {
 Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/dashboard', 'AdminCtrl@index')->name('admin.dashboard');
 
+    Route::get('/mark-as-read/{id}', 'AdminCtrl@mark_as_read')->name('mark.as.read');
+
     Route::post('/store-device-token', 'AdminCtrl@store_device_token')->name('store.device.token');
     Route::get('/admin/siswa','AdminCtrl@siswa')->name('admin.siswa');
+    Route::get('/admin/siswa-edit/{id}','AdminCtrl@siswa_edit')->name('admin.siswa.edit');
+    Route::get('admin/generate-pdf/{id}', 'AdminCtrl@admin_generate_pdf')->name('admin.generate.pdf');
+    Route::get('/admin/siswa-detail/{id}','AdminCtrl@siswa_detail')->name('admin.siswa.detail');
+    Route::get('/admin/siswa-delete/{id}','AdminCtrl@siswa_delete')->name('admin.siswa.delete');
+    Route::post('/admin/siswa-edit-proses','AdminCtrl@siswa_edit_proses')->name('admin.siswa.edit.proses');
 
 
     // payment
     Route::get('/admin/payment','AdminCtrl@payment')->name('admin.payment');
     Route::get('/admin/payment-approve/{id}','AdminCtrl@payment_approve')->name('admin.payment.approve');
+    Route::get('/admin/payment-invoice/{id}','AdminCtrl@payment_invoice')->name('admin.payment.invoice');
 
     // guru
     Route::get('/admin/teacher', 'AdminCtrl@teacher')->name('admin.teacher');
     Route::get('/admin/teacher-add', 'AdminCtrl@teacher_add')->name('admin.teacher.add');
     Route::post('/admin/teacher-add-proses', 'AdminCtrl@teacher_add_proses')->name('admin.teacher.add.proses');
+    Route::get('/admin/teacher-edit/{id}', 'AdminCtrl@teacher_edit')->name('admin.teacher.edit');
+    Route::post('/admin/teacher-edit-proses', 'AdminCtrl@teacher_edit_proses')->name('admin.teacher.edit.proses');
     Route::get('/admin/teacher-delete/{id}', 'AdminCtrl@teacher_delete')->name('admin.teacher.delete');
 
     // ekskul
@@ -78,6 +86,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/program', 'AdminCtrl@program')->name('admin.program');
     Route::get('/admin/program-add', 'AdminCtrl@program_add')->name('admin.program.add');
     Route::post('/admin/program-add-proses', 'AdminCtrl@program_add_proses')->name('admin.program.add.proses');
+    Route::get('/admin/program-edit/{id}', 'AdminCtrl@program_edit')->name('admin.program.edit');
+    Route::post('/admin/program-edit-proses', 'AdminCtrl@program_edit_proses')->name('admin.program.edit.proses');
     Route::get('/admin/program-delete/{id}', 'AdminCtrl@program_delete')->name('admin.program.delete');
 
     // Setting
@@ -99,9 +109,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // Biaya bulanan
     Route::get('admin/biaya-bulanan', 'AdminCtrl@biaya_bulanan')->name('admin.biaya.bulanan');
     Route::post('admin/admi-biaya-bulanan-attr', 'AdminCtrl@biaya_bulanan_attr')->name('admin.biaya.bulanan.attr');
+    Route::get('admin/admi-biaya-bulanan-hapus-attr/{attr}', 'AdminCtrl@biaya_bulanan_hapus_attr')->name('admin.biaya.bulanan.hapus.attr');
 
-    Route::post('admin/update-price0', 'AdminCtrl@admin_update_price0')->name('admin.update.price0');
-    Route::post('admin/update-price1', 'AdminCtrl@admin_update_price1')->name('admin.update.price1');
+    Route::post('admin/update-price', 'AdminCtrl@admin_update_price')->name('admin.update.price');
 
     // Berita
     Route::get('admin/berita', 'AdminCtrl@berita')->name('admin.berita');

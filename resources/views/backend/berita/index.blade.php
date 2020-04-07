@@ -13,7 +13,9 @@
                 <div class="row">
                     <div class="col">
                         @if(Session::has('msg'))
-                            <div class="alert alert-success">{{ Session::get('msg') }}</div>
+                            @section('script')
+                                {!! Session::get('msg') !!}
+                            @endsection
                         @endif
                     </div>
                 </div>
@@ -64,10 +66,30 @@
                                                     <small>Dibuat: <br> {{ date('d M Y H:i:s', strtotime($n->created_at)) }}</small>
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <a href="{{ route('admin.berita.delete', encrypt($n->id)) }}"><i class="fa fa-trash"></i></a>
+                                                    <a href="" data-toggle="modal" data-target="#hapusBerita{{ $n->id }}"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </div>
                                         </li>
+                                        <div class="modal fade" id="hapusBerita{{ $n->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" style="width: 350px" role="document">
+                                            <div class="modal-content border-0">
+                                                <div class="modal-header" style="background: #009688">
+                                                    <h5 class="modal-title text-white" id="exampleModalLongTitle">Hapus</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-11">
+                                                            <h5>Apakah anda yakin ingin menghapus ini ?</h5>
+                                                            <a href="{{ route('admin.berita.delete', encrypt($n->id)) }}" class="btn btn-block btn-danger">Ya Hapus</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </ul>
                             </div>
@@ -79,4 +101,11 @@
         </div>
     </div>
     </main>
+@endsection
+
+@section('script')
+<script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('desc');
+</script>
 @endsection

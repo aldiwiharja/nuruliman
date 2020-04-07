@@ -18,11 +18,6 @@
                         <div class="col-md-3">
                             <div class="card">
                                 <img src="{{ url($g) }}" class="card-img-top">
-                                <div class="card-body text-center">
-                                    <a href="#" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i> Hapus
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     @endforeach

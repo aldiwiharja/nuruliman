@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Str;
+use PDF;
 use App\User;
 use App\Student;
 use App\Program;
@@ -23,15 +24,112 @@ class AdminCtrl extends Controller
         return view('backend.dashboard');
     }
 
+    public function mark_as_read(Request $request, $id)
+    {
+        $user = Auth::user();
+        foreach ($user->unreadNotifications as $notif) {
+            if ($notif->id === $id) {
+                $notif->markAsRead();
+            }
+        }
+        return back();
+    }
+
     public function siswa(Request $request)
     {
-        $students = Student::all();
+        $students = Student::orderBy('id', 'DESC')->get();
         return view('backend.siswa.index', compact('students'));
+    }
+
+    public function siswa_edit(Request $request, $id)
+    {
+        $student = Student::where('id', decrypt($id))->first();
+        $programs = Program::all();
+        return view('backend.siswa.edit', compact('student', 'programs'));
+    }
+
+    public function siswa_detail(Request $request, $id)
+    {
+        $student = Student::where('id', decrypt($id))->first();
+        $programs = Program::all();
+        return view('backend.siswa.detail', compact('student', 'programs'));
+    }
+
+    public function admin_generate_pdf(Request $request, $id)
+    {
+        $student = Student::where('id', decrypt($id))->first();
+        $pdf = PDF::loadView('frontend.generate_pdf', compact('student'));
+        $pdf->setPaper('legal', 'potrait');
+        return $pdf->download('formulir-'.time().'.pdf');
+    }
+
+    public function siswa_edit_proses(Request $request)
+    {
+        $student = Student::where('id', $request->id_siswa)->first();
+        if ($student !== null) {
+            $student->tgl_masuk = $request->tgl_masuk;
+            $student->program = $request->program;
+            $student->nama_siswa = $request->nama_siswa;
+            $student->jenis_kelamin = $request->jenis_kelamin;
+            $student->nisn_siswa = $request->nisn_siswa;
+            $student->tmpt_lahir_siswa = $request->tmpt_lahir_siswa;
+            $student->tgl_lahir_siswa = $request->tgl_lahir_siswa;
+            $student->agama = $request->agama;
+            $student->tinggi_badan = $request->tinggi_badan;
+            $student->berat_badan = $request->berat_badan;
+            $student->no_ijazah = $request->no_ijazah;
+            $student->no_skhun = $request->no_skhun;
+            $student->no_hp = $request->no_hp;
+            $student->asal_sekolah = $request->asal_sekolah;
+            $student->niss = $request->niss;
+            $student->kampung_sekolah = $request->kampung_sekolah;
+            $student->desa_sekolah = $request->desa_sekolah;
+            $student->kec_sekolah = $request->kec_sekolah;
+            $student->kota_sekolah = $request->kota_sekolah;
+            $student->prov_sekolah = $request->prov_sekolah;
+            $student->nama_ayah = $request->nama_ayah;
+            $student->tmpt_lahir_ayah = $request->tmpt_lahir_ayah;
+            $student->tgl_lahir_ayah = $request->tgl_lahir_ayah;
+            $student->no_hp_ayah = $request->no_hp_ayah;
+            $student->nama_ibu = $request->nama_ibu;
+            $student->tmpt_lahir_ibu = $request->tmpt_lahir_ibu;
+            $student->tgl_lahir_ibu = $request->tgl_lahir_ibu;
+            $student->no_hp_ibu = $request->no_hp_ibu;
+            $student->no_kk = $request->no_kk;
+            $student->kampung_org_tua = $request->kampung_org_tua;
+            $student->rt_rw_org_tua = $request->rt_rw_org_tua;
+            $student->desa_org_tua = $request->desa_org_tua;
+            $student->kec_org_tua = $request->kec_org_tua;
+            $student->kota_org_tua = $request->kota_org_tua;
+            $student->prov_org_tua = $request->prov_org_tua;
+            $student->nama_sdr = $request->nama_sdr;
+            $student->status_sdr = $request->status_sdr;
+            $student->no_hp_sdr = $request->no_hp_sdr;
+            $student->alamat_sdr = $request->alamat_sdr;
+            $student->save();
+        }
+        return redirect('admin/siswa')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diupdate","success")</script>');
+    }
+
+    public function siswa_delete(Request $request, $id)
+    {
+        $student = Student::where('id', decrypt($id))->first();
+        $payment = Payment::where('student_id', $student->id)->first();
+        $user = User::where('role', 'siswa')->get();
+        foreach ($user as $key => $u) {
+            $student_id = explode('-',$u->name);
+            if ((int)$student_id[0] == $student->id) {
+                $u->delete();
+            }
+        }
+        $payment->delete();
+        $student->delete();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
     public function payment(Request $request)
     {
-        $payments = Payment::all();
+        $payments = Payment::orderBy('id', 'desc')->get();
         return view('backend.payment.index', compact('payments'));
     }
 
@@ -41,8 +139,14 @@ class AdminCtrl extends Controller
         if ($payment !== null) {
             $payment->status = 1;
             $payment->save();
-            return back()->with('msg', $payment->code.' Telah di approve');
+            return back()->with('msg', '<script>Swal.fire("Berhasil","Pembayaran telah di approve","success")</script>');
         }
+    }
+
+    public function payment_invoice(Request $request, $id)
+    {
+        $payment = Payment::where('id', decrypt($id))->first();
+        return view('backend.payment.invoice', compact('payment'));
     }
 
     public function login()
@@ -88,13 +192,32 @@ class AdminCtrl extends Controller
         $program->description = $request->desc_program;
         $program->kategori = $request->kategori_program;
         $program->save();
-        return redirect('/admin/program');
+        return redirect('/admin/program')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
+    }
+
+    public function program_edit(Request $request, $id)
+    {
+        $program = Program::where('id', decrypt($id))->first();
+        return view('backend.program.edit', compact('program'));
+    }
+
+    public function program_edit_proses(Request $request)
+    {   
+        $program = Program::where('id', $request->id)->first();
+        $program->name = Str::upper($request->nama_program);
+        $program->kategori = $request->kategori_program;
+        $program->description = $request->desc_program;
+        $program->save();
+        return redirect('/admin/program')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');
     }
 
     public function program_delete($id) {
         $program = Program::where('id', $id)->first();
+        if (file_exists($program->banner)) {
+            unlink($program->banner);
+        }
         $program->delete();
-        return back();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
     public function setting()
@@ -114,6 +237,7 @@ class AdminCtrl extends Controller
         array_push($value, $banner->store('uploads/admin/banner'));
         $setting->value = json_encode($value);
         $setting->save();
+        return "ok";
     }
 
     public function hapus_banner($key_blade)
@@ -150,7 +274,7 @@ class AdminCtrl extends Controller
         $value->sambutan = $request->sambutan;
         $kepsek_setting->value = json_encode($value);
         $kepsek_setting->save();
-        return back();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diupdate","success")</script>');
     }
 
     public function program_upload(Request $request)
@@ -163,7 +287,7 @@ class AdminCtrl extends Controller
             $program->banner = $request->file('banner'.$request->program_id)->store('uploads/admin/program_banner');
         }
         $program->save();
-        return back();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diupdate","success")</script>');
     }
 
     public function profile_update(Request $request)
@@ -207,7 +331,7 @@ class AdminCtrl extends Controller
         $ekskul->name = $request->nama_ekskul;
         $ekskul->galeri = json_encode($arr);
         $ekskul->save();
-        return redirect('/admin/extrakurikuler');
+        return redirect('/admin/extrakurikuler')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }
 
     public function ekskul_detail(Request $request, $id)
@@ -219,8 +343,14 @@ class AdminCtrl extends Controller
     public function ekskul_delete(Request $request, $id)
     {
         $ekskul = Extrakurikuler::where('id', decrypt($id))->first();
+        $galeri = json_decode($ekskul->galeri);
+        foreach ($galeri as $key => $g) {
+            if (file_exists($g)) {
+                unlink($g);
+            }
+        }
         $ekskul->delete();
-        return back();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
     public function teacher()
@@ -241,7 +371,28 @@ class AdminCtrl extends Controller
         $teacher->avatar = $request->file('photo')->store('uploads/admin/tenaga_pengajar');
         $teacher->matpel = $request->matpel;
         $teacher->save();
-        return redirect('/admin/teacher');
+        return redirect('/admin/teacher')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
+    }
+
+    public function teacher_edit(Request $request, $id)
+    {
+        $teacher = Teacher::where('id', decrypt($id))->first();
+        return view('backend.teacher.edit', compact('teacher'));
+    }
+
+    public function teacher_edit_proses(Request $request)
+    {
+        $teacher = Teacher::where('id', $request->id)->first();
+        if ($request->hasFile('photo')) {
+            if (file_exists($teacher->avatar)) {
+                unlink($teacher->avatar);
+            }
+        }
+        $teacher->avatar = $request->file('photo')->store('uploads/admin/tenaga_pengajar');
+        $teacher->name = $request->nama_teacher;
+        $teacher->matpel = $request->matpel;
+        $teacher->save();
+        return redirect('/admin/teacher')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');
     }
 
     public function teacher_delete(Request $request, $id)
@@ -251,7 +402,7 @@ class AdminCtrl extends Controller
             unlink($teacher->avatar);
         }
         $teacher->delete();
-        return back();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
     public function biaya(Request $request)
@@ -271,7 +422,7 @@ class AdminCtrl extends Controller
         $cost->name = $request->nama_biaya;
         $cost->price = $request->harga_biaya;
         $cost->save();
-        return redirect('/admin/biaya')->with('msg', 'Biaya telah ditambahkan');
+        return redirect('/admin/biaya')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }
 
     public function biaya_edit(Request $request, $id)
@@ -286,14 +437,14 @@ class AdminCtrl extends Controller
         $cost->name = $request->nama_biaya;
         $cost->price = $request->harga_biaya;
         $cost->save();
-        return redirect('/admin/biaya')->with('msg', 'Biaya telah diedit');
+        return redirect('/admin/biaya')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');
     }
 
     public function biaya_hapus(Request $request, $id)
     {
         $cost = Cost::where('id', decrypt($id))->first();
         $cost->delete();
-        return redirect('/admin/biaya')->with('msg', 'Biaya telah dihapus');
+        return redirect('/admin/biaya')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
     public function biaya_bulanan(Request $request)
@@ -312,25 +463,36 @@ class AdminCtrl extends Controller
             $monthly_fee->type = $key;
             $monthly_fee->save();
         }
-        return back()->with('msg', 'Attribute telah ditambahkan');
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }
 
-    public function admin_update_price0(Request $request)
+    public function biaya_bulanan_hapus_attr(Request $request, $attr)
     {
-        $monthly_fee = MonthlyFee::where(['type'=>0,'id'=> $request->id])->first();
-        $monthly_fee->price = $request->price;
-        if ($monthly_fee->save()) {
-            return 1;
+        $mf = MonthlyFee::where('attribute', $attr)->get();
+        foreach ($mf as $key => $mf) {
+            $mf->delete();
         }
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
-    public function admin_update_price1(Request $request)
+    public function admin_update_price(Request $request)
     {
-        $monthly_fee = MonthlyFee::where(['type'=>1,'id'=> $request->id])->first();
-        $monthly_fee->price = $request->price;
-        if ($monthly_fee->save()) {
-            return 1;
+        if ($request->type0 !== null) {
+            $mf = MonthlyFee::where('type',0)->get();
+            foreach ($mf as $key => $mf) {
+                $mf->price = $request->type0[$key];
+                $mf->save();
+            }
         }
+
+        if ($request->type1 !== null) {
+            $mf = MonthlyFee::where('type',1)->get();
+            foreach ($mf as $key => $mf) {
+                $mf->price = $request->type1[$key];
+                $mf->save();
+            }
+        }
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');
     }
 
     public function berita(Request $request)
@@ -346,7 +508,7 @@ class AdminCtrl extends Controller
         $news->desc = $request->desc;
         $news->image = $request->file('image')->store('uploads/admin/berita');
         $news->save();
-        return back()->with('msg', 'Berita telah di tambahkan');
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }
 
     public function berita_delete(Request $request, $id)
@@ -356,7 +518,7 @@ class AdminCtrl extends Controller
             unlink($news->image);
         }
         $news->delete();
-        return back()->with('msg', 'Berita telah di dihapus');
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
     public function logout()
@@ -369,6 +531,20 @@ class AdminCtrl extends Controller
     {
         $whatsapp_setting = Setting::where('key', 'whatsapp_setting')->first();
         return view('backend.whatsapp.index', compact('whatsapp_setting'));
+    }
+
+    public function whatsapp_update(Request $request)
+    {
+        $whatsapp_setting = Setting::where('key', 'whatsapp_setting')->first();
+        $value = json_decode($whatsapp_setting->value);
+        $value[0] = $request->contact[0];
+        $value[1] = $request->contact[1];
+        $value[2] = $request->contact[2];
+
+        $whatsapp_setting->value = json_encode($value);
+        $whatsapp_setting->save();
+
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');
     }
 
     public function store_device_token(Request $request)

@@ -25,9 +25,9 @@
     <div class="hero-container">
         <div class="row">
             <div class="col-md-12">
-                <h1>PENDAFATARAN SANTRI BARU</h1>
-                <h2>NURUL IMAN <br>AL HASANAH</h2>
-                <a href="{{ route('pendaftaran.index') }}" class="btn btn-success">DAFTAR</a>
+                <h1>PENDAFATARAN SISWA BARU</h1>
+                <h2>NURUL IMAN AL HASANAH</h2>
+                <a href="{{ route('pendaftaran.index') }}" class="btn btn-lg btn-success">DAFTAR SEKARANG</a>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
             <div class="row">
                 @foreach ($berita as $key => $b)
                     <div class="col-md-6">
-                        <div class="card" id="berita">
+                        <div class="card mt-2" id="berita">
                             <div class="card-body p-2">
                                 <div class="row no-gutters">
                                     <div class="col-md-3">
@@ -102,8 +102,8 @@
                         <div class="card-body">
                             <div class="row py-5">
                                 <div class="col-md-12">
-                                    <h4 class="text-center">PENERIMAAN SISWA BARU</h4>
-                                    <h1 class="text-center">DAFTAR SEKARANG !</h1>
+                                    <h2 class="text-center">PENERIMAAN SISWA BARU</h2>
+                                    <h1 class="text-center" style="font-size: 70px; color: white; text-shadow: 2px 2px #333;">DAFTAR SEKARANG !</h1>
                                     <div class="row justify-content-center">
                                         <div class="col-md-5">
                                             <div class="card border-0">

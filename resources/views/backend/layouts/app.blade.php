@@ -29,6 +29,7 @@
     <script type="text/javascript">$('#table').DataTable();</script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="{{ url('backend/docs/js/plugins/pace.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     {{-- <script>
       var vapidkey = '{{ config('app.vapid') }}';
     </script>
@@ -36,6 +37,8 @@
     <script src="{{ asset('js/enable-push.js') }}" defer></script> --}}
     @yield('script');
     <!-- Page specific javascripts-->
+    
+    
     @auth
       <script>
           // Register device for push notifications

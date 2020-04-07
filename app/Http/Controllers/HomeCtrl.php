@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PDF;
 use Hash;
+use Str;
 use Auth;
 use Storage;
 use App\Program;
@@ -17,6 +18,10 @@ use App\User;
 use App\News;
 use App\Cost;
 use App\MonthlyFee;
+
+use Notification;
+use App\Notifications\NotifSiswaRegistrasi;
+use App\Notifications\NotifSiswaBayar;
 
 class HomeCtrl extends Controller
 {
@@ -93,7 +98,6 @@ class HomeCtrl extends Controller
             'nama_siswa'=> 'required',
             'jenis_kelamin'	=> 'required',
             'tmpt_lahir_siswa'=> 'required',
-            'tgl_lahir_siswa'=> 'required|date',
             'agama'=> 'required',
             'no_hp'=> 'required',			
             'asal_sekolah'=> 'required',	
@@ -104,11 +108,9 @@ class HomeCtrl extends Controller
             'prov_sekolah'=> 'required',	
             'nama_ayah'=> 'required',		
             'tmpt_lahir_ayah'=> 'required',
-            'tgl_lahir_ayah'=> 'required|date',
             'no_hp_ayah'=> 'required',	
             'nama_ibu'=> 'required',		
             'tmpt_lahir_ibu'=> 'required',
-            'tgl_lahir_ibu'=> 'required|date',	
             'no_hp_ibu'=> 'required',		
             'no_kk'=> 'required',			
             'kampung_org_tua'=> 'required',
@@ -121,15 +123,26 @@ class HomeCtrl extends Controller
             'status_sdr'=> 'required',	
             'no_hp_sdr'=> 'required',		
             'alamat_sdr'=> 'required',
-            'email'=>'unique:users',	
+            'email'=>'unique:users',
+
+            'hari_lahir_siswa' => 'required',
+            'bulan_lahir_siswa' => 'required',	
+            'tahun_lahir_siswa' => 'required',
+
+            'hari_lahir_ayah' => 'required',
+            'bulan_lahir_ayah' => 'required',	
+            'tahun_lahir_ayah' => 'required',
+            
+            'hari_lahir_ibu' => 'required',
+            'bulan_lahir_ibu' => 'required',	
+            'tahun_lahir_ibu' => 'required'
         ];
         $customMsg = [
-            'required' => '* Kolom :attribute tidak boleh kosong.',
-            'date' => '* Kolom :attribute harus format tanggal.',
+            'required' => '* Kolom ini tidak boleh kosong.',
+            'date' => '* Kolom ini harus format tanggal.',
         ];
 
         $this->validate($request, $rules, $customMsg);
-
         $student = new Student;
         if (isset($request->pindah_status)) {
             $student->pindah_status = 1;
@@ -144,7 +157,11 @@ class HomeCtrl extends Controller
         $student->jenis_kelamin = $request->jenis_kelamin;
         $student->nisn_siswa = $request->nisn_siswa;
         $student->tmpt_lahir_siswa = $request->tmpt_lahir_siswa;
-        $student->tgl_lahir_siswa = $request->tgl_lahir_siswa;
+
+        // concate hari bulan tahun siswa
+        $tgl_lahir_siswa = $request->hari_lahir_siswa.' '.$request->bulan_lahir_siswa.' '.$request->tahun_lahir_siswa;
+        $student->tgl_lahir_siswa = $tgl_lahir_siswa;
+
         $student->agama = $request->agama;
         $student->tinggi_badan = $request->tinggi_badan;
         $student->berat_badan = $request->berat_badan;
@@ -160,11 +177,19 @@ class HomeCtrl extends Controller
         $student->prov_sekolah = explode("-",$request->prov_sekolah)[1];
         $student->nama_ayah = $request->nama_ayah;
         $student->tmpt_lahir_ayah = $request->tmpt_lahir_ayah;
-        $student->tgl_lahir_ayah = $request->tgl_lahir_ayah;
+
+        // concate hari bulan tahun ayah
+        $tgl_lahir_ayah = $request->hari_lahir_ayah.' '.$request->bulan_lahir_ayah.' '.$request->tahun_lahir_ayah;
+        $student->tgl_lahir_ayah = $tgl_lahir_ayah;
+
         $student->no_hp_ayah = $request->no_hp_ayah;
         $student->nama_ibu = $request->nama_ibu;
         $student->tmpt_lahir_ibu = $request->tmpt_lahir_ibu;
-        $student->tgl_lahir_ibu = $request->tgl_lahir_ibu;
+
+        // concate hari bulan tahun ibu
+        $tgl_lahir_ibu = $request->hari_lahir_ibu.' '.$request->bulan_lahir_ibu.' '.$request->tahun_lahir_ibu;
+        $student->tgl_lahir_ibu = $tgl_lahir_ibu;
+
         $student->no_hp_ibu = $request->no_hp_ibu;
         $student->no_kk = $request->no_kk;
         $student->kampung_org_tua = $request->kampung_org_tua;
@@ -188,15 +213,17 @@ class HomeCtrl extends Controller
             $payment->save();
             $user = new User;
             $user->name = $student->id.'-'.$student->nama_siswa;
-            $user->email = substr($student->nama_siswa, 0,3).'@email.com';
+            $user->email = Str::lower(substr($student->nama_siswa, 0,3)).'@email.com';
             $user->role = "siswa";
             $user->password = Hash::make('123456');
             $user->save();
-            Storage::put('/info_login/'.substr($student->nama_siswa, 0,3).'.txt', 'email: '.substr($student->nama_siswa, 0,3).'@email.com pass:123456');
+            // Storage::put('/info_login/'.substr($student->nama_siswa, 0,3).'.txt', 'email: '.substr($student->nama_siswa, 0,3).'@email.com pass:123456');
             if ($user->role === "siswa") {
                 Auth::attempt(['email' => $user->email, 'password' => $user->password]);
                 Auth::guard()->login($user);
             }
+            $admin = User::where('role', 'admin')->first();
+            $admin->notify(new NotifSiswaRegistrasi());
             return redirect('generate-formulir')->with('msg', 'Silahakan melakukan pembayaran');
         }
     }
@@ -259,6 +286,8 @@ class HomeCtrl extends Controller
             $payment->status = 2; // waiting approve
             $payment->bukti = $request->file('bukti_byr')->store('uploads/admin/bukti_transfer');
             $payment->save();
+            $admin = User::where('role', 'admin')->first();
+            $admin->notify(new NotifSiswaBayar());
             return redirect('sukses-pembayaran')->with('msg', 'Terimakasih sudah melakukan pembayaran');
         }
     }
