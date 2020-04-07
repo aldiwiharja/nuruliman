@@ -30,15 +30,15 @@
             <span class="app-menu__label">Pembayaran</span>
         </a>
     </li>
-    <li @if ($uri == "admin/progam" || $uri == "admin/extrakurikuler" || $uri == "admin/teacher" || $uri == "admin/biaya" || $uri == "admin/biaya-bulanan") class="treeview is-expanded" @else class="treeview" @endif>
-        <a @if ($uri == "admin/progam" || $uri == "admin/extrakurikuler" || $uri == "admin/teacher" || $uri == "admin/biaya" || $uri == "admin/biaya-bulanan") class="app-menu__item active" @else class="app-menu__item" @endif href="#" data-toggle="treeview">
+    <li @if ($uri == "admin/program" || $uri == "admin/extrakurikuler" || $uri == "admin/teacher" || $uri == "admin/biaya" || $uri == "admin/biaya-bulanan") class="treeview is-expanded" @else class="treeview" @endif>
+        <a @if ($uri == "admin/program" || $uri == "admin/extrakurikuler" || $uri == "admin/teacher" || $uri == "admin/biaya" || $uri == "admin/biaya-bulanan") class="app-menu__item active" @else class="app-menu__item" @endif href="#" data-toggle="treeview">
             <i class="app-menu__icon fa fa-folder"></i>
             <span class="app-menu__label">Data Master</span>
             <i class="treeview-indicator fa fa-angle-right"></i>
         </a>
         <ul class="treeview-menu">
             <li>
-                <a @if ($uri == "admin/progam") class="treeview-item active" @else class="treeview-item" @endif href="{{ route('admin.program') }}">
+                <a @if ($uri == "admin/program") class="treeview-item active" @else class="treeview-item" @endif href="{{ route('admin.program') }}">
                   <i class="icon fa fa-circle-o"></i> Program
                 </a>
             </li>
