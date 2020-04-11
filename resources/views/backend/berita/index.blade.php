@@ -62,7 +62,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h4>{{ $n->title }}</h4>
-                                                    <p>{{ $n->desc }}</p>
+                                                    <p>{!! $n->desc !!}</p>
                                                     <small>Dibuat: <br> {{ date('d M Y H:i:s', strtotime($n->created_at)) }}</small>
                                                 </div>
                                                 <div class="col-md-1">

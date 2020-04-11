@@ -1,17 +1,21 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <style>
-        .modal-body{
-            height: 450px;
-            overflow-y: auto;
-        }
-    </style>
     <section>
+        @if ($errors->any())
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+            <script>
+                Swal.fire(
+                    'Data tidak lengkap',
+                    'Silahkan cek dan lengkapi kembali',
+                    'info'
+                );
+            </script>
+        @endif
         <div class="container">
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#rincianB">
                         <i class="fa fa-money"></i> Lihat Rincian Biaya
                     </button>
                 </div>
@@ -83,15 +87,22 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
+                                        <div class="col">
+                                            <div class="alert alert-info">
+                                                <h4 class="text-center">Silahkan isi formulir dengan teliti dan benar, untuk yang bertanda (<span class="text-danger"><strong>*</strong></span>) wajib di isi !</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
                                         <div class="col-md-5">
-                                            <label>Tanggal Daftar</label>
-                                            <input type="text" class="form-control" value="{{ old('tgl_masuk') }}" name="tgl_masuk" id="tanggalMasuk" autocomplete="off">
+                                            <label>Tanggal Daftar <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" value="{{ old('tgl_masuk') }}" name="tgl_masuk" id="tgl_masuk" autocomplete="off">
                                             @error('tgl_masuk')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <div class="col-md-7">
-                                            <label>Pilih Program</label><br>
+                                            <label>Pilih Program</label> <span class="text-danger">*</span> <br>
                                             <div class="d-sm-block d-md-inline">
                                                 @foreach ($programs as $key => $p)
                                                     @if ($p->kategori == "sekolah")
@@ -133,8 +144,8 @@
                                             <h3>1. IDENTITAS CALON SANTRI/PESERTA DIDIK</h3>
                                             <table class="table">
                                                 <tr>
-                                                    <td width="300">a. Nama Lengkap</td>
-                                                    <td width="20">:</td>
+                                                    <td>a. Nama Lengkap <span class="text-danger">*</span></td>
+                                                    <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" value="{{ old('nama_siswa') }}" name="nama_siswa">
                                                         @error('nama_siswa')
@@ -143,7 +154,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>b. Jenis Kelamin</td>
+                                                    <td>b. Jenis Kelamin <span class="text-danger">*</span> </td>
                                                     <td>:</td>
                                                     <td>
                                                         <div class="custom-control custom-radio custom-control-inline">
@@ -163,28 +174,41 @@
                                                     <td>c. NISN</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="nisn_siswa" value="{{ old('nisn_siswa') }}" placeholder="Lewati jika tidak ada">
+                                                        <input type="text" class="form-control" name="nisn_siswa" value="{{ old('nisn_siswa') }}">
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>d. Tempat Tanggal Lahir</td>
+                                                    <td>d. Tempat Tanggal Lahir <span class="text-danger">*</span> </td>
                                                     <td>:</td>
                                                     <td>
                                                         <div class="row">
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <input type="text" value="{{ old('tmpt_lahir_siswa') }}" class="form-control" name="tmpt_lahir_siswa" placeholder="Contoh: Bogor" >
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <div class="input-group input-group">
-                                                                    <select name="hari_lahir_siswa" id="hari_lahir_siswa" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Hari--</option>
-                                                                    </select>
-                                                                    <select name="bulan_lahir_siswa" id="bulan_lahir_siswa" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Bulan--</option>
-                                                                    </select>
-                                                                    <select name="tahun_lahir_siswa" id="tahun_lahir_siswa" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Tahun--</option>
-                                                                    </select>
+                                                            <div class="col-md-9">
+                                                                <div class="row no-gutters">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="hari_lahir_siswa" id="hari_lahir_siswa" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Tanggal--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="bulan_lahir_siswa" id="bulan_lahir_siswa" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Bulan--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="tahun_lahir_siswa" id="tahun_lahir_siswa" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Tahun--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -203,7 +227,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>e. Agama</td>
+                                                    <td>e. Agama <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="agama" value="{{ old('agama') }}">
@@ -234,14 +258,16 @@
                                                     <td>g. No Ijazah Sebelumnya</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="no_ijazah" placeholder="Lewati jika tidak ada" value="{{ old('no_ijazah') }}">
+                                                        <input type="text" class="form-control" name="no_ijazah" value="{{ old('no_ijazah') }}">
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>h. No SKHUN Sebelumnya</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="no_skhun" placeholder="Lewati jika tidak ada" value="{{ old('no_skhun') }}">
+                                                        <input type="text" class="form-control" name="no_skhun" value="{{ old('no_skhun') }}">
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -249,9 +275,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <input type="number" class="form-control" name="no_hp" value="{{ old('no_hp') }}">
-                                                        @error('no_hp')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -262,8 +286,8 @@
                                             <h3>2. ASAL SEKOLAH</h3>
                                             <table class="table">
                                                 <tr>
-                                                    <td width="300">a. Nama Sekolah</td>
-                                                    <td width="20">:</td>
+                                                    <td>a. Nama Sekolah <span class="text-danger">*</span></td>
+                                                    <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="asal_sekolah" value="{{ old('asal_sekolah') }}">
                                                         @error('asal_sekolah')
@@ -275,7 +299,8 @@
                                                     <td>b. NISS / NPSS</td>
                                                     <td>:</td>
                                                     <td>
-                                                        <input type="text" class="form-control" placeholder="Lewati jika tidak ada" name="niss" value="{{ old('niss') }}">
+                                                        <input type="text" class="form-control" name="niss" value="{{ old('niss') }}">
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -286,7 +311,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Kampung</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Kampung <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <textarea name="kampung_sekolah" id="" class="form-control" cols="6" rows="3" placeholder="Alamat lengkap">{{ old('kampung_sekolah') }}</textarea>
@@ -297,8 +322,9 @@
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Provinsi</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Provinsi <span class="text-danger">*</span></td>
                                                     <td>:</td>
+                                                    
                                                     <td>
                                                         <select name="prov_sekolah" onchange="getKota(this.value)" id="prov_sekolah" class="form-control">
                                                             <option value="">--Pilih Provinsi--</option>
@@ -309,7 +335,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Kab / Kota</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Kab / Kota <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="kota_sekolah" onchange="getKecamatan(this.value)" id="kota_sekolah" class="form-control">
@@ -318,7 +344,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Kecamatan</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Kecamatan <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="kec_sekolah" onchange="getDesa(this.value)" id="kec_sekolah" class="form-control">
@@ -327,7 +353,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Desa / Kelurahan</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Desa / Kelurahan <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="desa_sekolah" id="desa_sekolah" class="form-control">
@@ -344,8 +370,8 @@
                                             <h3>3. IDENTITAS ORANG TUA</h3>
                                             <table class="table">
                                                 <tr>
-                                                    <td width="300">1. Nama Ayah</td>
-                                                    <td width="20">:</td>
+                                                    <td>1. Nama Ayah <span class="text-danger">*</span></td>
+                                                    <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="nama_ayah" value="{{ old('nama_ayah') }}">
                                                             @error('nama_ayah')
@@ -354,27 +380,39 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Tempat Tanggal Lahir</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Tempat Tanggal Lahir <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
+                                                        <div class="row no-gutters">
+                                                            <div class="col-md-3">
                                                                 <input type="text" placeholder="Contoh: Bogor" class="form-control" name="tmpt_lahir_ayah" value="{{ old('tmpt_lahir_ayah') }}">
                                                                 @error('tmpt_lahir_ayah')
                                                                     <small class="text-danger">{{ $message }}</small>
                                                                 @enderror
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <div class="input-group input-group">
-                                                                    <select name="hari_lahir_ayah" id="hari_lahir_ayah" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Hari--</option>
-                                                                    </select>
-                                                                    <select name="bulan_lahir_ayah" id="bulan_lahir_ayah" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Bulan--</option>
-                                                                    </select>
-                                                                    <select name="tahun_lahir_ayah" id="tahun_lahir_ayah" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Tahun--</option>
-                                                                    </select>
+                                                            <div class="col-md-9">
+                                                                <div class="row no-gutters">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="hari_lahir_ayah" id="hari_lahir_ayah" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Tanggal--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="bulan_lahir_ayah" id="bulan_lahir_ayah" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Bulan--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="tahun_lahir_ayah" id="tahun_lahir_ayah" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Tahun--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 @error('tmpt_lahir_ayah')
                                                                     <small class="text-danger">{{ $message }}</small>
@@ -393,7 +431,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; No Handphone</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; No Handphone <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <input type="number" class="form-control" name="no_hp_ayah" value="{{ old('no_hp_ayah') }}">
@@ -403,7 +441,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>2. Nama Ibu</td>
+                                                    <td>2. Nama Ibu <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="nama_ibu" value="{{ old('nama_ibu') }}">
@@ -413,27 +451,41 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Tempat Tanggal Lahir</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Tempat Tanggal Lahir <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
+                                                        <div class="row no-gutters">
+                                                            <div class="col-md-3">
                                                                 <input type="text" placeholder="Contoh: Bogor" class="form-control" name="tmpt_lahir_ibu" value="{{ old('tmpt_lahir_ibu') }}">
                                                                 @error('tmpt_lahir_ibu')
                                                                     <small class="text-danger">{{ $message }}</small>
                                                                 @enderror
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <div class="input-group input-group">
-                                                                    <select name="hari_lahir_ibu" id="hari_lahir_ibu" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Hari--</option>
-                                                                    </select>
-                                                                    <select name="bulan_lahir_ibu" id="bulan_lahir_ibu" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Bulan--</option>
-                                                                    </select>
-                                                                    <select name="tahun_lahir_ibu" id="tahun_lahir_ibu" class="form-control">
-                                                                        <option value="" disabled selected>--Pilih Tahun--</option>
-                                                                    </select>
+                                                            <div class="col-md-9">
+                                                                <div class="row no-gutters">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="hari_lahir_ibu" id="hari_lahir_ibu" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Tanggal--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="bulan_lahir_ibu" id="bulan_lahir_ibu" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Bulan--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <select name="tahun_lahir_ibu" id="tahun_lahir_ibu" class="form-control">
+                                                                                <option value="" disabled selected>--Pilih Tahun--</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 @error('tmpt_lahir_ibu')
                                                                     <small class="text-danger">{{ $message }}</small>
@@ -452,7 +504,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; No Handphone</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; No Handphone <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <input type="number" class="form-control" name="no_hp_ibu" value="{{ old('no_hp_ibu') }}">
@@ -466,9 +518,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="no_kk" value="{{ old('no_kk') }}">
-                                                        @error('no_kk')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -479,7 +529,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Kampung</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Kampung <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <textarea name="kampung_org_tua" id="" class="form-control" cols="6" rows="3" placeholder="Alamat lengkap">{{ old('kampung_org_tua') }}</textarea>
@@ -489,7 +539,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; RT / RW</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; RT / RW <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" placeholder="Contoh: RT001 / RW001" name="rt_rw_org_tua" value="{{ old('rt_rw_org_tua') }}">
@@ -499,7 +549,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Provinsi</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Provinsi <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="prov_org_tua" onchange="getKotaOrg(this.value)" id="prov_org_tua" class="form-control">
@@ -511,7 +561,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Kab / Kota</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Kab / Kota <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="kota_org_tua" onchange="getKecOrg(this.value)" id="kota_org_tua" class="form-control">
@@ -520,7 +570,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Kecamatan</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Kecamatan <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="kec_org_tua" onchange="getDesaOrg(this.value)" id="kec_org_tua" class="form-control">
@@ -529,7 +579,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>&nbsp;&nbsp;&nbsp; Desa / Kelurahan</td>
+                                                    <td>&nbsp;&nbsp;&nbsp; Desa / Kelurahan <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
                                                         <select name="desa_org_tua" id="desa_org_tua" class="form-control">
@@ -550,9 +600,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="nama_sdr" value="{{ old('nama_sdr') }}">
-                                                        @error('nama_sdr')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -560,9 +608,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <input type="text" class="form-control" name="status_sdr" value="{{ old('status_sdr') }}">
-                                                        @error('status_sdr')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -570,9 +616,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <input type="number" class="form-control" name="no_hp_sdr" value="{{ old('no_hp_sdr') }}">
-                                                        @error('no_hp_sdr')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -580,9 +624,7 @@
                                                     <td>:</td>
                                                     <td>
                                                         <textarea name="alamat_sdr" class="form-control" cols="6" rows="3">{{ old('alamat_sdr') }}</textarea>
-                                                        @error('alamat_sdr')
-                                                            <small class="text-danger">{{ $message }}</small>
-                                                        @enderror
+                                                        <small class="text-info">Lewati jika tidak tahu</small>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -594,7 +636,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-lg btn-success btn-block">PROSES PENDAFATARAN</button>
+                            <button type="submit" class="btn btn-lg btn-success btn-block">PROSES PENDAFTARAN</button>
                         </div>
                     </div>
                 </form>
@@ -602,10 +644,10 @@
         </div>
     </section>
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade bd-example-modal-lg" id="rincianB" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" id="card-head">
                     <h5 class="modal-title" id="exampleModalLongTitle">Rincian Biaya</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -734,10 +776,11 @@
     </div>
 @endsection
 
-@section('script')
-    <script>
 
-    
+
+
+@section('script')
+    <script>  
         function getToken() {
             var result = "";
             $.ajax({
@@ -865,7 +908,6 @@
             getAllDesaByKecId(token, real_value, "#desa_org_tua")
         }
         
-        
         function selectTempatTglLahir(id_hari, id_bulan, id_tahun) {
             // Hari
             for (let i = 1; i < 32; i++) {
@@ -893,11 +935,30 @@
         selectTempatTglLahir("#hari_lahir_ayah","#bulan_lahir_ayah","#tahun_lahir_ayah");
         selectTempatTglLahir("#hari_lahir_ibu","#bulan_lahir_ibu","#tahun_lahir_ibu");
 
-        $('#tanggalMasuk').datepicker({
+        $('#tgl_masuk').datepicker({
             calendarWeeks: true,
             format: 'dd mmm yyyy', 
             uiLibrary: 'bootstrap4'
         });
+        var d = new Date();
+        var month = new Array();
+        month[0] = "Jan";
+        month[1] = "Feb";
+        month[2] = "Mar";
+        month[3] = "Apr";
+        month[4] = "May";
+        month[5] = "Jun";
+        month[6] = "Jul";
+        month[7] = "Aug";
+        month[8] = "Sep";
+        month[9] = "Oct";
+        month[10] = "Nov";
+        month[11] = "Dec";
+        var date = d.getDate().toString();
+        var month = month[d.getMonth()];
+        var year = d.getFullYear().toString();
+        var result = date+' '+month+' '+year;
+        $('#tgl_masuk').val(result);
 
         $('#pindah-kelas').hide();
         $("#yaPindah").click(function () {
@@ -909,3 +970,4 @@
         });
     </script>
 @endsection
+

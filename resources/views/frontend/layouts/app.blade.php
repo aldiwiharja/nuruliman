@@ -6,8 +6,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>{{ config('app.name') }}</title>
-    <meta content="" name="descriptison">
-    <meta content="" name="keywords">
+    {{-- Seo --}}
+    <meta name="author" content="Deodex Team">
+    <meta name="description" content="Pondok pesantren nurul iman al hasanah">
+    <meta name="keywords" content="Nuruliman, Nurul Iman, Nurul Iman Al Hasanah, Ponpes, Pendaftaran Nurul Iman, Pondok Pesantran">
+    <meta name="image" content="{{ url('frontend') }}/assets/img/logo.png">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -28,6 +31,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ url('frontend') }}/assets/css/style.css" rel="stylesheet">
+    
 
     <!-- =======================================================
   * Template Name: Remember - v2.0.0
@@ -36,31 +40,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
-<style>
-    .float{
-        position:fixed;
-        width:60px;
-        height:60px;
-        bottom:17px;
-        left:40px;
-        background-color:#25d366;
-        color:#FFF;
-        border-radius:50px;
-        text-align:center;
-        font-size:30px;
-        box-shadow: 1px 1px 2px #999;
-        z-index:100;
-    }
-
-    .float:hover {
-        color: #333;
-    }
-
-    .my-float{
-        margin-top:16px;
-    }
-</style>
 
 <body>
     
@@ -172,13 +151,11 @@
                 </div>
 
                 <div class="social-links">
-                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                    <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                    <a target="_blank" href="https://www.facebook.com/Nurul-iman-Al-hasanah-asyukriah-1707286829493719/" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a target="_blank" href="https://www.instagram.com/nurulimanasyukriah/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a target="_blank" href="https://www.youtube.com/channel/UCuHlYUsi8ClJALsgbqiWjmw" class="youtube"><i class="bx bxl-youtube"></i></a>
                 </div>
-
+                
             </div>
         </div>
 
@@ -205,7 +182,7 @@
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="width: 350px" role="document">
         <div class="modal-content border-0">
-            <div class="modal-header bg-success">
+            <div class="modal-header" id="card-head">
                 <h5 class="modal-title text-white" id="exampleModalLongTitle">Login</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -237,44 +214,48 @@
         </div>
     </div>
 
+    @if (Auth::check())
+        <a href="#" onclick="showDocument()" class="dataAnda">
+            <i class="fa fa-file my-float"></i>
+        </a>
+    @endif
+
     <a href="#" id="openBoxWa" class="float">
         <i class="fa fa-whatsapp my-float"></i>
     </a>
-    <style>
-        #boxWa {
-            position:fixed;
-            width:300px;
-            height:auto;
-            bottom:17px;
-            left:40px;
-            background-color: #29A744;
-            color:#FFF;
-            border-radius:6px;
-            text-align:center;
-            box-shadow: 1px 1px 2px #999;
-            z-index:100;
-            display: none;
-        }
-    </style>
+
     <div id="boxWa">
         <p class="text-right mr-2" style="cursor: pointer" onclick="closeWa()">x</p>
-        <div class="row p-2">
-            <div class="col">
+        @php
+            $wa = json_decode(\App\Setting::where('key', 'whatsapp_setting')->first()->value);
+        @endphp
+        <ul class="list-group p-2" id="wa-list">
+            @foreach ($wa as $key => $wa)
                 @php
-                    $wa = json_decode(\App\Setting::where('key', 'whatsapp_setting')->first()->value);
+                    $url = "https://api.whatsapp.com/send?phone=".$wa."&text=Assalamualaikum%0ASaya%20mau%20daftar%20di%20ponpes%20nurul%20iman"
                 @endphp
-                <ul class="list-group p-0 bg-transparent" id="wa-list">
-                    @foreach ($wa as $key => $wa)
-                        @php
-                            $url = "https://api.whatsapp.com/send?phone=".$wa."&text=Assalamualaikum%0ASaya%20mau%20daftar%20di%20ponpes%20nurul%20iman"
-                        @endphp
-                        <li class="list-group-item p-0">
-                            <a href="{{ $url }}" target="_blank">Admin / CS {{ $key+1 }}</a>
-                        </li>
-                    @endforeach
-                </ul>
+                <li class="list-group-item mt-3 border-0" style="border-radius: 5px">
+                    <a href="{{ $url }}" target="_blank">Admin / CS {{ $key+1 }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+
+    <div class="modal fade" id="showDocs" tabindex="-1" role="dialog" aria-labelledby="showDocsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="row" id="loader">
+                <div class="col">
+                    <h1 class="text-center">
+                        <i class="fa fa-spin fa-spinner"></i>
+                    </h1>
+                </div>
+            </div>
+            <div id="showDocs-body">
+
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Vendor JS Files -->
@@ -292,6 +273,9 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link href="{{ url('frontend/assets/vendor/smart/css/smart_wizard.css') }}" rel="stylesheet"></link>
+    <script src="{{ url('frontend/assets/vendor/smart/js/jquery.smartWizard.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('backend/docs/js/plugins/dropzone.js') }}"></script>
 
     <script>
         $('#openBoxWa').on('click', function(){
@@ -301,15 +285,19 @@
         function closeWa(){
             $('#boxWa').hide();
         }
+
+        function showDocument() {
+            $('#showDocs-body').html(null);
+            $('#showDocs').modal();
+            $('#loader').show();
+            $.get("{{ route('document.modal') }}", function(data) {
+                $('#loader').hide();
+                $('#showDocs-body').html(data);
+            })
+        }
     </script>
 
 
-    {{-- <script>
-        var vapidkey = '{{ config('app.vapid') }}';
-    </script>
-
-    <script src="{{ asset('js/enable-push.js') }}" defer></script> --}}
-    
 
     <!-- Template Main JS File -->
     <script src="{{ url('frontend') }}/assets/js/main.js"></script>

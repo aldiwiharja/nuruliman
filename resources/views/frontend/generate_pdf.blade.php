@@ -25,15 +25,30 @@
 <body>
 
     <section class="main">
-        <img src="{{ public_path('uploads/admin/logo/head_form.jpg') }}" alt="" height="110" width="653">
-        <table>
+        <table style="margin-top: 5px">
             <tr>
-                <td>Tanggal Daftar : {{ date('d M Y', strtotime($student->tgl_masuk)) }} / </td>
-                <td>Program : {{ $student->program }} / </td>
+                <td width="100">
+                    <img src="{{ public_path('uploads/admin/logo/Nuruliman.png') }}" alt="" width="100">
+                </td>
+                <td>
+                    <h2 style="text-align: center">FORMULIR PENDAFTARAN</h2>
+                    <h3 style="text-align: center">SANTRI / PESERTA DIDIK BARU</h3>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <table style="margin-top: 15px">
+            <tr>
+                <td width="200">Tanggal Daftar : {{ date('d M Y', strtotime($student->tgl_masuk)) }}</td>
+                <td width="200">Program : {{ $student->program }}</td>
+            </tr>
+        </table>
+        <table style="margin-top: 10px">
+            <tr>
                 <td>Pindahan : @if ($student->pindah_status == 1) {{ $student->pindah_tingkat.' | '.$student->pindah_program }} @else Tidak @endif</td>
             </tr>
         </table>
-        <h5>1. IDENTITAS CALON SANTRI/PESERTA DIDIK</h5>
+        <h5 style="margin-top: 20px">1. IDENTITAS CALON SANTRI/PESERTA DIDIK</h5>
         <table>
             <tr>
                 <td width="200">a. Nama Lengkap</td>
@@ -312,7 +327,7 @@
                 <td>Dengan ini saya bersedia mendaftar di pondok pesantren Nurul Iman Al Hasanah</td>
             </tr>
         </table>
-        <table>
+        <table style="margin-top: 60px">
             <tr>
                 <td align="center" width="240">
                     Siswa

@@ -25,11 +25,11 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-5 col-5">
                                     <label>Tanggal Daftar</label>
                                     <p><b>{{ date('d M Y', strtotime($student->tgl_masuk)) }}</b></p>
                                 </div>
-                                <div class="col-md-7">
+                                <div class="col-md-7 col-7">
                                     <label>Pilih Program</label>
                                     <p><b>{{ $student->program }}</b></p>
                                 </div>

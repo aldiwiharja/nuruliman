@@ -46,30 +46,32 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Jenis Pembayaran</th>
-                                    <th>Jumah Pembayaran</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Pembayaran Pendafataran</td>
-                                    <td>Rp {{ number_format($payment->total) }}</td>
-                                    <th><b>Rp {{ number_format($payment->total) }}</b></th>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" align="center">
-                                        <h5>Grand Total</h5>
-                                    </td>
-                                    <td><h5>Rp {{ number_format($payment->total) }}</h5></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Jenis Pembayaran</th>
+                                        <th>Jumah Pembayaran</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Pembayaran Pendafataran</td>
+                                        <td>Rp {{ number_format($payment->total) }}</td>
+                                        <th><b>Rp {{ number_format($payment->total) }}</b></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" align="center">
+                                            <h5>Grand Total</h5>
+                                        </td>
+                                        <td><h5>Rp {{ number_format($payment->total) }}</h5></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -45,11 +45,11 @@
                 </li>
             </ul>
         </li>
-        {{-- <li @if ($uri == "ekskul") class="active" @endif><a href="{{ route('ekskul.index') }}">Extra Kulikuler</a></li> --}}
         <li class="drop-down"><a href="">Informasi</a>
             <ul>
                 <li><a href="{{ route('persyaratan.index') }}">Persayatan</a></li>
                 <li><a href="{{ route('rincian.biaya.index') }}">Rincian Biaya</a></li>
+                <li><a href="{{ route('user.guide') }}" target="_blank">Cara Pendaftaran</a></li>
                 
                 @if (Auth::check())
                     <li><a href="{{ route('generate.formulir') }}">Formulir</a></li>
@@ -62,10 +62,10 @@
                 $user = Auth::user();
             @endphp
             @if ($user->role === "siswa")
-                <li><a href="{{ route('siswa.keluar') }}" class="text-succes">Keluar</a></li>
+                <li><a href="{{ route('siswa.keluar') }}">Keluar</a></li>
             @endif
         @else 
-            <li><a href="" data-toggle="modal" data-target="#loginModal" class="text-success">Masuk</a></li>
+            <li><a href="" data-toggle="modal" data-target="#loginModal">Masuk</a></li>
         @endif
 
     </ul>

@@ -12,7 +12,7 @@
                             $siswa = \App\Student::where('id', $payment->student_id)->first();
                         @endphp
                         <div class="card">
-                            <div class="card-header bg-success">
+                            <div class="card-header" id="card-head">
                                 <h3 class="text-white"  style="font-family: Arial;">{{ $payment->code }}</h3>
                             </div>
                             <div class="card-body">
@@ -57,7 +57,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Total Biaya Pendaftaran</td>
+                                                <td>Biaya Pendaftaran</td>
                                                 <td>:</td>
                                                 <td><b>Rp. {{ number_format($payment->total) }}</b></td>
                                             </tr>

@@ -17,6 +17,8 @@
 // Route::post('/push-store','PushController@store');
 
 Route::post('/masuk', 'HomeCtrl@siswa_masuk')->name('siswa.masuk');
+Route::get('/user_guide', 'HomeCtrl@user_guide')->name('user.guide');
+
 
 Route::group(['middleware' => ['siswa']], function () {
     Route::get('/', 'HomeCtrl@index')->name('home.index');
@@ -35,11 +37,19 @@ Route::group(['middleware' => ['siswa']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'siswa']], function () {
+    Route::get('/sukses-pendaftaran', 'HomeCtrl@sukses_pendaftaran')->name('sukses.pendaftaran');
     Route::get('/generate-formulir', 'HomeCtrl@generate_formulir')->name('generate.formulir');
     Route::get('/generate-pdf', 'HomeCtrl@generate_pdf')->name('generate.pdf');
     Route::get('/sukses-pembayaran', 'HomeCtrl@sukses_pembayaran')->name('sukses.pembayaran');
     Route::post('/konfirmasi-pembayaran', 'HomeCtrl@konfirmasi_pembayaran')->name('konfirmasi.pembayaran');
     Route::get('/pembayaran', 'HomeCtrl@pembayaran')->name('pembayaran');
+
+    Route::post('/upload-ktp', 'HomeCtrl@upload_ktp')->name('upload.ktp');
+    Route::post('/upload-kk', 'HomeCtrl@upload_kk')->name('upload.kk');
+    Route::post('/upload-ijazah', 'HomeCtrl@upload_ijazah')->name('upload.ijazah');
+    Route::post('/upload-sk', 'HomeCtrl@upload_sk')->name('upload.sk');
+    Route::get('/existing-docs', 'HomeCtrl@existing_docs')->name('existing.docs');
+    Route::get('/document-modal', 'HomeCtrl@document_modal')->name('document.modal');
 });
 
 Route::group(['middleware' => ['guest']], function () {
@@ -59,6 +69,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/siswa-detail/{id}','AdminCtrl@siswa_detail')->name('admin.siswa.detail');
     Route::get('/admin/siswa-delete/{id}','AdminCtrl@siswa_delete')->name('admin.siswa.delete');
     Route::post('/admin/siswa-edit-proses','AdminCtrl@siswa_edit_proses')->name('admin.siswa.edit.proses');
+    Route::get('/admin/siswa-document/{id}','AdminCtrl@siswa_document')->name('admin.siswa.document');
 
 
     // payment
@@ -123,4 +134,6 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('admin/whatsapp-update', 'AdminCtrl@whatsapp_update')->name('admin.whatsapp.update');
     
     Route::get('/admin/logout', 'AdminCtrl@logout')->name('admin.logout');
+
+    
 });

@@ -18,6 +18,7 @@ use App\User;
 use App\News;
 use App\Cost;
 use App\MonthlyFee;
+use App\Document;
 
 use Notification;
 use App\Notifications\NotifSiswaRegistrasi;
@@ -98,8 +99,7 @@ class HomeCtrl extends Controller
             'nama_siswa'=> 'required',
             'jenis_kelamin'	=> 'required',
             'tmpt_lahir_siswa'=> 'required',
-            'agama'=> 'required',
-            'no_hp'=> 'required',			
+            'agama'=> 'required',		
             'asal_sekolah'=> 'required',	
             'kampung_sekolah'=> 'required',
             'desa_sekolah'=> 'required',	
@@ -111,18 +111,13 @@ class HomeCtrl extends Controller
             'no_hp_ayah'=> 'required',	
             'nama_ibu'=> 'required',		
             'tmpt_lahir_ibu'=> 'required',
-            'no_hp_ibu'=> 'required',		
-            'no_kk'=> 'required',			
+            'no_hp_ibu'=> 'required',					
             'kampung_org_tua'=> 'required',
             'rt_rw_org_tua'=> 'required',	
             'desa_org_tua'=> 'required',	
             'kec_org_tua'=> 'required',	
             'kota_org_tua'=> 'required',	
             'prov_org_tua'=> 'required',	
-            'nama_sdr'=> 'required',		
-            'status_sdr'=> 'required',	
-            'no_hp_sdr'=> 'required',		
-            'alamat_sdr'=> 'required',
             'email'=>'unique:users',
 
             'hari_lahir_siswa' => 'required',
@@ -143,6 +138,7 @@ class HomeCtrl extends Controller
         ];
 
         $this->validate($request, $rules, $customMsg);
+
         $student = new Student;
         if (isset($request->pindah_status)) {
             $student->pindah_status = 1;
@@ -213,31 +209,41 @@ class HomeCtrl extends Controller
             $payment->save();
             $user = new User;
             $user->name = $student->id.'-'.$student->nama_siswa;
-            $user->email = Str::lower(substr($student->nama_siswa, 0,3)).'@email.com';
+            $user->email = 'siswa_'.$student->id.'@email.com';
             $user->role = "siswa";
+            $user->student_id = $student->id;
             $user->password = Hash::make('123456');
             $user->save();
-            // Storage::put('/info_login/'.substr($student->nama_siswa, 0,3).'.txt', 'email: '.substr($student->nama_siswa, 0,3).'@email.com pass:123456');
+        
+            Storage::put('/info_login/siswa_'.$student->id.'.txt', 'email: siswa_'.$student->id.'@email.com pass:123456');
             if ($user->role === "siswa") {
                 Auth::attempt(['email' => $user->email, 'password' => $user->password]);
                 Auth::guard()->login($user);
             }
+            
             $admin = User::where('role', 'admin')->first();
             $admin->notify(new NotifSiswaRegistrasi());
-            return redirect('generate-formulir')->with('msg', 'Silahakan melakukan pembayaran');
+            return redirect('sukses-pendaftaran')->with('msg', 'Silahakan melakukan pembayaran');
         }
+    }
+
+    public function sukses_pendaftaran(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $student = Student::where('id', $student_id)->first();
+        return view('frontend.sukses_pendaftaran', compact('student'));
     }
 
     public function generate_formulir(Request $request)
     {
-        $student_id = explode('-',Auth::user()->name)[0];
+        $student_id = Auth::user()->student_id;
         $student = Student::where('id', $student_id)->first();
         return view('frontend.generate_formulir', compact('student'));
     }
 
     public function generate_pdf(Request $request)
     {
-        $student_id = explode('-',Auth::user()->name)[0];
+        $student_id = Auth::user()->student_id;
         $student = Student::where('id', $student_id)->first();
         $pdf = PDF::loadView('frontend.generate_pdf', compact('student'));
         $pdf->setPaper('legal', 'potrait');
@@ -274,7 +280,7 @@ class HomeCtrl extends Controller
 
     public function pembayaran(Request $request)
     {
-        $student_id = explode('-',Auth::user()->name)[0];
+        $student_id = Auth::user()->student_id;
         $payment = Payment::where('student_id', $student_id)->first();
         return view('frontend.pembayaran', compact('payment'));
     }
@@ -294,9 +300,106 @@ class HomeCtrl extends Controller
 
     public function sukses_pembayaran(Request $request)
     {
-        $student_id = explode('-',Auth::user()->name)[0];
+        $student_id = Auth::user()->student_id;
         $payment = Payment::where('student_id', $student_id)->first();
         return view('frontend.sukses_pembayaran', compact('payment'));
+    }
+
+    public function user_guide()
+    {
+        return response()->file(
+            public_path('uploads/admin/user_guide/user_guide.pdf')
+        );
+    }
+
+    // Upload
+
+    public function upload_ktp(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $current_docs = Document::where('student_id', $student_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->ktp_orang_tua)) {
+                unlink($current_docs->ktp_orang_tua);
+            }
+            $current_docs->ktp_orang_tua = $request->file('file')->store('uploads/document/ktp');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $student_id;
+            $docs->ktp_orang_tua = $request->file('file')->store('uploads/document/ktp');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function upload_kk(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $current_docs = Document::where('student_id', $student_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->kk)) {
+                unlink($current_docs->kk);
+            }
+            $current_docs->kk = $request->file('file')->store('uploads/document/kk');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $student_id;
+            $docs->kk = $request->file('file')->store('uploads/document/kk');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function upload_ijazah(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $current_docs = Document::where('student_id', $student_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->ijazah)) {
+                unlink($current_docs->ijazah);
+            }
+            $current_docs->ijazah = $request->file('file')->store('uploads/document/ijazah');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $student_id;
+            $docs->ijazah = $request->file('file')->store('uploads/document/ijazah');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function upload_sk(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $current_docs = Document::where('student_id', $student_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->surat_kelulusan)) {
+                unlink($current_docs->surat_kelulusan);
+            }
+            $current_docs->surat_kelulusan = $request->file('file')->store('uploads/document/surat_kelulusan');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $student_id;
+            $docs->surat_kelulusan = $request->file('file')->store('uploads/document/surat_kelulusan');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function existing_docs(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $current_docs = Document::where('student_id', $student_id)->first();
+        return $current_docs;
+    }
+
+    public function document_modal(Request $request)
+    {
+        return view('frontend.partial.document_modal');
     }
 
 }

@@ -83,8 +83,8 @@
                                                         <h3>1. IDENTITAS CALON SANTRI/PESERTA DIDIK</h3>
                                                         <table class="table">
                                                             <tr>
-                                                                <td width="300">a. Nama Lengkap</td>
-                                                                <td width="20">:</td>
+                                                                <td>a. Nama Lengkap</td>
+                                                                <td>:</td>
                                                                 <td>
                                                                     <input type="text" class="form-control" value="{{ $student->nama_siswa }}" name="nama_siswa">
                                                                     @error('nama_siswa')
@@ -196,8 +196,8 @@
                                                         <h3>2. ASAL SEKOLAH</h3>
                                                         <table class="table">
                                                             <tr>
-                                                                <td width="300">a. Nama Sekolah</td>
-                                                                <td width="20">:</td>
+                                                                <td>a. Nama Sekolah</td>
+                                                                <td>:</td>
                                                                 <td>
                                                                     <input type="text" class="form-control" name="asal_sekolah" value="{{ $student->asal_sekolah }}">
                                                                     @error('asal_sekolah')
@@ -267,8 +267,8 @@
                                                         <h3>3. IDENTITAS ORANG TUA</h3>
                                                         <table class="table">
                                                             <tr>
-                                                                <td width="300">1. Nama Ayah</td>
-                                                                <td width="20">:</td>
+                                                                <td>1. Nama Ayah</td>
+                                                                <td>:</td>
                                                                 <td>
                                                                     <input type="text" class="form-control" name="nama_ayah" value="{{ $student->nama_ayah }}">
                                                                         @error('nama_ayah')

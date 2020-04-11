@@ -54,7 +54,7 @@ h6 {
     width: 40px;
     height: 40px;
     border-radius: 50px;
-    background: #8fc04e;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
     color: #fff;
     transition: all 0.4s;
 }
@@ -133,7 +133,7 @@ h6 {
     z-index: 997;
     transition: all 0.5s;
     padding: 10px 0;
-    background: #0f0f0f;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
 }
 
 #header .logo h1 {
@@ -198,7 +198,7 @@ h6 {
 .nav-menu a:hover,
 .nav-menu .active>a,
 .nav-menu li:hover>a {
-    color: #8fc04e;
+    color: #343a40;
     text-decoration: none;
 }
 
@@ -396,12 +396,28 @@ h6 {
 # Hero Section
 --------------------------------------------------------------*/
 
+#card-head {
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
+}
+
 #hero {
     width: 100%;
     height: 80vh;
     background-size: cover;
     position: relative;
     padding: 0;
+}
+
+#hero-0 {
+    width: 100%;
+    height: 80vh;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
+    background-size: cover;
+    padding: 0;
+}
+
+#hero-0 #content-hero-0 {
+    margin-top: 170px;
 }
 
 #header-profile {
@@ -411,18 +427,8 @@ h6 {
     position: relative;
 }
 
-#header-ekskul {
-    width: 100%;
-    height: 70vh;
-    background-size: cover;
-    position: relative;
-    background-image: url('../img/program/mts.jpeg');
-}
-
 #berita {
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 }
 
 #berita:hover {
@@ -478,23 +484,6 @@ h6 {
     text-shadow: 2px 2px #252525;
 }
 
-#hero .btn-get-started {
-    font-family: "Raleway", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 1px;
-    display: inline-block;
-    padding: 8px 28px;
-    border-radius: 10px;
-    transition: 0.5s;
-    border: 2px solid #8fc04e;
-    color: #fff;
-}
-
-#hero .btn-get-started:hover {
-    background: #8fc04e;
-}
-
 .box-program {
     padding: 30px;
     background-color: #1c1c1c;
@@ -525,6 +514,9 @@ h6 {
         position: absolute;
         max-height: 150px;
     }
+    #text-sambutan {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -547,7 +539,8 @@ h6 {
     }
     .register-now {
         height: auto;
-        margin: 10px;
+        border-radius: 0%;
+        border: none;
     }
     #hero h1 {
         font-size: 28px;
@@ -558,6 +551,30 @@ h6 {
         line-height: 24px;
         margin-bottom: 30px;
     }
+    #header-profile {
+        width: 100%;
+        height: 40vh;
+        background-size: contain;
+    }
+    #text-sambutan {
+        font-size: 12px;
+    }
+    #hero-0 {
+        width: 100%;
+        height: 40vh;
+        background: linear-gradient(45deg, #0b9ed3, #5EEE66);
+        background-size: cover;
+        padding: 0;
+    }
+    #hero-0 #content-hero-0 {
+        margin-top: 70px;
+    }
+    #hero-0 #content-hero-0 h1 {
+        font-size: 30px;
+    }
+    #hero-0 #content-hero-0 h2 {
+        font-size: 25px;
+    }
 }
 
 
@@ -566,7 +583,7 @@ h6 {
 --------------------------------------------------------------*/
 
 section {
-    padding: 30px 0;
+    padding: 10px 0;
     overflow: hidden;
 }
 
@@ -993,7 +1010,7 @@ section {
 .portfolio #portfolio-flters li:hover,
 .portfolio #portfolio-flters li.filter-active {
     color: #fff;
-    background: #8fc04e;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
 }
 
 .portfolio #portfolio-flters li:last-child {
@@ -1754,7 +1771,7 @@ section {
 --------------------------------------------------------------*/
 
 #footer {
-    background: url("../img/footer-bg.jpg") center center no-repeat;
+    background: url("../img/footer-bg.jpg");
     color: #fff;
     font-size: 14px;
     position: relative;
@@ -1825,7 +1842,7 @@ section {
     background: none;
     font-size: 16px;
     padding: 0 20px;
-    background: #8fc04e;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
     color: #fff;
     transition: 0.3s;
     border-radius: 50px;
@@ -1833,7 +1850,7 @@ section {
 }
 
 #footer .footer-top .footer-newsletter form input[type="submit"]:hover {
-    background: #75a239;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
 }
 
 #footer .footer-top .social-links {
@@ -1843,7 +1860,7 @@ section {
 #footer .footer-top .social-links a {
     font-size: 18px;
     display: inline-block;
-    background: #8fc04e;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
     color: #fff;
     line-height: 1;
     padding: 8px 0;
@@ -1856,7 +1873,7 @@ section {
 }
 
 #footer .footer-top .social-links a:hover {
-    background: #75a239;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
     color: #fff;
     text-decoration: none;
 }
@@ -1878,4 +1895,159 @@ section {
     float: right;
     text-align: center;
     font-size: 13px;
+}
+
+.avatar-upload {
+    position: relative;
+    max-width: 205px;
+    margin: 20px auto;
+}
+
+.avatar-upload .avatar-edit {
+    position: absolute;
+    right: -5px;
+    z-index: 1;
+    top: -18px;
+}
+
+.avatar-upload .avatar-edit input {
+    display: none;
+}
+
+.avatar-upload .avatar-edit input+label {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+    border-radius: 100%;
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
+    border: 1px solid transparent;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+}
+
+.avatar-upload .avatar-edit input+label:hover {
+    background: linear-gradient(45deg, #0b9ed3, #5EEE66);
+}
+
+.avatar-upload .avatar-edit input+label:after {
+    content: "\f040";
+    font-family: 'FontAwesome';
+    color: #757575;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: auto;
+}
+
+.avatar-upload .avatar-preview {
+    width: 192px;
+    height: 192px;
+    position: relative;
+    border: 1px dashed #686868;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-upload .avatar-preview>div {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.dataAnda {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 100px;
+    left: 40px;
+    background: linear-gradient(45deg, #5E64EE, #5EEE66);
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 1px 1px 2px #999;
+    z-index: 100;
+}
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 17px;
+    left: 40px;
+    background: linear-gradient(45deg, #5E64EE, #5EEE66);
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 1px 1px 2px #999;
+    z-index: 100;
+}
+
+.my-float {
+    margin-top: 16px;
+}
+
+#boxWa {
+    position: fixed;
+    width: 300px;
+    height: 400px;
+    bottom: 55px;
+    left: 105px;
+    background: linear-gradient(45deg, #5E64EE, #5EEE66);
+    color: #FFF;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 1px 1px 2px #999;
+    z-index: 100;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #boxWa {
+        width: 100%;
+        height: 300px;
+        background: linear-gradient(45deg, #5E64EE, #5EEE66);
+        color: #FFF;
+        left: 0;
+        bottom: 0;
+        border-radius: 0%;
+        text-align: center;
+        box-shadow: 1px 1px 2px #999;
+        z-index: 100;
+    }
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 10px;
+        left: 20px;
+        background: linear-gradient(45deg, #5E64EE, #5EEE66);
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 1px 1px 2px #999;
+        z-index: 100;
+    }
+    .dataAnda {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 100px;
+        left: 20px;
+        background: linear-gradient(45deg, #5E64EE, #5EEE66);
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 1px 1px 2px #999;
+        z-index: 100;
+    }
 }

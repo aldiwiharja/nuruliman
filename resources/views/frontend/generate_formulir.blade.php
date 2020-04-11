@@ -8,32 +8,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="row mb-2">
-                        <div class="col-md-3 text-center">
-                            <h1>1</h1>
-                            <a href="" data-toggle="modal" data-target="#infoLogin" class="btn btn-warning">
-                                <i class="fa fa-info-circle"></i> Informasi Login
-                            </a>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <h1>2</h1>
-                            <a href="{{ route('generate.pdf') }}" class="btn btn-info">
-                                <i class="fa fa-file-pdf-o"></i> Download Formulir
-                            </a>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <h1>3</h1>
-                            <a href="{{ route('generate.persyaratan') }}" class="btn btn-primary">
-                                <i class="fa fa-file-pdf-o"></i> Download Persyaratan
-                            </a>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <h1>4</h1>
-                            <a href="{{ route('pendaftaran.index') }}" class="btn btn-success">
-                                <i class="fa fa-money"></i> Bayar Sekarang
-                            </a>
-                        </div>
-                    </div>
                     
                     @if ($student !== null)
                         <div class="card">
@@ -446,6 +420,8 @@
         </div>
     </section>
 
+
+
     <!-- Modal -->
     <div class="modal fade" id="infoLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog" style="width: 350px" role="document">
@@ -482,8 +458,9 @@
 @endsection
 
 
-@if(Session::has('msg'))
-    @section('script')
+
+@section('script')
+    @if (Session::has('msg'))
         <script>
             Swal.fire(
                 'Terimaksih sudah melakukan pendaftaran',
@@ -503,5 +480,5 @@
                 }
             });
         </script>
-    @endsection
-@endif
+    @endif
+@endsection

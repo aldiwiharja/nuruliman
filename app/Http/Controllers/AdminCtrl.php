@@ -16,6 +16,7 @@ use App\Payment;
 use App\Cost;
 use App\MonthlyFee;
 use App\News;
+use App\Document;
 
 class AdminCtrl extends Controller
 {
@@ -53,6 +54,13 @@ class AdminCtrl extends Controller
         $student = Student::where('id', decrypt($id))->first();
         $programs = Program::all();
         return view('backend.siswa.detail', compact('student', 'programs'));
+    }
+
+    public function siswa_document(Request $request, $id)
+    {
+        $student_id = $id;
+        $document = Document::where('student_id', $student_id)->first();
+        return view('backend.siswa.document', compact('document'));
     }
 
     public function admin_generate_pdf(Request $request, $id)
@@ -115,6 +123,25 @@ class AdminCtrl extends Controller
     {
         $student = Student::where('id', decrypt($id))->first();
         $payment = Payment::where('student_id', $student->id)->first();
+        $doc = Document::where('student_id', $student->id)->first();
+        if (file_exists($doc->ktp_orang_tua)) {
+            unlink($doc->ktp_orang_tua);
+        }
+        if (file_exists($doc->kk)) {
+            unlink($doc->kk);
+        }
+        if (file_exists($doc->ijazah)) {
+            unlink($doc->ijazah);
+        }
+        if (file_exists($doc->surat_kelulusan)) {
+            unlink($doc->surat_kelulusan);
+        }
+        if (file_exists($doc->skhun)) {
+            unlink($doc->skhun);
+        }
+        if (file_exists($payment->bukti)) {
+            unlink($payment->bukti);
+        }
         $user = User::where('role', 'siswa')->get();
         foreach ($user as $key => $u) {
             $student_id = explode('-',$u->name);
@@ -124,6 +151,7 @@ class AdminCtrl extends Controller
         }
         $payment->delete();
         $student->delete();
+        $doc->delete();
         return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
@@ -304,7 +332,7 @@ class AdminCtrl extends Controller
         $value->profile_visi_misi = $request->profile_visi_misi;
         $profile_setting->value = json_encode($value);
         $profile_setting->save();
-        return back();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diupdate","success")</script>');
     }
 
     public function ekskul()

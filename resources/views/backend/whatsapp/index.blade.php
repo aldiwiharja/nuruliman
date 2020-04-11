@@ -5,11 +5,11 @@
     <div class="app-title">
         <h2>Whatsapp Setting</h2>
     </div>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
             <div class="tile">
                 <div class="tile-body">
-                    <div class="col-lg-12">
+                    <div class="col-md-12">
                         @if(Session::has('msg'))
                             @section('script')
                                 {!! Session::get('msg') !!}
@@ -40,7 +40,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <button type="submit" class="btn btn-primary">Perbaharui</button>
+                            <button type="submit" class="btn btn-block btn-primary">Perbaharui</button>
                         </form>
                     </div>
                 </div>

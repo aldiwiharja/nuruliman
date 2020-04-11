@@ -16,7 +16,7 @@
                         <i class="fa fa-file-pdf-o"></i> Download Persyaratan
                     </a>
                     <div class="card">
-                        <div class="card-header bg-success text-white">
+                        <div class="card-header text-white" id="card-head">
                             <h4>PERSYARATAN</h4>
                         </div>
                         <div class="card-body">

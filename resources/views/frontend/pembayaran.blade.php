@@ -12,7 +12,7 @@
                             $siswa = \App\Student::where('id', $payment->student_id)->first();
                         @endphp
                         <div class="card">
-                            <div class="card-header bg-success">
+                            <div class="card-header" id="card-head">
                                 <h3 class="text-white"  style="font-family: Arial;">{{ $payment->code }}</h3>
                             </div>
                             <div class="card-body">
@@ -36,7 +36,7 @@
                                                 <td>{{ $payment->code }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Total Biaya Pendaftaran</td>
+                                                <td>Biaya Pendaftaran</td>
                                                 <td>:</td>
                                                 <td><b>Rp. {{ number_format($payment->total) }}</b></td>
                                             </tr>
@@ -54,7 +54,7 @@
                                                     </h2>
                                                 </div>
                                             
-                                                <div id="mandiri" class="collapse" aria-labelledby="mandiriHead" data-parent="#accordionExample">
+                                                <div id="mandiri" class="collapse show" aria-labelledby="mandiriHead" data-parent="#accordionExample">
                                                     <div class="card-body">
                                                         <p>Silahkan transfer ke nomor rekening di bawah ini !</p>
                                                         <h5 class="card-title" style="font-family: Arial;">1330012007928</h5>
@@ -106,7 +106,7 @@
     <div class="modal fade" id="confirmPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="width: 350px" role="document">
         <div class="modal-content border-0">
-            <div class="modal-header bg-success">
+            <div class="modal-header" id="card-head">
                 <h5 class="modal-title text-white" id="exampleModalLongTitle">KONFIRMASI</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -129,10 +129,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Bukti Transfer</label>
-                                        <input type="file" class="form-control" name="bukti_byr">
+                                        <input type="file" onchange="terisi(event)" class="form-control" name="bukti_byr">
+                                        <small class="text-info">Silahkan upload file bukti transfer disini </small>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" id="btn-upload" class="btn btn-primary btn-block" disabled style="cursor: not-allowed">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +159,17 @@
     @section('script')
         <script>
             function confirmPayment(){
-                $('#confirmPayment').modal();
+                $('#confirmPayment').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }
+
+            function terisi(e){
+                if (e.target.value !== null || e.target.value !== "") {
+                    $('#btn-upload').prop('disabled', false);
+                    $('#btn-upload').removeAttr('style');
+                }
             }
 
         </script>
