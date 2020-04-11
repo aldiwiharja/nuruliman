@@ -42,7 +42,6 @@
 </head>
 
 <body>
-    
     @include('frontend.layouts.header') 
     
     @yield('content')
@@ -296,6 +295,37 @@
             })
         }
     </script>
+
+    
+
+    @auth
+        @php
+            $student_id = Auth::user()->student_id;
+            $document = \App\Document::where('student_id', $student_id)->first();
+            $docs['ktp'] = $document->ktp_orang_tua;
+            $docs['kk'] = $document->kk;
+            $docs['ijazah'] = $document->ijazah;
+            $docs['sk'] = $document->surat_kelulusan;
+            // $docs['skhun'] = $document->skhun;
+            $alert = false;
+            foreach ($docs as $key => $d) {
+                if ($d == null) {
+                    $alert = true;
+                }
+            }
+        @endphp
+        @if ($alert !== false)
+            <script>
+                setInterval(() => {
+                    Swal.fire(
+                        'Lengkapi Dokumen anda',
+                        'Harap untuk melengkapi dokumen dokumen anda',
+                        'info'
+                    );
+                }, 10000);
+            </script>
+        @endif
+    @endauth
 
 
 
