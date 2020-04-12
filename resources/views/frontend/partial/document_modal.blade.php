@@ -1,5 +1,8 @@
 <div class="modal-header" id="card-head">
     <h5 class="modal-title" id="showDocsLabel">DATA DOKUMEN ANDA</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <div class="modal-body">
     @if (Auth::check())
@@ -20,99 +23,185 @@
                     <a href="{{ route('generate.formulir') }}" class="btn btn-info btn-sm">
                         <i class="fa fa-file-pdf-o"></i> Lihat formulir anda klik disini
                     </a><br>
-                    <a href="{{ route('pendaftaran.index') }}" class="btn btn-info btn-sm mt-2">
+                    <a href="{{ route('sukses.pembayaran') }}" class="btn btn-info btn-sm mt-2">
                         <i class="fa fa-money"></i> Lihat status pembayaran anda klik disini
                     </a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th align="center">KTP ORANG TUA</th>
-                                <th align="center">KARTU KELUARGA</th>
-                                <th align="center">IJAZAH</th>
-                                <th align="center">SURAT KELULUSAN</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td align="center">
-                                    @if ($document->ktp_orang_tua !== null)
-                                        <i class="fa fa-check text-success fa-2x"></i><br>
-                                        <img src="{{ url($document->ktp_orang_tua) }}" alt="" class="img-fluid" width="200">
-                                    @else
-                                        <i class="fa fa-times text-danger fa-2x"></i><br> 
-                                        <h5 class="text-center">FC KTP ORANG TUA</h5>
-                                        <div class="avatar-upload">
-                                            <div class="avatar-edit">
-                                                <input type='file' id="imageUploadKtp-modal" accept=".png, .jpg, .jpeg" />
-                                                <label for="imageUploadKtp-modal"></label>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th align="center">KTP ORANG TUA</th>
+                                    <th align="center">KARTU KELUARGA</th>
+                                    <th align="center">IJAZAH</th>
+                                    <th align="center">SURAT KELULUSAN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        @if ($document->ktp_orang_tua !== null)
+                                            <i class="fa fa-check text-success fa-2x"></i>
+                                            <div id="current-ktp">
+                                                <img src="{{ url($document->ktp_orang_tua) }}" alt="" class="img-fluid" width="200">
                                             </div>
-                                            <div class="avatar-preview">
-                                                <div id="imagePreviewKtp-modal" style=""></div>
+                                            <div id="edit-ktp" style="display: none">
+                                                <h5 class="text-center">FC KTP ORANG TUA</h5>
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' id="imageUploadKtp-modal" accept=".png, .jpg, .jpeg" />
+                                                        <label for="imageUploadKtp-modal"></label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <div id="imagePreviewKtp-modal" style=""></div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                </td>
-                                <td align="center">
-                                    @if ($document->kk !== null)
-                                        <i class="fa fa-check text-success fa-2x"></i><br>
-                                        <img src="{{ url($document->kk) }}" alt="" class="img-fluid" width="200">
-                                    @else 
-                                        <i class="fa fa-times text-danger fa-2x"></i><br> 
-                                        <h5 class="text-center">FC KARTU KELUARGA</h5>
-                                        <div class="avatar-upload">
-                                            <div class="avatar-edit">
-                                                <input type='file' id="imageUploadKk-modal" accept=".png, .jpg, .jpeg" />
-                                                <label for="imageUploadKk-modal"></label>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <button onclick="editKtp()" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="avatar-preview">
-                                                <div id="imagePreviewKk-modal" style=""></div>
+                                        @else
+                                            <i class="fa fa-times text-danger fa-2x"></i><br> 
+                                            <h5 class="text-center">FC KTP ORANG TUA</h5>
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUploadKtp-modal" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUploadKtp-modal"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreviewKtp-modal" style=""></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                </td>
-                                <td align="center">
-                                    @if ($document->ijazah !== null)
-                                        <i class="fa fa-check text-success fa-2x"></i><br>
-                                        <img src="{{ url($document->ijazah) }}" alt="" class="img-fluid" width="200">
-                                    @else 
-                                        <i class="fa fa-times text-danger fa-2x"></i><br> 
-                                        <h5 class="text-center">FC IJAZAH</h5>
-                                        <div class="avatar-upload">
-                                            <div class="avatar-edit">
-                                                <input type='file' id="imageUploadIj-modal" accept=".png, .jpg, .jpeg" />
-                                                <label for="imageUploadIj-modal"></label>
+                                        @endif
+                                    </td>
+                                    <td align="center">
+                                        @if ($document->kk !== null)
+                                            <i class="fa fa-check text-success fa-2x"></i>
+                                            <div id="current-kk">
+                                                <img src="{{ url($document->kk) }}" alt="" class="img-fluid" width="200">
                                             </div>
-                                            <div class="avatar-preview">
-                                                <div id="imagePreviewIj-modal" style=""></div>
+                                            <div id="edit-kk" style="display: none">
+                                                <h5 class="text-center">FC KARTU KELUARGA</h5>
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' id="imageUploadKk-modal" accept=".png, .jpg, .jpeg" />
+                                                        <label for="imageUploadKk-modal"></label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <div id="imagePreviewKk-modal" style=""></div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                </td>
-                                <td align="center">
-                                    @if ($document->surat_kelulusan !== null)
-                                        <i class="fa fa-check text-success fa-2x"></i><br>
-                                        <img src="{{ url($document->surat_kelulusan) }}" alt="" class="img-fluid" width="200">
-                                    @else 
-                                        <i class="fa fa-times text-danger fa-2x"></i><br> 
-                                        <h5 class="text-center">SURAT KELULUSAN</h5>
-                                        <div class="avatar-upload">
-                                            <div class="avatar-edit">
-                                                <input type='file' id="imageUploadSk-modal" accept=".png, .jpg, .jpeg" />
-                                                <label for="imageUploadSk-modal"></label>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <button onclick="editKk()" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="avatar-preview">
-                                                <div id="imagePreviewSk-modal" style=""></div>
+                                        @else 
+                                            <i class="fa fa-times text-danger fa-2x"></i><br> 
+                                            <h5 class="text-center">FC KARTU KELUARGA</h5>
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUploadKk-modal" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUploadKk-modal"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreviewKk-modal" style=""></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        @endif
+                                    </td>
+                                    <td align="center">
+                                        @if ($document->ijazah !== null)
+                                            <i class="fa fa-check text-success fa-2x"></i>
+                                            <div id="current-ij">
+                                                <img src="{{ url($document->ijazah) }}" alt="" class="img-fluid" width="200">
+                                            </div>
+                                            <div id="edit-ij" style="display: none">
+                                                <h5 class="text-center">FC IJAZAH</h5>
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' id="imageUploadIj-modal" accept=".png, .jpg, .jpeg" />
+                                                        <label for="imageUploadIj-modal"></label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <div id="imagePreviewIj-modal" style=""></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <button onclick="editIj()" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @else 
+                                            <i class="fa fa-times text-danger fa-2x"></i><br> 
+                                            <h5 class="text-center">FC IJAZAH</h5>
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUploadIj-modal" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUploadIj-modal"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreviewIj-modal" style=""></div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td align="center">
+                                        @if ($document->surat_kelulusan !== null)
+                                            <i class="fa fa-check text-success fa-2x"></i>
+                                            <div id="current-sk">
+                                                <img src="{{ url($document->surat_kelulusan) }}" alt="" class="img-fluid" width="200">
+                                            </div>
+                                            <div id="edit-sk" style="display: none">
+                                                <h5 class="text-center">SURAT KELULUSAN</h5>
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' id="imageUploadSk-modal" accept=".png, .jpg, .jpeg" />
+                                                        <label for="imageUploadSk-modal"></label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <div id="imagePreviewSk-modal" style=""></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <button onclick="editSk()" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @else 
+                                            <i class="fa fa-times text-danger fa-2x"></i><br> 
+                                            <h5 class="text-center">SURAT KELULUSAN</h5>
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUploadSk-modal" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUploadSk-modal"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreviewSk-modal" style=""></div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </img>
                 </div>
             </div>
             @php
@@ -130,7 +219,7 @@
             @endphp
             @if ($alert !== false)    
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-12">
                         <a href="#" id="proses-upload" class="btn btn-block btn-success">
                             PROSES UPLOAD DOKUMEN
                         </a>
@@ -173,7 +262,13 @@
                 console.log(res);
             },
             error: function(err){
-                console.log(err);
+                if (err.status == 200) {
+                    Swal.fire(
+                        'Berhasil',
+                        'Dokumen berhasil diubah',
+                        'success'
+                    );
+                }
             }
         });
     }
@@ -190,4 +285,24 @@
     $("#imageUploadSk-modal").change(function() {
         readURL(this,"#imagePreviewSk-modal", "{{ route('upload.sk') }}");
     });
+    
+    function editKtp() {
+        $('#current-ktp').hide();
+        $('#edit-ktp').show();
+    }
+
+    function editKk() {
+        $('#current-kk').hide();
+        $('#edit-kk').show();
+    }
+
+    function editIj() {
+        $('#current-ij').hide();
+        $('#edit-ij').show();
+    }
+
+    function editSk() {
+        $('#current-sk').hide();
+        $('#edit-sk').show();
+    }
 </script>

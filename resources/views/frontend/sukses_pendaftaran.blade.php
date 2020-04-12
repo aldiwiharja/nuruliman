@@ -231,6 +231,13 @@
 
         $('.sw-btn-next').prop('disabled', true);
         $('.sw-btn-next').attr('style', 'cursor:not-allowed');
+        $('.sw-btn-prev').prop('disabled', true);
+        $('.sw-btn-prev').attr('style', 'cursor:not-allowed');
+
+        $('.sw-btn-next').on('click', function() {
+            $('.sw-btn-prev').prop('disabled', false);
+            $('.sw-btn-prev').removeAttr('style');
+        });
 
         // download
         function generateValueChecked() {
@@ -338,18 +345,24 @@
             var formData = new FormData();
             formData.append('_token', '{{ csrf_token() }}');
             formData.append('file', input.files[0]);
+
+            
             $.ajax({
                 url: url,
                 type: "POST",
                 dataType: "JSON",
                 data: formData,
                 processData: false,
-                contentType: false,
-                success: function(res) {
-                    console.log(res);
-                },
-                error: function(err){
-                    console.log(err);
+                contentType: false
+            }).done(function(res){
+                console.log(res);
+            }).fail(function(err){
+                if (err.status == 200) {
+                    Swal.fire(
+                        'Berhasil',
+                        'Dokumen telah terismpan',
+                        'success'
+                    );
                 }
             });
         }

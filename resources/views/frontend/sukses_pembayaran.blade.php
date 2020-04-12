@@ -65,24 +65,36 @@
                                                 <td>Bukti Pembayaran</td>
                                                 <td>:</td>
                                                 <td>
-                                                    <a href="{{ url($payment->bukti) }}" download><i class="fa fa-download"></i> Bukti Transfer</a>
+                                                    @if ($payment->bukti !== null)
+                                                        <a href="{{ url($payment->bukti) }}" download><i class="fa fa-download"></i> Bukti Transfer</a>
+                                                    @else 
+                                                        -    
+                                                    @endif
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <b>Beritahu admin apabila anda sudah bayar</b><br>
-                                        @php
-                                            $wa = json_decode(\App\Setting::where('key', 'whatsapp_setting')->first()->value);
-                                            $url = "https://api.whatsapp.com/send?phone=".$wa[0]."&text=Saya%20sudah%20melakukan%20pembayaran";
-                                        @endphp
-                                        <a target="_blank" href="{{ $url }}" class="btn btn-success">
-                                            <i class="fa fa-send"> Beritahu Admin</i>
-                                        </a>
+                                @if ($payment->status !== 0)
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <b>Beritahu admin apabila anda sudah bayar</b><br>
+                                            @php
+                                                $wa = json_decode(\App\Setting::where('key', 'whatsapp_setting')->first()->value);
+                                                $url = "https://api.whatsapp.com/send?phone=".$wa[0]."&text=Saya%20sudah%20melakukan%20pembayaran";
+                                            @endphp
+                                            <a target="_blank" href="{{ $url }}" class="btn btn-success">
+                                                <i class="fa fa-send"> Beritahu Admin</i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
+                                @else 
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <a href="{{ route('pembayaran') }}" class="btn btn-primary">BAYAR SEKARANG</a>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endif

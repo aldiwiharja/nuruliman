@@ -589,4 +589,76 @@ class AdminCtrl extends Controller
         $user->save();
         return "ok";
     }
+
+    public function admin_upload_ktp(Request $request)
+    {
+        $current_docs = Document::where('id', $request->document_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->ktp_orang_tua)) {
+                unlink($current_docs->ktp_orang_tua);
+            }
+            $current_docs->ktp_orang_tua = $request->file('file')->store('uploads/document/ktp');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $request->document_id;
+            $docs->ktp_orang_tua = $request->file('file')->store('uploads/document/ktp');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function admin_upload_kk(Request $request)
+    {
+        $current_docs = Document::where('id', $request->document_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->kk)) {
+                unlink($current_docs->kk);
+            }
+            $current_docs->kk = $request->file('file')->store('uploads/document/kk');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $request->document_id;
+            $docs->kk = $request->file('file')->store('uploads/document/kk');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function admin_upload_ijazah(Request $request)
+    {
+        $current_docs = Document::where('id', $request->document_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->ijazah)) {
+                unlink($current_docs->ijazah);
+            }
+            $current_docs->ijazah = $request->file('file')->store('uploads/document/ijazah');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $request->document_id;
+            $docs->ijazah = $request->file('file')->store('uploads/document/ijazah');
+            $docs->save();
+        }
+        return "ok";
+    }
+
+    public function admin_upload_sk(Request $request)
+    {
+        $current_docs = Document::where('id', $request->document_id)->first();
+        if ($current_docs !== null) {
+            if (file_exists($current_docs->surat_kelulusan)) {
+                unlink($current_docs->surat_kelulusan);
+            }
+            $current_docs->surat_kelulusan = $request->file('file')->store('uploads/document/surat_kelulusan');
+            $current_docs->save();
+        }else {
+            $docs = new Document;
+            $docs->student_id = $request->document_id;
+            $docs->surat_kelulusan = $request->file('file')->store('uploads/document/surat_kelulusan');
+            $docs->save();
+        }
+        return "ok";
+    }
 }

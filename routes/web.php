@@ -148,5 +148,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     
     Route::get('/admin/logout', 'AdminCtrl@logout')->name('admin.logout');
 
+    Route::post('/admin-upload-ktp', 'AdminCtrl@admin_upload_ktp')->name('admin.upload.ktp');
+    Route::post('/admin-upload-kk', 'AdminCtrl@admin_upload_kk')->name('admin.upload.kk');
+    Route::post('/admin-upload-ijazah', 'AdminCtrl@admin_upload_ijazah')->name('admin.upload.ijazah');
+    Route::post('/admin-upload-sk', 'AdminCtrl@admin_upload_sk')->name('admin.upload.sk');
+
     
 });

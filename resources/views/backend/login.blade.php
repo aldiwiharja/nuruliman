@@ -18,6 +18,7 @@
       <div class="logo">
         <h4 class="text-center">PONPES <br> NURUL IMAN AL HASANAH</h4>
       </div>
+      <a href="{{ url('/') }}" class="btn btn-warning mb-2">Pergi Ke Halaman Siswa</a>
       <div class="login-box">
         <form class="login-form" action="{{ route('admin.login.proses') }}" method="POST">
             @csrf

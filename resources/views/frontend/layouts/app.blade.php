@@ -276,6 +276,7 @@
     <link href="{{ url('frontend/assets/vendor/smart/css/smart_wizard.css') }}" rel="stylesheet"></link>
     <script src="{{ url('frontend/assets/vendor/smart/js/jquery.smartWizard.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('backend/docs/js/plugins/dropzone.js') }}"></script>
+    <script type="text/javascript" src="{{ url('backend/docs/js/plugins/bootstrap-notify.min.js') }}"></script>
 
     <script>
         $('#openBoxWa').on('click', function(){

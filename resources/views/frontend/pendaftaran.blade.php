@@ -45,6 +45,7 @@
                                 @elseif ($payment->status == 1)
                                     <div class="mb-2" style="border: dashed; padding: 20px; width: 50%; margin: 0 auto;">
                                         <h3 class="text-danger">Status: Sudah Bayar</h3>
+                                        <a href="{{ route('sukses.pembayaran') }}" class="btn btn-info btn-sm">Lihat Pembayaran</a>
                                     </div>
                                     <h2>Pembayaran anda sudah kami terima</h2>
                                     <b>Untuk informasi selanjutnya silahkan hubungi admin melalui 

@@ -214,6 +214,10 @@ class HomeCtrl extends Controller
             $user->student_id = $student->id;
             $user->password = Hash::make('123456');
             $user->save();
+
+            $document = new Document;
+            $document->student_id = $student->id;
+            $document->save();
         
             Storage::put('/info_login/siswa_'.$student->id.'.txt', 'email: siswa_'.$student->id.'@email.com pass:123456');
             if ($user->role === "siswa") {
