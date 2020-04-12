@@ -9,14 +9,20 @@
         @endphp
         @if ($document !== null)
             <div class="row">
-                <div class="col">
-                    <b>Catatan:</b>
-                    <p>
-                        <i class="fa fa-check fa-fw text-success"></i> Telah di Upload
-                    </p>
-                    <p>
-                        <i class="fa fa-times fa-fw text-danger"></i> Belum di Upload
-                    </p>
+                <div class="col-md-6">
+                    <b>Catatan:</b><br>
+                    <ul>
+                        <li><i class="fa fa-check fa-fw text-success"></i> Telah di Upload</li>
+                        <li><i class="fa fa-times fa-fw text-danger"></i> Belum di Upload</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ route('generate.formulir') }}" class="btn btn-info btn-sm">
+                        <i class="fa fa-file-pdf-o"></i> Lihat formulir anda klik disini
+                    </a><br>
+                    <a href="{{ route('pendaftaran.index') }}" class="btn btn-info btn-sm mt-2">
+                        <i class="fa fa-money"></i> Lihat status pembayaran anda klik disini
+                    </a>
                 </div>
             </div>
             <div class="row">
@@ -109,25 +115,40 @@
                     </table>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <a href="{{ route('generate.formulir') }}" class="btn btn-info btn-lg">
-                        <i class="fa fa-file-pdf-o"></i> Lihat formulir anda klik disini
-                    </a>
+            @php
+                $docs['ktp'] = $document->ktp_orang_tua;
+                $docs['kk'] = $document->kk;
+                $docs['ijazah'] = $document->ijazah;
+                $docs['sk'] = $document->surat_kelulusan;
+                // $docs['skhun'] = $document->skhun;
+                $alert = false;
+                foreach ($docs as $key => $d) {
+                    if ($d == null) {
+                        $alert = true;
+                    }
+                }
+            @endphp
+            @if ($alert !== false)    
+                <div class="row">
+                    <div class="col">
+                        <a href="#" id="proses-upload" class="btn btn-block btn-success">
+                            PROSES UPLOAD DOKUMEN
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <a href="{{ route('pendaftaran.index') }}" class="btn btn-info btn-lg">
-                        <i class="fa fa-money"></i> Lihat status pembayaran anda klik disini
-                    </a>
-                </div>
-            </div>
+            @endif
         @endif
     @endif
 </div>
 
 <script>
+    $('#proses-upload').on('click', function(){
+        $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES UPLOAD DOKUMEN');
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    });
+
     function readURL(input, imgView, url) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -159,18 +180,14 @@
 
     $("#imageUploadKtp-modal").change(function() {
         readURL(this,"#imagePreviewKtp-modal","{{ route('upload.ktp') }}");
-        location.reload();
     });
     $("#imageUploadKk-modal").change(function() {
         readURL(this,"#imagePreviewKk-modal", "{{ route('upload.kk') }}");
-        location.reload();
     });
     $("#imageUploadIj-modal").change(function() {
         readURL(this,"#imagePreviewIj-modal", "{{ route('upload.ijazah') }}");
-        location.reload();
     });
     $("#imageUploadSk-modal").change(function() {
         readURL(this,"#imagePreviewSk-modal", "{{ route('upload.sk') }}");
-        location.reload();
     });
 </script>

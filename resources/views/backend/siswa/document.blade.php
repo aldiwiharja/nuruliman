@@ -55,6 +55,14 @@
                     </table>
                 </div>
             </div>
+        @else 
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="alert alert-info">
+                        <h5>Siswa belum melakukan upload dokumen</h5>
+                    </div>
+                </div>
+            </div>
         @endif
     @endif
 </div>

@@ -121,7 +121,12 @@ class AdminCtrl extends Controller
 
     public function siswa_delete(Request $request, $id)
     {
+        
         $student = Student::where('id', decrypt($id))->first();
+        $pdf = public_path().'/pdf/formulir_'.$student->id.'.pdf';
+        if (file_exists($pdf)) {
+            unlink($pdf);
+        }
         $payment = Payment::where('student_id', $student->id)->first();
         $doc = Document::where('student_id', $student->id)->first();
         if ($doc !== null) {

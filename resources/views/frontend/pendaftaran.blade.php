@@ -107,7 +107,7 @@
                                                 @foreach ($programs as $key => $p)
                                                     @if ($p->kategori == "sekolah")
                                                         <div class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" id="customRadio{{ $key }}" name="program" value="{{ $p->name }}" class="custom-control-input">
+                                                            <input type="radio" id="customRadio{{ $key }}" name="program" value="{{ $p->name }}" @if (old('program') == $p->name) checked @endif class="custom-control-input">
                                                             <label class="custom-control-label" for="customRadio{{ $key }}">{{ $p->name }}</label>
                                                         </div>
                                                     @endif
@@ -158,11 +158,11 @@
                                                     <td>:</td>
                                                     <td>
                                                         <div class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" id="laki-laki"  name="jenis_kelamin" value="laki-laki" class="custom-control-input" >
+                                                            <input type="radio" id="laki-laki"  name="jenis_kelamin" value="laki-laki" @if (old('jenis_kelamin') == 'laki-laki') checked @endif class="custom-control-input" >
                                                             <label class="custom-control-label" for="laki-laki">Laki-Laki</label>
                                                         </div>
                                                         <div class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan" class="custom-control-input" >
+                                                            <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan" @if (old('jenis_kelamin') == 'perempuan') checked @endif class="custom-control-input" >
                                                             <label class="custom-control-label" for="perempuan">Perempuan</label>
                                                         </div>
                                                         @error('jenis_kelamin')
@@ -636,7 +636,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-lg btn-success btn-block">PROSES PENDAFTARAN</button>
+                            <button type="submit" id="daftar" class="btn btn-lg btn-success btn-block">PROSES PENDAFTARAN</button>
                         </div>
                     </div>
                 </form>
@@ -774,13 +774,18 @@
             </div>
         </div>
     </div>
+    
 @endsection
 
 
 
 
+
 @section('script')
-    <script>  
+    <script> 
+        $('#daftar').on('click', function() {
+            $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES PENDAFTARAN');
+        }); 
         function getToken() {
             var result = "";
             $.ajax({
