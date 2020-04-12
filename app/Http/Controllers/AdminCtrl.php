@@ -124,23 +124,26 @@ class AdminCtrl extends Controller
         $student = Student::where('id', decrypt($id))->first();
         $payment = Payment::where('student_id', $student->id)->first();
         $doc = Document::where('student_id', $student->id)->first();
-        if (file_exists($doc->ktp_orang_tua)) {
-            unlink($doc->ktp_orang_tua);
-        }
-        if (file_exists($doc->kk)) {
-            unlink($doc->kk);
-        }
-        if (file_exists($doc->ijazah)) {
-            unlink($doc->ijazah);
-        }
-        if (file_exists($doc->surat_kelulusan)) {
-            unlink($doc->surat_kelulusan);
-        }
-        if (file_exists($doc->skhun)) {
-            unlink($doc->skhun);
-        }
-        if (file_exists($payment->bukti)) {
-            unlink($payment->bukti);
+        if ($doc !== null) {
+            if (file_exists($doc->ktp_orang_tua)) {
+                unlink($doc->ktp_orang_tua);
+            }
+            if (file_exists($doc->kk)) {
+                unlink($doc->kk);
+            }
+            if (file_exists($doc->ijazah)) {
+                unlink($doc->ijazah);
+            }
+            if (file_exists($doc->surat_kelulusan)) {
+                unlink($doc->surat_kelulusan);
+            }
+            if (file_exists($doc->skhun)) {
+                unlink($doc->skhun);
+            }
+            if (file_exists($payment->bukti)) {
+                unlink($payment->bukti);
+            }
+            $doc->delete();
         }
         $user = User::where('role', 'siswa')->get();
         foreach ($user as $key => $u) {
@@ -151,7 +154,6 @@ class AdminCtrl extends Controller
         }
         $payment->delete();
         $student->delete();
-        $doc->delete();
         return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
     }
 
