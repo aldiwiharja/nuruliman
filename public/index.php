@@ -21,7 +21,11 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
+// Unruk local
 require __DIR__.'/../vendor/autoload.php';
+
+// untuk public
+// require __DIR__.'/../laravel/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +39,11 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
+// untuk local
 $app = require_once __DIR__.'/../bootstrap/app.php';
+
+// untuk public
+// $app = require_once __DIR__.'/../laravel/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +56,11 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
+
+// public
+// $app->bind('path.public', function() {
+//     return __DIR__;
+// });
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
