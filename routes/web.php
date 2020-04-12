@@ -16,6 +16,20 @@
 // //store a push subscriber.
 // Route::post('/push-store','PushController@store');
 
+Route::get('/clear', function() {
+
+    \Artisan::call('cache:clear');
+    \Artisan::call('config:clear');
+    \Artisan::call('config:cache');
+    \Artisan::call('route:clear');
+    \Artisan::call('view:cache');
+    \Artisan::call('view:clear');
+    \Artisan::call('optimize:clear');
+ 
+    return "Cleared!";
+ 
+ });
+
 Route::post('/masuk', 'HomeCtrl@siswa_masuk')->name('siswa.masuk');
 Route::get('/user_guide', 'HomeCtrl@user_guide')->name('user.guide');
 
@@ -33,7 +47,6 @@ Route::group(['middleware' => ['siswa']], function () {
     Route::get('/persyaratan', 'HomeCtrl@persyaratan')->name('persyaratan.index');
     Route::get('/rincian-biaya', 'HomeCtrl@rincian_biaya')->name('rincian.biaya.index');
     Route::get('/generate-rincian-biaya', 'HomeCtrl@generate_rincian_biaya')->name('generate.rincian.biaya');
-    Route::get('/generate-persyaratan', 'HomeCtrl@generate_persyaratan')->name('generate.persyaratan');
 });
 
 Route::group(['middleware' => ['auth', 'siswa']], function () {

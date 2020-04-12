@@ -7,6 +7,13 @@
     <section>
         <div class="container">
             <div class="row">
+                <div class="col">
+                    <a href="{{ url('pdf/formulir_'.$user->student_id.'.pdf') }}" class="btn btn btn-success mb-2" download>
+                        <i class="fa fa-file-pdf-o"></i> Download Formulir Anda
+                    </a>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     
                     @if ($student !== null)

@@ -26,6 +26,7 @@
                                         <th>Total</th>
                                         <th>Status</th>
                                         <th>Bukti</th>
+                                        <th>Tipe Pembayaran</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -60,6 +61,17 @@
                                                     </a>
                                                 @else 
                                                     Tidak Ada
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($p->status == 1)
+                                                    @if ($p->bukti !== null)
+                                                        Tranfer Bank
+                                                    @else 
+                                                        Offline
+                                                    @endif
+                                                @else 
+                                                    -
                                                 @endif
                                             </td>
                                             <td>

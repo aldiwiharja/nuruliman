@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('generate.persyaratan') }}" class="btn btn-info mb-2">
+                    <a href="{{ url('pdf/persyaratan.pdf') }}" class="btn btn-info mb-2" download>
                         <i class="fa fa-file-pdf-o"></i> Download Persyaratan
                     </a>
                     <div class="card">

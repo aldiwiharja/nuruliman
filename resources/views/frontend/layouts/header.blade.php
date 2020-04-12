@@ -50,7 +50,7 @@
                         <li><a href="{{ route('user.guide') }}" target="_blank">Cara Pendaftaran</a></li>
                         
                         @if (Auth::check())
-                            <li><a href="{{ route('generate.formulir') }}">Formulir</a></li>
+                            <li><a href="{{ route('generate.formulir') }}">Formulir Anda</a></li>
                         @endif
                     </ul>
                 </li>

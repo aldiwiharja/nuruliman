@@ -220,11 +220,21 @@ class HomeCtrl extends Controller
                 Auth::attempt(['email' => $user->email, 'password' => $user->password]);
                 Auth::guard()->login($user);
             }
+
+            $this->generate_pdf($student->id);
             
             $admin = User::where('role', 'admin')->first();
             $admin->notify(new NotifSiswaRegistrasi());
             return redirect('sukses-pendaftaran')->with('msg', 'Silahakan melakukan pembayaran');
         }
+    }
+
+    public function generate_pdf($student_id)
+    {
+        $student = Student::where('id', $student_id)->first();
+        $pdf = PDF::loadView('frontend.generate_pdf', compact('student'))
+                ->setPaper('legal', 'potrait')
+                ->save(public_path().'/pdf/formulir_'.$student_id.'.pdf');
     }
 
     public function sukses_pendaftaran(Request $request)
@@ -241,25 +251,16 @@ class HomeCtrl extends Controller
         return view('frontend.generate_formulir', compact('student'));
     }
 
-    public function generate_pdf(Request $request)
-    {
-        $student_id = Auth::user()->student_id;
-        $student = Student::where('id', $student_id)->first();
-        $pdf = PDF::loadView('frontend.generate_pdf', compact('student'));
-        $pdf->setPaper('legal', 'potrait');
-        return $pdf->download('formulir-'.time().'.pdf');
-    }
-
     public function persyaratan(Request $request)
     {
         return view('frontend.persyaratan');
     }
-
+    
     public function generate_persyaratan(Request $request)
     {
-        $pdf = PDF::loadView('frontend.generate_persyaratan');
-        $pdf->setPaper('legal', 'potrait');
-        return $pdf->download('persyaratan.pdf');
+        $pdf = PDF::loadView('frontend.generate_persyaratan')
+                    ->setPaper('legal', 'potrait')
+                    ->save(public_path().'/pdf/persyaratan.pdf');
     }
 
     public function rincian_biaya(Request $request)

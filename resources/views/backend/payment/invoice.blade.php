@@ -41,6 +41,21 @@
                                     @endif
                                 </td>
                             </tr>
+                            <tr>
+                                <td>Tipe Pembayaran</td>
+                                <td>:</td>
+                                <td>
+                                    @if ($payment->status == 1)
+                                        @if ($payment->bukti !== null)
+                                            Tranfer Bank
+                                        @else 
+                                            Offline
+                                        @endif
+                                    @else 
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

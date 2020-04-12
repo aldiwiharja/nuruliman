@@ -223,6 +223,7 @@
         <i class="fa fa-whatsapp my-float"></i>
     </a>
 
+
     <div id="boxWa">
         <p class="text-right mr-2" style="cursor: pointer" onclick="closeWa()">x</p>
         @php
@@ -302,29 +303,31 @@
         @php
             $student_id = Auth::user()->student_id;
             $document = \App\Document::where('student_id', $student_id)->first();
-            $docs['ktp'] = $document->ktp_orang_tua;
-            $docs['kk'] = $document->kk;
-            $docs['ijazah'] = $document->ijazah;
-            $docs['sk'] = $document->surat_kelulusan;
-            // $docs['skhun'] = $document->skhun;
-            $alert = false;
-            foreach ($docs as $key => $d) {
-                if ($d == null) {
-                    $alert = true;
-                }
-            }
         @endphp
-        @if ($alert !== false)
-            <script>
-                setInterval(() => {
-                    Swal.fire(
-                        'Lengkapi Dokumen anda',
-                        'Harap untuk melengkapi dokumen dokumen anda',
-                        'info'
-                    );
-                }, 10000);
-            </script>
+        @if ($document !== null)
+            @php
+                $docs['ktp'] = $document->ktp_orang_tua;
+                $docs['kk'] = $document->kk;
+                $docs['ijazah'] = $document->ijazah;
+                $docs['sk'] = $document->surat_kelulusan;
+                // $docs['skhun'] = $document->skhun;
+                $alert = false;
+                foreach ($docs as $key => $d) {
+                    if ($d == null) {
+                        $alert = true;
+                    }
+                }
+            @endphp
+            @if ($alert !== false)
+                <a href="#" class="tap">
+                    <img src="{{ url('frontend/assets/img/tap.png') }}">
+                </a>
+                <div class="notice">
+                    <i class="fa fa-warning"></i> Lengkapi Data Anda !
+                </div>
+            @endif
         @endif
+        
     @endauth
 
 

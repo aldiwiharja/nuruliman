@@ -8,7 +8,18 @@
             $document = \App\Document::where('student_id', $student_id)->first();
         @endphp
         @if ($document !== null)
-            <div class="row mt-2">
+            <div class="row">
+                <div class="col">
+                    <b>Catatan:</b>
+                    <p>
+                        <i class="fa fa-check fa-fw text-success"></i> Telah di Upload
+                    </p>
+                    <p>
+                        <i class="fa fa-times fa-fw text-danger"></i> Belum di Upload
+                    </p>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <thead>
@@ -96,6 +107,20 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{{ route('generate.formulir') }}" class="btn btn-info btn-lg">
+                        <i class="fa fa-file-pdf-o"></i> Lihat formulir anda klik disini
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <a href="{{ route('pendaftaran.index') }}" class="btn btn-info btn-lg">
+                        <i class="fa fa-money"></i> Lihat status pembayaran anda klik disini
+                    </a>
                 </div>
             </div>
         @endif

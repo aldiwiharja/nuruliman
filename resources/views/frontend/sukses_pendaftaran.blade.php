@@ -58,9 +58,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="#" id="info-login-load">
-                                                    <i class="fa fa-file-text"></i> Informasi Login
-                                                </a>
+                                                <i class="fa fa-file-text text-info"></i> Informasi Login
                                             </td>
                                         </tr>
                                         <tr>
@@ -73,9 +71,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="#" id="formulir-load">
-                                                    <i class="fa fa-file-pdf-o"></i> Formulir Anda
-                                                </a>
+                                                <i class="fa fa-file-pdf-o text-info"></i> Formulir Anda
                                             </td>
                                         </tr>
                                         <tr>
@@ -88,9 +84,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="#" id="persyaratan-load">
-                                                    <i class="fa fa-file-pdf-o"></i> Persyaratan
-                                                </a>
+                                                <i class="fa fa-file-pdf-o text-info"></i> Persyaratan
                                             </td>
                                         </tr>
                                     </tbody>
@@ -172,7 +166,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="lanjut">
                                     <label class="form-check-label" for="lanjut">
-                                        Lanjutkan
+                                        Ceklis ini untuk melanjutkan
                                     </label>
                                 </div>
                             </div>
@@ -271,33 +265,30 @@
             var link=document.createElement('a');
             link.href = url;
             link.download = url.substr(url.lastIndexOf('/') + 1);
-            $('#info-login-load').html(`<i class="fa fa-spin fa-spinner"></i> Mohon tunggu sedang mendownload berkas`);
             link.click()
             checkYa();
             $(this).prop('disabled', true);
-            $('#info-login-load').html(`<i class="fa fa-file-text"></i> Informasi Login`);
         });
         $('#ceklist2').on('change', function(e){
             e.preventDefault();
-            var url = "{{ route('generate.pdf') }}";
-            $('#formulir-load').html(`<i class="fa fa-spin fa-spinner"></i> Mohon tunggu sedang mendownload berkas`);
-            $.get(url, function(res) {
-                if (res == undefined) {
-                    $('#formulir-load').html(`<i class="fa fa-file-pdf-o"></i> Formulir Anda`);
-                }
-            })
+            var student_id = "{{ Auth::user()->student_id }}";
+            var base_url = {!! json_encode(url('/')) !!};
+            var url = base_url + "/pdf/formulir_"+student_id+".pdf";
+            var link=document.createElement('a');
+            link.href = url;
+            link.download = url.substr(url.lastIndexOf('/') + 1);
+            link.click();
             checkYa();
             $(this).prop('disabled', true);
         });
         $('#ceklist3').on('change', function(e){
             e.preventDefault();
-            var url = "{{ route('generate.persyaratan') }}";
-            $('#persyaratan-load').html(`<i class="fa fa-spin fa-spinner"></i> Mohon tunggu sedang mendownload berkas`);
-            $.get(url, function(res) {
-                if (res == undefined) {
-                    $('#persyaratan-load').html(`<i class="fa fa-file-pdf-o"></i> Persyaratan`);
-                }
-            })
+            var base_url = {!! json_encode(url('/')) !!};
+            var url = base_url + "/pdf/persyaratan.pdf";
+            var link=document.createElement('a');
+            link.href = url;
+            link.download = url.substr(url.lastIndexOf('/') + 1);
+            link.click();
             checkYa();
             $(this).prop('disabled', true);
         });
