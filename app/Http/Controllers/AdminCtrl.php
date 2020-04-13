@@ -593,16 +593,17 @@ class AdminCtrl extends Controller
     public function admin_upload_ktp(Request $request)
     {
         $current_docs = Document::where('id', $request->document_id)->first();
+        $student_id = $current_docs->student_id;
         if ($current_docs !== null) {
             if (file_exists($current_docs->ktp_orang_tua)) {
                 unlink($current_docs->ktp_orang_tua);
             }
-            $current_docs->ktp_orang_tua = $request->file('file')->store('uploads/document/ktp');
+            $current_docs->ktp_orang_tua = $request->file('file')->storeAs('uploads/document/ktp','ktp_siswa'.$student_id.'.jpg');
             $current_docs->save();
         }else {
             $docs = new Document;
             $docs->student_id = $request->document_id;
-            $docs->ktp_orang_tua = $request->file('file')->store('uploads/document/ktp');
+            $docs->ktp_orang_tua = $request->file('file')->storeAs('uploads/document/ktp','ktp_siswa'.$student_id.'.jpg');
             $docs->save();
         }
         return "ok";
@@ -611,16 +612,17 @@ class AdminCtrl extends Controller
     public function admin_upload_kk(Request $request)
     {
         $current_docs = Document::where('id', $request->document_id)->first();
+        $student_id = $current_docs->student_id;
         if ($current_docs !== null) {
             if (file_exists($current_docs->kk)) {
                 unlink($current_docs->kk);
             }
-            $current_docs->kk = $request->file('file')->store('uploads/document/kk');
+            $current_docs->kk = $request->file('file')->storeAs('uploads/document/kk','kk_siswa'.$student_id.'.jpg');
             $current_docs->save();
         }else {
             $docs = new Document;
             $docs->student_id = $request->document_id;
-            $docs->kk = $request->file('file')->store('uploads/document/kk');
+            $docs->kk = $request->file('file')->storeAs('uploads/document/kk','kk_siswa'.$student_id.'.jpg');
             $docs->save();
         }
         return "ok";
@@ -629,16 +631,17 @@ class AdminCtrl extends Controller
     public function admin_upload_ijazah(Request $request)
     {
         $current_docs = Document::where('id', $request->document_id)->first();
+        $student_id = $current_docs->student_id;
         if ($current_docs !== null) {
             if (file_exists($current_docs->ijazah)) {
                 unlink($current_docs->ijazah);
             }
-            $current_docs->ijazah = $request->file('file')->store('uploads/document/ijazah');
+            $current_docs->ijazah = $request->file('file')->storeAs('uploads/document/ijazah','ijazah_siswa'.$student_id.'.jpg');
             $current_docs->save();
         }else {
             $docs = new Document;
             $docs->student_id = $request->document_id;
-            $docs->ijazah = $request->file('file')->store('uploads/document/ijazah');
+            $docs->ijazah = $request->file('file')->storeAs('uploads/document/ijazah','ijazah_siswa'.$student_id.'.jpg');
             $docs->save();
         }
         return "ok";
@@ -647,16 +650,17 @@ class AdminCtrl extends Controller
     public function admin_upload_sk(Request $request)
     {
         $current_docs = Document::where('id', $request->document_id)->first();
+        $student_id = $current_docs->student_id;
         if ($current_docs !== null) {
             if (file_exists($current_docs->surat_kelulusan)) {
                 unlink($current_docs->surat_kelulusan);
             }
-            $current_docs->surat_kelulusan = $request->file('file')->store('uploads/document/surat_kelulusan');
+            $current_docs->surat_kelulusan = $request->file('file')->storeAs('uploads/document/surat_kelulusan','sk_siswa'.$student_id.'.jpg');
             $current_docs->save();
         }else {
             $docs = new Document;
             $docs->student_id = $request->document_id;
-            $docs->surat_kelulusan = $request->file('file')->store('uploads/document/surat_kelulusan');
+            $docs->surat_kelulusan = $request->file('file')->storeAs('uploads/document/surat_kelulusan','sk_siswa'.$student_id.'.jpg');
             $docs->save();
         }
         return "ok";

@@ -46,6 +46,11 @@
                                                         <i class="fa fa-edit"></i> Edit
                                                     </button>
                                                 </div>
+                                                <div class="col">
+                                                    <a href="{{ url($document->ktp_orang_tua) }}" class="btn btn-success btn-sm" download>
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
+                                                </div>
                                             </div>
                                         @else
                                             <i class="fa fa-times text-danger fa-2x"></i><br> 
@@ -76,6 +81,11 @@
                                                         <i class="fa fa-edit"></i> Edit
                                                     </button>
                                                 </div>
+                                                <div class="col">
+                                                    <a href="{{ url($document->kk) }}" class="btn btn-success btn-sm" download>
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
+                                                </div>
                                             </div>
                                         @else 
                                             <h5>Belum di upload</h5>
@@ -104,6 +114,11 @@
                                                     <button onclick="editIj()" class="btn btn-sm btn-info">
                                                         <i class="fa fa-edit"></i> Edit
                                                     </button>
+                                                </div>
+                                                <div class="col">
+                                                    <a href="{{ url($document->ijazah) }}" class="btn btn-success btn-sm" download>
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
                                                 </div>
                                             </div>
                                         @else 
@@ -134,6 +149,11 @@
                                                         <i class="fa fa-edit"></i> Edit
                                                     </button>
                                                 </div>
+                                                <div class="col">
+                                                    <a href="{{ url($document->surat_kelulusan) }}" class="btn btn-success btn-sm" download>
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
+                                                </div>
                                             </div>
                                         @else 
                                             <h5>Belum di upload</h5>
@@ -143,6 +163,13 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button id="proses-perubahan" class="btn btn-block btn-lg btn-success">
+                        PROSES PERUBAHAN
+                    </button>
                 </div>
             </div>
         @else 
@@ -156,7 +183,6 @@
         @endif
     @endif
 </div>
-
 
 <script>
     var document_id = $('#document_id').text();
@@ -228,4 +254,11 @@
         $('#current-sk').hide();
         $('#edit-sk').show();
     }
+
+    $('#proses-perubahan').on('click', function() {
+        $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES PERUBAHAN');
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    });
 </script>

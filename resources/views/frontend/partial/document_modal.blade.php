@@ -201,31 +201,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </img>
-                </div>
-            </div>
-            @php
-                $docs['ktp'] = $document->ktp_orang_tua;
-                $docs['kk'] = $document->kk;
-                $docs['ijazah'] = $document->ijazah;
-                $docs['sk'] = $document->surat_kelulusan;
-                // $docs['skhun'] = $document->skhun;
-                $alert = false;
-                foreach ($docs as $key => $d) {
-                    if ($d == null) {
-                        $alert = true;
-                    }
-                }
-            @endphp
-            @if ($alert !== false)    
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="#" id="proses-upload" class="btn btn-block btn-success">
-                            PROSES UPLOAD DOKUMEN
-                        </a>
                     </div>
                 </div>
-            @endif
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button id="proses-perubahan" class="btn btn-block btn-lg btn-success">
+                        PROSES PERUBAHAN
+                    </button>
+                </div>
+            </div>
         @endif
     @endif
 </div>
@@ -305,4 +290,11 @@
         $('#current-sk').hide();
         $('#edit-sk').show();
     }
+
+    $('#proses-perubahan').on('click', function() {
+        $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES PERUBAHAN');
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    });
 </script>
