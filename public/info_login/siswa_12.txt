@@ -1,1 +1,0 @@
-email: siswa_12@email.com pass:123456
