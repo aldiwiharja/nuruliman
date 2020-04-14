@@ -40,7 +40,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <button type="submit" class="btn btn-block btn-primary">Perbaharui</button>
+                            <button type="submit" class="btn btn-block nav-item btn-primary">Perbaharui</button>
                         </form>
                     </div>
                 </div>

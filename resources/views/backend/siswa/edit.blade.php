@@ -5,9 +5,15 @@
     <div class="app-title">
         <h2>Siswa</h2>
     </div>
+    @if(Session::has('msg'))
+        @section('script')
+            {!! Session::get('msg') !!}
+        @endsection
+    @endif
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ route('admin.siswa') }}" class="btn btn-sm btn-primary mb-2">Kembali</a>
+            <a href="{{ route('admin.siswa') }}" class="btn btn-sm btn-primary mb-2 nav-item">Kembali</a>
+            <a href="{{ route('admin.download.pdf', encrypt($student->id)) }}" class="btn btn-sm btn-primary mb-2"><i class="fa fa-download"></i> Download Formulir</a>
         <div class="tile">
             <div class="tile-body">
                 <div class="row">
@@ -161,7 +167,6 @@
                                                                             <input type="number" class="form-control" name="berat_badan" value="{{ $student->berat_badan }}">
                                                                         </div>
                                                                     </div>
-                                                                    <small class="text-info">Lewati jika tidak tahu</small>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -234,28 +239,28 @@
                                                                 <td>&nbsp;&nbsp;&nbsp; Provinsi</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->prov_sekolah }}">
+                                                                    <input type="text" name="prov_sekolah" class="form-control" value="{{ $student->prov_sekolah }}">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>&nbsp;&nbsp;&nbsp; Kab / Kota</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->kota_sekolah }}">
+                                                                    <input type="text" name="kota_sekolah" class="form-control" value="{{ $student->kota_sekolah }}">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>&nbsp;&nbsp;&nbsp; Kecamatan</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->kec_sekolah }}">
+                                                                    <input type="text" name="kec_sekolah" class="form-control" value="{{ $student->kec_sekolah }}">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>&nbsp;&nbsp;&nbsp; Desa / Kelurahan</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->desa_sekolah }}">
+                                                                    <input type="text" name="desa_sekolah" class="form-control" value="{{ $student->desa_sekolah }}">
                                                                 </td>
                                                             </tr>
                                                             
@@ -307,6 +312,16 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
+                                                                <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ayah</td>
+                                                                <td>:</td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" name="pekerjaan_ayah" value="{{ $student->pekerjaan_ayah }}">
+                                                                    @error('pekerjaan_ayah')
+                                                                        <small class="text-danger">{{ $message }}</small>
+                                                                    @enderror
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
                                                                 <td>2. Nama Ibu</td>
                                                                 <td>:</td>
                                                                 <td>
@@ -344,6 +359,28 @@
                                                                     @error('no_hp_ibu')
                                                                         <small class="text-danger">{{ $message }}</small>
                                                                     @enderror
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ibu</td>
+                                                                <td>:</td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" name="pekerjaan_ibu" value="{{ $student->pekerjaan_ibu }}">
+                                                                    @error('pekerjaan_ibu')
+                                                                        <small class="text-danger">{{ $message }}</small>
+                                                                    @enderror
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&nbsp;&nbsp;&nbsp; Penghasilan Orang Tua</td>
+                                                                <td>:</td>
+                                                                <td>
+                                                                    <select name="penghasilan_org_tua" class="form-control">
+                                                                        <option value="under1jt" @if ($student->penghasilan_org_tua == "under1jt") selected @endif>Di bawah 1 juta</option>
+                                                                        <option value="under3jt" @if ($student->penghasilan_org_tua == "under3jt") selected @endif>Di bawah 3 juta</option>
+                                                                        <option value="under5jt" @if ($student->penghasilan_org_tua == "under5jt") selected @endif>Di bawah 5 juta</option>
+                                                                        <option value="upper5jt" @if ($student->penghasilan_org_tua == "upper5jt") selected @endif>Di atas 5 juta</option>
+                                                                    </select>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -387,28 +424,28 @@
                                                                 <td>&nbsp;&nbsp;&nbsp; Provinsi</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->prov_org_tua }}">
+                                                                    <input type="text" name="prov_org_tua" class="form-control" value="{{ $student->prov_org_tua }}">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>&nbsp;&nbsp;&nbsp; Kab / Kota</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->kota_org_tua }}">
+                                                                    <input type="text" name="kota_org_tua" class="form-control" value="{{ $student->kota_org_tua }}">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>&nbsp;&nbsp;&nbsp; Kecamatan</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->kec_org_tua }}">
+                                                                    <input type="text" name="kec_org_tua" class="form-control" value="{{ $student->kec_org_tua }}">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>&nbsp;&nbsp;&nbsp; Desa / Kelurahan</td>
                                                                 <td>:</td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" value="{{ $student->desa_org_tua }}">
+                                                                    <input type="text" name="desa_org_tua" class="form-control" value="{{ $student->desa_org_tua }}">
                                                                 </td>
                                                             </tr>
             
@@ -468,7 +505,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-lg btn-success btn-block">UBAH DATA</button>
+                                    <button type="submit" class="btn btn-lg nav-item btn-success btn-block">UBAH DATA</button>
                                 </div>
                             </div>
                                             

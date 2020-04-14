@@ -6,6 +6,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>PEMBAYARAN ANDA</h1>
+                    <a href="{{ route('pendaftaran.index') }}" class="btn btn-primary nav-load">Kembali</a>
                     <hr>
                     @if ($payment !== null)
                         @php

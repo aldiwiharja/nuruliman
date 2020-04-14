@@ -7,6 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <a href="{{ route('admin.program') }}" class="btn btn-sm mb-2 btn-primary nav-item">Kembali</a>
             <div class="tile">
                 <div class="tile-header">
                     <h2>Program</h2>
@@ -32,7 +33,7 @@
                             <textarea name="desc_program" id="" cols="10" rows="5" class="form-control">{{ $program->description }}</textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn nav-item btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

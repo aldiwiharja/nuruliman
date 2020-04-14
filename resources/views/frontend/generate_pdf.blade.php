@@ -201,6 +201,13 @@
                 </td>
             </tr>
             <tr>
+                <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ayah</td>
+                <td>:</td>
+                <td>
+                    {{ $student->pekerjaan_ayah }}
+                </td>
+            </tr>
+            <tr>
                 <td>2. Nama Ibu</td>
                 <td>:</td>
                 <td>
@@ -219,6 +226,28 @@
                 <td>:</td>
                 <td>
                     {{ $student->no_hp_ibu }}
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ibu</td>
+                <td>:</td>
+                <td>
+                    {{ $student->pekerjaan_ibu }}
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp; Penghasilan Orang Tua</td>
+                <td>:</td>
+                <td>
+                    @if ($student->penghasilan_org_tua == "under1jt")
+                        Di Bawah 1 Juta
+                    @elseif ($student->penghasilan_org_tua == "under3jt")
+                        Di Bawah 3 Juta
+                    @elseif ($student->penghasilan_org_tua == "under5jt")
+                        Di Bawah 5 Juta
+                    @elseif ($student->penghasilan_org_tua == "upper5jt")
+                        Di Atas 5 Juta
+                    @endif
                 </td>
             </tr>
             <tr>

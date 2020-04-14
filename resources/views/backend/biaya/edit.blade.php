@@ -21,7 +21,7 @@
                             <input type="number" name="harga_biaya" value="{{ $cost->price }}" class="form-control">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn nav-item btn-primary">Save</button>
                         </div>
                     </form>
                 </div>

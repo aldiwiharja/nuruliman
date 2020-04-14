@@ -53,7 +53,6 @@
                                                 </div>
                                             </div>
                                         @else
-                                            <i class="fa fa-times text-danger fa-2x"></i><br> 
                                             <h5>Belum di upload</h5>
                                         @endif
                                     </td>
@@ -217,6 +216,7 @@
                         'Dokumen berhasil diubah',
                         'success'
                     );
+                    $('#loadoverlay').addClass('sembunyi');
                 }
             }
         });
@@ -224,15 +224,19 @@
 
     $("#imageUploadKtp-modal").change(function() {
         readURL(this,"#imagePreviewKtp-modal","{{ route('admin.upload.ktp') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     $("#imageUploadKk-modal").change(function() {
         readURL(this,"#imagePreviewKk-modal", "{{ route('admin.upload.kk') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     $("#imageUploadIj-modal").change(function() {
         readURL(this,"#imagePreviewIj-modal", "{{ route('admin.upload.ijazah') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     $("#imageUploadSk-modal").change(function() {
         readURL(this,"#imagePreviewSk-modal", "{{ route('admin.upload.sk') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     
     function editKtp() {
@@ -257,6 +261,7 @@
 
     $('#proses-perubahan').on('click', function() {
         $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES PERUBAHAN');
+        $('#loadoverlay').removeClass('sembunyi');
         setTimeout(() => {
             location.reload();
         }, 2000);

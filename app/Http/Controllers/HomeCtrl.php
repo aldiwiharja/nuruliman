@@ -109,9 +109,12 @@ class HomeCtrl extends Controller
             'nama_ayah'=> 'required',		
             'tmpt_lahir_ayah'=> 'required',
             'no_hp_ayah'=> 'required',	
+            'pekerjaan_ayah'=> 'required',	
             'nama_ibu'=> 'required',		
             'tmpt_lahir_ibu'=> 'required',
             'no_hp_ibu'=> 'required',					
+            'pekerjaan_ibu'=> 'required',					
+            'penghasilan_org_tua'=> 'required',					
             'kampung_org_tua'=> 'required',
             'rt_rw_org_tua'=> 'required',	
             'desa_org_tua'=> 'required',	
@@ -179,6 +182,7 @@ class HomeCtrl extends Controller
         $student->tgl_lahir_ayah = $tgl_lahir_ayah;
 
         $student->no_hp_ayah = $request->no_hp_ayah;
+        $student->pekerjaan_ayah = $request->pekerjaan_ayah;
         $student->nama_ibu = $request->nama_ibu;
         $student->tmpt_lahir_ibu = $request->tmpt_lahir_ibu;
 
@@ -187,6 +191,8 @@ class HomeCtrl extends Controller
         $student->tgl_lahir_ibu = $tgl_lahir_ibu;
 
         $student->no_hp_ibu = $request->no_hp_ibu;
+        $student->pekerjaan_ibu = $request->pekerjaan_ibu;
+        $student->penghasilan_org_tua = $request->penghasilan_org_tua;
         $student->no_kk = $request->no_kk;
         $student->kampung_org_tua = $request->kampung_org_tua;
         $student->rt_rw_org_tua = $request->rt_rw_org_tua;
@@ -225,7 +231,7 @@ class HomeCtrl extends Controller
                 Auth::guard()->login($user);
             }
 
-            $this->generate_pdf($student->id);
+            $this->save_pdf($student->id);
             
             $admin = User::where('role', 'admin')->first();
             $admin->notify(new NotifSiswaRegistrasi());
@@ -233,12 +239,21 @@ class HomeCtrl extends Controller
         }
     }
 
-    public function generate_pdf($student_id)
+    public function save_pdf($student_id)
     {
         $student = Student::where('id', $student_id)->first();
         $pdf = PDF::loadView('frontend.generate_pdf', compact('student'))
                 ->setPaper('legal', 'potrait')
                 ->save(public_path().'/pdf/formulir_'.$student_id.'.pdf');
+    }
+
+    public function download_pdf(Request $request)
+    {
+        $student_id = Auth::user()->student_id;
+        $student = Student::where('id', $student_id)->first();
+        $pdf = PDF::loadView('frontend.generate_pdf', compact('student'));
+        $pdf->setPaper('legal', 'potrait');
+        return $pdf->download('formulir_siswa'.$student_id.'.pdf');
     }
 
     public function sukses_pendaftaran(Request $request)

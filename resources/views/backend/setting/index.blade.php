@@ -18,16 +18,16 @@
                     <h3>Setting Frontend</h3>
                     <div class="bs-component">
                       <ul class="nav nav-tabs">
-                        <li class="nav-item">
+                        <li >
                             <a class="nav-link active" data-toggle="tab" href="#slide">Banner</a>
                         </li>
-                        <li class="nav-item">
+                        <li >
                             <a class="nav-link" data-toggle="tab" href="#about">Sambutan Kepsek</a>
                         </li>
-                        <li class="nav-item">
+                        <li >
                             <a class="nav-link" data-toggle="tab" href="#program">Program Banner</a>
                         </li>
-                        <li class="nav-item">
+                        <li >
                             <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
                         </li>
                       </ul>
@@ -117,7 +117,7 @@
                                             <textarea id="" cols="10" rows="5" name="sambutan" class="form-control">{{ $kepsek_setting->sambutan }}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-block btn-primary">
+                                            <button type="submit" class="btn btn-block nav-item btn-primary">
                                                 <i class="fa fa-refresh"></i> Update
                                             </button>
                                         </div>
@@ -158,7 +158,7 @@
                                                                 <input type="hidden" name="program_id" value="{{ $p->id }}">
                                                             </div>
                                                             <div class="col-md-2">
-                                                                <button type="submit" class="btn btn-success">Upload</button>
+                                                                <button type="submit" class="btn nav-item btn-success">Upload</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -192,7 +192,7 @@
                                             <textarea name="profile_visi_misi" class="form-control" cols="8" rows="5">{{ $p->profile_visi_misi }}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                                            <button type="submit" class="btn btn-primary nav-item btn-block">Simpan</button>
                                         </div>
                                     </form>
                                 </div>

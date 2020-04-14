@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-md-12">
             
-            <a href="{{ route('admin.siswa') }}" class="btn btn-sm btn-primary mb-2">Kembali</a>
-            <a href="{{ route('admin.generate.pdf', encrypt($student->id)) }}" class="btn btn-sm btn-primary mb-2"><i class="fa fa-download"></i> Download Formulir</a>
+            <a href="{{ route('admin.siswa') }}" class="btn btn-sm btn-primary nav-item mb-2 nav-item">Kembali</a>
+            <a href="{{ route('admin.download.pdf', encrypt($student->id)) }}" class="btn btn-sm btn-primary mb-2"><i class="fa fa-download"></i> Download Formulir</a>
         <div class="tile">
             <div class="tile-body">
                 <div class="row">
@@ -221,6 +221,13 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ayah</td>
+                                            <td>:</td>
+                                            <td>
+                                                <b>{{ $student->pekerjaan_ayah }}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>2. Nama Ibu</td>
                                             <td>:</td>
                                             <td>
@@ -239,6 +246,28 @@
                                             <td>:</td>
                                             <td>
                                                 <b>{{ $student->no_hp_ibu }}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ibu</td>
+                                            <td>:</td>
+                                            <td>
+                                                <b>{{ $student->pekerjaan_ibu }}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;&nbsp;&nbsp; Penghasilan Orang Tua</td>
+                                            <td>:</td>
+                                            <td>
+                                                @if ($student->penghasilan_org_tua == "under1jt")
+                                                    <b>Di Bawah 1 Juta</b>
+                                                @elseif ($student->penghasilan_org_tua == "under3jt")
+                                                    <b>Di Bawah 3 Juta</b>
+                                                @elseif ($student->penghasilan_org_tua == "under5jt")
+                                                    <b>Di Bawah 5 Juta</b>
+                                                @elseif ($student->penghasilan_org_tua == "upper5jt")
+                                                    <b>Di Atas 5 Juta</b>
+                                                @endif
                                             </td>
                                         </tr>
                                         <tr>

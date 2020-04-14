@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
         <div class="pb-2">
-            <a href="{{ route('admin.biaya.add') }}" class="btn btn-primary">
+            <a href="{{ route('admin.biaya.add') }}" class="btn nav-item btn-primary">
                 <i class="fa fa-plus"></i> Tambah Biaya
             </a>
         </div>
@@ -59,7 +59,7 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-11">
                                                             <h5>Apakah anda yakin ingin menghapus ini ?</h5>
-                                                            <a href="{{ route('admin.biaya.hapus', encrypt($c->id)) }}" class="btn btn-block btn-danger">Ya Hapus</a>
+                                                            <a href="{{ route('admin.biaya.hapus', encrypt($c->id)) }}" class="btn btn-block nav-item btn-danger">Ya Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>

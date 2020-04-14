@@ -7,6 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <a href="{{ route('admin.program') }}" class="btn btn-sm mb-2 btn-primary nav-item">Kembali</a>
             <div class="tile">
                 <div class="tile-header">
                     <h2>Program</h2>
@@ -16,7 +17,7 @@
                         @csrf
                         <div class="form-group">
                             <label>Nama Program</label>
-                            <input type="text" name="nama_program" class="form-control">
+                            <input type="text" name="nama_program" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Kategori Program</label>

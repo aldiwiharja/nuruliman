@@ -14,6 +14,7 @@
     <script src="https://sdk.pushy.me/web/1.0.5/pushy-sdk.js"></script>
   </head>
   <body class="app sidebar-mini">
+    <div id="loadoverlay" class="loading sembunyi">Loading&#8230;</div>
     @include('backend.layouts.navbar')
     @include('backend.layouts.sidebar')
     @yield('content')
@@ -41,6 +42,9 @@
     
     @auth
       <script>
+          $('.nav-item').on('click', function() {
+              $('#loadoverlay').removeClass('sembunyi');
+          });
           // Register device for push notifications
           Pushy.register({ appId: '5e8b66f0adead2f2494633b8' }).then(function (deviceToken) {
               // Print device token to console

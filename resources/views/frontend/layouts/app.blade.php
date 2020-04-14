@@ -42,8 +42,8 @@
 </head>
 
 <body>
+    <div id="loadoverlay" class="loading sembunyi">Loading&#8230;</div>
     @include('frontend.layouts.header') 
-    
     @yield('content')
 
     @if(Session::has('harusadmin'))
@@ -279,6 +279,10 @@
     <script type="text/javascript" src="{{ url('backend/docs/js/plugins/bootstrap-notify.min.js') }}"></script>
 
     <script>
+
+        $('.nav-load').on('click', function(){
+            $('#loadoverlay').removeClass('sembunyi');
+        });
         $('#openBoxWa').on('click', function(){
             $('#boxWa').fadeToggle();
         });
@@ -296,6 +300,7 @@
                 $('#showDocs-body').html(data);
             })
         }
+
     </script>
 
     

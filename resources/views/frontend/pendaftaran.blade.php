@@ -18,6 +18,42 @@
                     <button class="btn btn-success" data-toggle="modal" data-target="#rincianB">
                         <i class="fa fa-money"></i> Lihat Rincian Biaya
                     </button>
+                    @auth
+                        <a id="akun-anda" href="#" data-toggle="modal" data-target="#info-login" class="btn btn-success">
+                            <i class="fa fa-user"></i> Akun Anda
+                        </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="info-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" style="width: 350px" role="document">
+                            <div class="modal-content border-0">
+                                <div class="modal-header" id="card-head">
+                                    <h5 class="modal-title text-white" id="exampleModalLongTitle">INFORMASI AKUN ANDA</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row justify-content-center">
+                                        <div class="col-11">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td>:</td>
+                                                    <td>{{ Auth::user()->email }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Password</td>
+                                                    <td>:</td>
+                                                    <td>123456</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
             </div>
             @if (Auth::check())
@@ -45,7 +81,7 @@
                                 @elseif ($payment->status == 1)
                                     <div class="mb-2" style="border: dashed; padding: 20px; width: 50%; margin: 0 auto;">
                                         <h3 class="text-danger">Status: Sudah Bayar</h3>
-                                        <a href="{{ route('sukses.pembayaran') }}" class="btn btn-info btn-sm">Lihat Pembayaran</a>
+                                        <a href="{{ route('sukses.pembayaran') }}" class="btn nav-load btn-info btn-sm">Lihat Pembayaran</a>
                                     </div>
                                     <h2>Pembayaran anda sudah kami terima</h2>
                                     <b>Untuk informasi selanjutnya silahkan hubungi admin melalui 
@@ -61,7 +97,7 @@
                                     </div>
                                     <h2>Pemabayaran anda sedang kami proses</h2>
                                     <div class="p-3">
-                                        <a href="{{ route('sukses.pembayaran') }}" class="btn btn-success">
+                                        <a href="{{ route('sukses.pembayaran') }}" class="btn nav-load btn-success">
                                             LIHAT PEMBAYARAN
                                         </a>
                                     </div>
@@ -442,6 +478,16 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ayah <span class="text-danger">*</span></td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="pekerjaan_ayah" value="{{ old('pekerjaan_ayah') }}">
+                                                        @error('pekerjaan_ayah')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <td>2. Nama Ibu <span class="text-danger">*</span></td>
                                                     <td>:</td>
                                                     <td>
@@ -512,6 +558,28 @@
                                                         @error('no_hp_ibu')
                                                             <small class="text-danger">{{ $message }}</small>
                                                         @enderror
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ibu <span class="text-danger">*</span></td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="pekerjaan_ibu" value="{{ old('pekerjaan_ibu') }}">
+                                                        @error('pekerjaan_ibu')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;&nbsp;&nbsp; Penghasilan Orang Tua <span class="text-danger">*</span></td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <select name="penghasilan_org_tua" class="form-control">
+                                                            <option value="under1jt">Di bawah 1 juta</option>
+                                                            <option value="under3jt">Di bawah 3 juta</option>
+                                                            <option value="under5jt">Di bawah 5 juta</option>
+                                                            <option value="upper5jt">Di atas 5 juta</option>
+                                                        </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -786,6 +854,7 @@
     <script> 
         $('#daftar').on('click', function() {
             $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES PENDAFTARAN');
+            $('#loadoverlay').removeClass('sembunyi');
         }); 
         function getToken() {
             var result = "";

@@ -55,7 +55,7 @@
                                                 @if ($p->bukti !== null)
                                                     <a href="{{ url($p->bukti) }}" download>
                                                         <i class="fa fa-download"></i> Download Bukti
-                                                    </a>
+                                                    </a><br>
                                                     <a href="{{ url($p->bukti) }}" target="_blank">
                                                         <i class="fa fa-eye"></i> Lihat Bukti
                                                     </a>
@@ -64,7 +64,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if ($p->status == 1)
+                                                @if ((int)$p->status == 1)
                                                     @if ($p->bukti !== null)
                                                         Tranfer Bank
                                                     @else 
@@ -75,10 +75,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.payment.invoice', encrypt($p->id)) }}" class="btn btn-info btn-sm">
+                                                <a href="{{ route('admin.payment.invoice', encrypt($p->id)) }}" class="btn btn-info btn-sm nav-item">
                                                     <i class="fa fa-eye"></i> Lihat
                                                 </a>
-                                                @if ($p->status !== 1)
+                                                @if ((int)$p->status !== 1)
                                                     <a href="" data-toggle="modal" data-target="#approve{{ $p->id }}" class="btn btn-success btn-sm">
                                                         <i class="fa fa-check"></i> Approve
                                                     </a>
@@ -98,7 +98,7 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-11">
                                                             <h5>Apakah anda yakin untuk approve pembayaran ini ?</h5>
-                                                            <a href="{{ route('admin.payment.approve', encrypt($p->id)) }}" class="btn btn-block btn-success">Ya Approve</a>
+                                                            <a href="{{ route('admin.payment.approve', encrypt($p->id)) }}" class="btn btn-block btn-success nav-item">Ya Approve</a>
                                                         </div>
                                                     </div>
                                                 </div>

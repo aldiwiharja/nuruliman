@@ -16,7 +16,7 @@
                         @csrf
                         <div class="form-group">
                             <label>Nama Guru</label>
-                            <input type="text" name="nama_teacher" class="form-control">
+                            <input type="text" name="nama_teacher" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Photo</label>

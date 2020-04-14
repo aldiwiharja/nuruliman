@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <a href="{{ url('pdf/formulir_'.$user->student_id.'.pdf') }}" class="btn btn btn-success mb-2" download>
+                    <a href="{{ route('download.pdf') }}" class="btn btn btn-success mb-2">
                         <i class="fa fa-file-pdf-o"></i> Download Formulir Anda
                     </a>
                 </div>
@@ -225,6 +225,13 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ayah</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <b>{{ $student->pekerjaan_ayah }}</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td>2. Nama Ibu</td>
                                                 <td>:</td>
                                                 <td>
@@ -243,6 +250,28 @@
                                                 <td>:</td>
                                                 <td>
                                                     <b>{{ $student->no_hp_ibu }}</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;&nbsp;&nbsp; Pekerjaan Ibu</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <b>{{ $student->pekerjaan_ibu }}</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;&nbsp;&nbsp; Penghasilan Orang Tua</td>
+                                                <td>:</td>
+                                                <td>
+                                                    @if ($student->penghasilan_org_tua == "under1jt")
+                                                        <b>Di Bawah 1 Juta</b>
+                                                    @elseif ($student->penghasilan_org_tua == "under3jt")
+                                                        <b>Di Bawah 3 Juta</b>
+                                                    @elseif ($student->penghasilan_org_tua == "under5jt")
+                                                        <b>Di Bawah 5 Juta</b>
+                                                    @elseif ($student->penghasilan_org_tua == "upper5jt")
+                                                        <b>Di Atas 5 Juta</b>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             <tr>

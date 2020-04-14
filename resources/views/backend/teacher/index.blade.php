@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pb-2">
-                <a href="{{ route('admin.teacher.add') }}" class="btn btn-primary">
+                <a href="{{ route('admin.teacher.add') }}" class="btn nav-item btn-primary">
                     <i class="fa fa-plus"></i> Tambah Tenaga Pendidik
                 </a>
             </div>
@@ -41,7 +41,7 @@
                                         <td>{{ $t->name }}</td>
                                         <td>{{ $t->matpel }}</td>
                                         <td>
-                                            <a href="{{ route('admin.teacher.edit', encrypt($t->id)) }}" class="btn btn-primary btn-sm">
+                                            <a href="{{ route('admin.teacher.edit', encrypt($t->id)) }}" class="btn btn-primary nav-item btn-sm">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
                                             <a href="" data-toggle="modal" data-target="#hapusGuru{{ $t->id }}" class="btn btn-danger btn-sm">
@@ -62,7 +62,7 @@
                                                 <div class="row justify-content-center">
                                                     <div class="col-11">
                                                         <h5>Apakah anda yakin ingin menghapus ini ?</h5>
-                                                        <a href="{{ route('admin.teacher.delete', $t->id) }}" class="btn btn-block btn-danger">Ya Hapus</a>
+                                                        <a href="{{ route('admin.teacher.delete', $t->id) }}" class="btn btn-block nav-item btn-danger">Ya Hapus</a>
                                                     </div>
                                                 </div>
                                             </div>

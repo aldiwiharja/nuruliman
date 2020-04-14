@@ -7,11 +7,11 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-        <a href="{{ route('admin.payment') }}" class="btn btn-sm btn-primary mb-2">Kembali</a>
+        <a href="{{ route('admin.payment') }}" class="btn btn-sm btn-primary nav-item mb-2">Kembali</a>
         <div class="tile">
             <div class="tile-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <table class="table">
                             <tr>
                                 <td>Nama Siswa</td>

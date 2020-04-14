@@ -36,6 +36,15 @@ class AdminCtrl extends Controller
         return back();
     }
 
+    public function mark_all_as_read(Request $request)
+    {
+        $user = Auth::user();
+        foreach ($user->unreadNotifications as $notif) {
+            $notif->markAsRead();
+        }
+        return back();
+    }
+
     public function siswa(Request $request)
     {
         $students = Student::orderBy('id', 'DESC')->get();
@@ -63,12 +72,12 @@ class AdminCtrl extends Controller
         return view('backend.siswa.document', compact('document'));
     }
 
-    public function admin_generate_pdf(Request $request, $id)
+    public function admin_download_pdf(Request $request, $id)
     {
         $student = Student::where('id', decrypt($id))->first();
         $pdf = PDF::loadView('frontend.generate_pdf', compact('student'));
         $pdf->setPaper('legal', 'potrait');
-        return $pdf->download('formulir-'.time().'.pdf');
+        return $pdf->download('formulir_'.$student->id.'.pdf');
     }
 
     public function siswa_edit_proses(Request $request)
@@ -99,10 +108,13 @@ class AdminCtrl extends Controller
             $student->tmpt_lahir_ayah = $request->tmpt_lahir_ayah;
             $student->tgl_lahir_ayah = $request->tgl_lahir_ayah;
             $student->no_hp_ayah = $request->no_hp_ayah;
+            $student->pekerjaan_ayah = $request->pekerjaan_ayah;
             $student->nama_ibu = $request->nama_ibu;
             $student->tmpt_lahir_ibu = $request->tmpt_lahir_ibu;
             $student->tgl_lahir_ibu = $request->tgl_lahir_ibu;
             $student->no_hp_ibu = $request->no_hp_ibu;
+            $student->pekerjaan_ibu = $request->pekerjaan_ibu;
+            $student->penghasilan_org_tua = $request->penghasilan_org_tua;
             $student->no_kk = $request->no_kk;
             $student->kampung_org_tua = $request->kampung_org_tua;
             $student->rt_rw_org_tua = $request->rt_rw_org_tua;
@@ -116,13 +128,16 @@ class AdminCtrl extends Controller
             $student->alamat_sdr = $request->alamat_sdr;
             $student->save();
         }
-        return redirect('admin/siswa')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diupdate","success")</script>');
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diupdate","success")</script>');
     }
 
     public function siswa_delete(Request $request, $id)
     {
-        
         $student = Student::where('id', decrypt($id))->first();
+        $txt = public_path().'/info_login/siswa_'.$student->id.'.txt';
+        if (file_exists($txt)) {
+            unlink($txt);
+        }
         $pdf = public_path().'/pdf/formulir_'.$student->id.'.pdf';
         if (file_exists($pdf)) {
             unlink($pdf);
@@ -142,9 +157,9 @@ class AdminCtrl extends Controller
             if (file_exists($doc->surat_kelulusan)) {
                 unlink($doc->surat_kelulusan);
             }
-            if (file_exists($doc->skhun)) {
-                unlink($doc->skhun);
-            }
+            // if (file_exists($doc->skhun)) {
+            //     unlink($doc->skhun);
+            // }
             if (file_exists($payment->bukti)) {
                 unlink($payment->bukti);
             }
@@ -403,7 +418,9 @@ class AdminCtrl extends Controller
     {
         $teacher = new Teacher;
         $teacher->name = $request->nama_teacher;
-        $teacher->avatar = $request->file('photo')->store('uploads/admin/tenaga_pengajar');
+        if ($request->hasFile('photo')) {
+            $teacher->avatar = $request->file('photo')->store('uploads/admin/tenaga_pengajar');
+        }
         $teacher->matpel = $request->matpel;
         $teacher->save();
         return redirect('/admin/teacher')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
@@ -423,7 +440,9 @@ class AdminCtrl extends Controller
                 unlink($teacher->avatar);
             }
         }
-        $teacher->avatar = $request->file('photo')->store('uploads/admin/tenaga_pengajar');
+        if ($request->hasFile('photo')) {
+            $teacher->avatar = $request->file('photo')->store('uploads/admin/tenaga_pengajar');
+        }
         $teacher->name = $request->nama_teacher;
         $teacher->matpel = $request->matpel;
         $teacher->save();
@@ -541,7 +560,9 @@ class AdminCtrl extends Controller
         $news = new News;
         $news->title = $request->title;
         $news->desc = $request->desc;
-        $news->image = $request->file('image')->store('uploads/admin/berita');
+        if ($request->hasFile('image')) {
+            $news->image = $request->file('image')->store('uploads/admin/berita');
+        }
         $news->save();
         return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }

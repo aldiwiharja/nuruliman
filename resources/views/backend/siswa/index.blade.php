@@ -82,10 +82,10 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.siswa.detail', encrypt($s->id)) }}" class="btn btn-info btn-sm">
+                                                <a href="{{ route('admin.siswa.detail', encrypt($s->id)) }}" class="btn btn-info btn-sm nav-item">
                                                     <i class="fa fa-eye"></i> Lihat
                                                 </a>
-                                                <a href="{{ route('admin.siswa.edit', encrypt($s->id)) }}" class="btn btn-primary btn-sm">
+                                                <a href="{{ route('admin.siswa.edit', encrypt($s->id)) }}" class="btn btn-primary btn-sm nav-item">
                                                     <i class="fa fa-edit"></i> Edit
                                                 </a>
                                                 <a href="#" data-toggle="modal" data-target="#deleteSiswa{{ $s->id }}" class="btn btn-danger btn-sm">
@@ -107,7 +107,7 @@
                                                         <div class="col-11">
                                                             <h5>Apakah anda yakin ingin menghapus {{ $s->nama_siswa }} ?</h5>
                                                             <h6>Proses ini akan menghapus data pembayaran siswa juga</h6>
-                                                            <a href="{{ route('admin.siswa.delete', encrypt($s->id)) }}" class="btn btn-block btn-danger">Ya Hapus</a>
+                                                            <a href="{{ route('admin.siswa.delete', encrypt($s->id)) }}" class="btn btn-block btn-danger nav-item">Ya Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>

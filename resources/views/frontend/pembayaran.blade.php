@@ -161,6 +161,7 @@
             </script>
             
         @endsection
+        
     @endif
     @section('script')
         <script>
@@ -177,6 +178,11 @@
                     $('#btn-upload').removeAttr('style');
                 }
             }
+
+            $('#btn-upload').on('click', function() {
+                $(this).html('<i class="fa fa-spin fa-spinner"></i> Submit');
+                $('#loadoverlay').removeClass('sembunyi');
+            });
 
         </script>
     @endsection

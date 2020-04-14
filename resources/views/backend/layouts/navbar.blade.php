@@ -59,7 +59,7 @@
                 </div>
                 </div>
                 <li class="app-notification__footer">
-                    <a href="#">Tandai semua untuk di baca.</a>
+                    <a href="#" style="text-decoration: none" onclick="markAllAsRead(event)">Tandai semua untuk di baca.</a>
                 </li>
             </ul>
         </li>
@@ -91,6 +91,14 @@
             $.get(mark_url);
             setTimeout(() => {
                 location.href = url;
+            }, 1000);
+        }
+
+        function markAllAsRead(e) {
+            e.stopPropagation();
+            $.get('{{ route('mark.all.as.read') }}');
+            setTimeout(() => {
+                location.reload();
             }, 1000);
         }
     </script>

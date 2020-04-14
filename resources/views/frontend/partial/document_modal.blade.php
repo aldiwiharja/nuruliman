@@ -4,6 +4,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+
 <div class="modal-body">
     @if (Auth::check())
         @php
@@ -253,6 +254,7 @@
                         'Dokumen berhasil diubah',
                         'success'
                     );
+                    $('#loadoverlay').addClass('sembunyi');
                 }
             }
         });
@@ -260,15 +262,19 @@
 
     $("#imageUploadKtp-modal").change(function() {
         readURL(this,"#imagePreviewKtp-modal","{{ route('upload.ktp') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     $("#imageUploadKk-modal").change(function() {
         readURL(this,"#imagePreviewKk-modal", "{{ route('upload.kk') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     $("#imageUploadIj-modal").change(function() {
         readURL(this,"#imagePreviewIj-modal", "{{ route('upload.ijazah') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     $("#imageUploadSk-modal").change(function() {
         readURL(this,"#imagePreviewSk-modal", "{{ route('upload.sk') }}");
+        $('#loadoverlay').removeClass('sembunyi');
     });
     
     function editKtp() {
@@ -293,6 +299,7 @@
 
     $('#proses-perubahan').on('click', function() {
         $(this).html('<i class="fa fa-spin fa-spinner"></i> PROSES PERUBAHAN');
+        $('#loadoverlay').removeClass('sembunyi');
         setTimeout(() => {
             location.reload();
         }, 2000);

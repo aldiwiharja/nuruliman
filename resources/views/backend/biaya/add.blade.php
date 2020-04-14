@@ -7,13 +7,15 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <a href="{{ route('admin.biaya') }}" class="btn btn-sm mb-2 btn-primary nav-item">Kembali</a>
             <div class="tile">
                 <div class="tile-body">
+                    <h4>Biaya</h4>
                     <form action="{{ route('admin.biaya.add.proses') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label>Nama Biaya</label>
-                            <input type="text" name="nama_biaya" class="form-control">
+                            <input type="text" name="nama_biaya" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Harga</label>

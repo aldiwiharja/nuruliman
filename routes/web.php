@@ -52,7 +52,7 @@ Route::group(['middleware' => ['siswa']], function () {
 Route::group(['middleware' => ['auth', 'siswa']], function () {
     Route::get('/sukses-pendaftaran', 'HomeCtrl@sukses_pendaftaran')->name('sukses.pendaftaran');
     Route::get('/generate-formulir', 'HomeCtrl@generate_formulir')->name('generate.formulir');
-    Route::get('/generate-pdf', 'HomeCtrl@generate_pdf')->name('generate.pdf');
+    Route::get('/download-pdf', 'HomeCtrl@download_pdf')->name('download.pdf');
     Route::get('/sukses-pembayaran', 'HomeCtrl@sukses_pembayaran')->name('sukses.pembayaran');
     Route::post('/konfirmasi-pembayaran', 'HomeCtrl@konfirmasi_pembayaran')->name('konfirmasi.pembayaran');
     Route::get('/pembayaran', 'HomeCtrl@pembayaran')->name('pembayaran');
@@ -74,11 +74,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/dashboard', 'AdminCtrl@index')->name('admin.dashboard');
 
     Route::get('/mark-as-read/{id}', 'AdminCtrl@mark_as_read')->name('mark.as.read');
+    Route::get('/mark-all-as-read', 'AdminCtrl@mark_all_as_read')->name('mark.all.as.read');
 
     Route::post('/store-device-token', 'AdminCtrl@store_device_token')->name('store.device.token');
     Route::get('/admin/siswa','AdminCtrl@siswa')->name('admin.siswa');
     Route::get('/admin/siswa-edit/{id}','AdminCtrl@siswa_edit')->name('admin.siswa.edit');
-    Route::get('admin/generate-pdf/{id}', 'AdminCtrl@admin_generate_pdf')->name('admin.generate.pdf');
+    Route::get('admin/download-pdf/{id}', 'AdminCtrl@admin_download_pdf')->name('admin.download.pdf');
     Route::get('/admin/siswa-detail/{id}','AdminCtrl@siswa_detail')->name('admin.siswa.detail');
     Route::get('/admin/siswa-delete/{id}','AdminCtrl@siswa_delete')->name('admin.siswa.delete');
     Route::post('/admin/siswa-edit-proses','AdminCtrl@siswa_edit_proses')->name('admin.siswa.edit.proses');

@@ -302,6 +302,7 @@
 
         $('#pembayaran').on('click', function() {
             $(this).html(`<i class="fa fa-spin fa-spinner"></i> Mohon tunggu ...`);
+            $('#loadoverlay').removeClass('sembunyi');
             setTimeout(() => {
                 location.href = "{{ route('pembayaran') }}";
             }, 2000);
@@ -363,21 +364,26 @@
                         'Dokumen telah terismpan',
                         'success'
                     );
+                    $('#loadoverlay').addClass('sembunyi');
                 }
             });
         }
 
         $("#imageUploadKtp").change(function() {
             readURL(this,"#imagePreviewKtp","{{ route('upload.ktp') }}");
+            $('#loadoverlay').removeClass('sembunyi');
         });
         $("#imageUploadKk").change(function() {
             readURL(this,"#imagePreviewKk", "{{ route('upload.kk') }}");
+            $('#loadoverlay').removeClass('sembunyi');
         });
         $("#imageUploadIj").change(function() {
             readURL(this,"#imagePreviewIj", "{{ route('upload.ijazah') }}");
+            $('#loadoverlay').removeClass('sembunyi');
         });
         $("#imageUploadSk").change(function() {
             readURL(this,"#imagePreviewSk", "{{ route('upload.sk') }}");
+            $('#loadoverlay').removeClass('sembunyi');
         });
         
     </script>

@@ -31,7 +31,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>Nama Attribute</label>
-                                        <input type="text" name="attr" class="form-control">
+                                        <input type="text" name="attr" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="row mt-2 justify-content-center">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-block btn-primary btn-lg">
+                                <button type="submit" class="btn btn-block nav-item btn-primary btn-lg">
                                     <i class="fa fa-refresh"></i> UPDATE HARGA
                                 </button>
                             </div>

@@ -30,7 +30,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label>Judul</label>
-                                        <input type="text" class="form-control" name="title">
+                                        <input type="text" class="form-control" name="title" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Deskripsi</label>
@@ -83,7 +83,7 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-11">
                                                             <h5>Apakah anda yakin ingin menghapus ini ?</h5>
-                                                            <a href="{{ route('admin.berita.delete', encrypt($n->id)) }}" class="btn btn-block btn-danger">Ya Hapus</a>
+                                                            <a href="{{ route('admin.berita.delete', encrypt($n->id)) }}" class="btn btn-block nav-item btn-danger">Ya Hapus</a>
                                                         </div>
                                                     </div>
                                                 </div>

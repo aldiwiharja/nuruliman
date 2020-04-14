@@ -28,7 +28,7 @@
                 <div class="col-md-12">
                     <h1>PENDAFATARAN SISWA BARU</h1>
                     <h2>NURUL IMAN AL HASANAH</h2>
-                    <a href="{{ route('pendaftaran.index') }}" class="btn btn-lg btn-success">DAFTAR SEKARANG</a>
+                    <a href="{{ route('pendaftaran.index') }}" class="btn nav-load btn-lg btn-success">DAFTAR SEKARANG</a>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
                                                     <div class="text-center">
                                                         <h3 class="card-title">TAHUN PELAJARAN</h3>
                                                         <h1>2020-2021</h1>
-                                                        <a href="{{ route('pendaftaran.index') }}" class="text-white btn btn-block btn-success">FORMULIR PENDAFTARAN</a><br>
+                                                        <a href="{{ route('pendaftaran.index') }}" class="text-white nav-load btn btn-block btn-success">FORMULIR PENDAFTARAN</a><br>
                                                         <a href="{{ route('user.guide') }}" target="_blank" class="text-white btn btn-block btn-primary">CARA PENDAFTARAN</a>
                                                     </div>
                                                 </div>
