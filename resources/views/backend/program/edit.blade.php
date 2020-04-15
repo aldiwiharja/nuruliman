@@ -51,7 +51,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-md-auto">
-                                                <input type="file" name="galeri[]" id="image-1" class="form-control" data-multiple-caption="{count} files selected" accept="image/*" required />
+                                                <input type="file" name="galeri[]" id="image-1" class="form-control" data-multiple-caption="{count} files selected" accept="image/*" />
                                                 <label for="image-1" class="mw-100 mb-3">
                                                 </label>
                                             </div>

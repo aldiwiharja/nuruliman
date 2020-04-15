@@ -37,7 +37,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Banner Program</label>
-                                    <input type="file" name="banner_program" class="form-control" required>
+                                    <input type="file" name="banner_program" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Galeri Poto</label>
@@ -49,7 +49,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-md-auto">
-                                                <input type="file" name="galeri[]" id="image-1" class="form-control" data-multiple-caption="{count} files selected" accept="image/*" required />
+                                                <input type="file" name="galeri[]" id="image-1" class="form-control" data-multiple-caption="{count} files selected" accept="image/*" />
                                                 <label for="image-1" class="mw-100 mb-3">
                                                 </label>
                                             </div>

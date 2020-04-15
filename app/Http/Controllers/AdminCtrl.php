@@ -281,8 +281,10 @@ class AdminCtrl extends Controller
                 $path = $g->store('uploads/admin/program_galeri');
                 array_push($arr, $path);
             }
+            $result = array_merge($arr, $galeri);
+        }else {
+            $result = $galeri;
         }
-        $result = array_merge($arr, $galeri);
         $program->galeri = json_encode($result);
         $program->save();
         return redirect('/admin/program')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');

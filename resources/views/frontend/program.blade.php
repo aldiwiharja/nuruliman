@@ -8,7 +8,7 @@
     @endphp
     <section id="header-program" @if ($banner !== null) style="background-image: url({{ url($banner) }})" @else style="background:#333  @endif">
         <div class="title">
-            <h1>{{ $title }}</h1>
+            {{-- <h1>{{ $title }}</h1> --}}
         </div>
     </section>
     <!-- ======= Why Us Section ======= -->
@@ -25,17 +25,7 @@
                             <div class="col-md-5 mt-1">
                                 <div class="card border-0" style="height: 60vh; background-color: rgba(255, 255, 255, 0.8)">
                                     <div class="card-body">
-                                        <h3>{{ $title }}</h3>
-                                        <strong>Lama belajar 3 tahun</strong>
-                                        <hr>
-                                        <div class="group-text">
-                                            <ol>
-                                                <li>Belajar</li>
-                                                <li>Mengaji</li>
-                                                <li>Mengikuti Ekstrakurikuler</li>
-                                                <li>Dan lain-lain</li>
-                                            </ol>
-                                        </div>
+                                        {!! $program->description !!}
                                     </div>
                                 </div>
                             </div>
@@ -62,5 +52,27 @@
         </div>
     </section>
     <!-- End Why Us Section -->
+
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-title" data-aos="zoom-in">
+                <h1>Galeri {{ $title }}</h1>
+                <hr>
+            </div>
+            <div class="row galeri-slide">
+
+                @foreach (json_decode($program->galeri) as $key => $g)    
+                    <div class="col-lg-12 d-flex align-items-stretch">
+                        <div class="member" data-aos="fade-up">
+                            <div class="member-img">
+                                <img src="{{ url($g) }}" class="img-fluid" alt="">
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+    </section>
 
 @endsection
