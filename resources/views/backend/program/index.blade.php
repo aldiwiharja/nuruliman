@@ -36,7 +36,7 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $p->name }}</td>
                                     <td>{{ $p->kategori }}</td>
-                                    <td>{{ $p->description }}</td>
+                                    <td>{!! $p->description !!}</td>
                                     <td>
                                         <a href="{{ route('admin.program.edit', encrypt($p->id)) }}" class="btn btn-primary nav-item btn-sm">
                                             <i class="fa fa-edit"></i> Edit

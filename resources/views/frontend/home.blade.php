@@ -167,14 +167,21 @@
                 @foreach ($ekskul_setting as $key => $es)
                     @php
                         $galeri = json_decode($es->galeri);
+                        $count = 3;
                     @endphp
                     @foreach ($galeri as $key => $g)
-                        <div class="col-lg-4 col-6 portfolio-item {{ \Str::lower($es->name) }}">
-                            <img src="{{ url($g) }}" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>{{ $es->name }}</h4>
-                            </div>
-                        </div>                
+                        @if ((int)$key == $count)
+                            @php
+                                break;
+                            @endphp
+                        @else 
+                            <div class="col-lg-3 col-6 portfolio-item {{ \Str::lower($es->name) }}">
+                                <img src="{{ url($g) }}" class="img-fluid" alt="">
+                                <div class="portfolio-info">
+                                    <h4>{{ $es->name }}</h4>
+                                </div>
+                            </div>                
+                        @endif
                     @endforeach
                 @endforeach
 
@@ -192,10 +199,10 @@
                 <h1>Tenaga Pendidik</h1>
             </div>
 
-            <div class="row">
+            <div class="row autoplay">
 
                 @foreach ($tenaga_pendidik as $key => $tp)    
-                    <div class="col-lg-3 col-6 d-flex align-items-stretch">
+                    <div class="col-lg-12 d-flex align-items-stretch">
                         <div class="member" data-aos="fade-up">
                             <div class="member-img">
                                 <img src="{{ url($tp->avatar) }}" class="img-fluid" alt="">
@@ -206,8 +213,14 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <h4>{{ $tp->name }}</h4>
-                                <span>{{ $tp->matpel }}</span>
+                                <b>{{ $tp->name }}</b><br>
+                                <small>
+                                    @if ($tp->matpel !== null)
+                                        {{ $tp->matpel }}
+                                    @else 
+                                        Nothing
+                                    @endif
+                                </small>
                             </div>
                         </div>
                     </div>

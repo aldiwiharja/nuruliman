@@ -7,6 +7,7 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <a href="{{ route('admin.ekskul') }}" class="btn btn-primary nav-item btn-sm mb-2">Kembali</a>
             <div class="tile">
                 <div class="tile-header">
                     <h2>Ekskul</h2>
@@ -19,15 +20,19 @@
                             <input type="text" name="nama_ekskul" class="form-control" required>
                         </div>
                         <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="desc_ekskul" class="form-control" cols="10" rows="6"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label>Galeri</label>
                             <div id="upload-images">
                                 <div class="row">
-                                    <div class="col-md-1">
-                                        <div class="text-left">
-                                            <button type="button" class="btn btn-primary" onclick="add_more_image()"><i class="fa fa-plus"></i></button>
-                                        </div>
+                                    <div class="col-md-auto">
+                                        <button type="button" class="btn btn-primary" onclick="add_more_image()">
+                                            <i class="fa fa-plus"></i> Lebih Banyak
+                                        </button>
                                     </div>
-                                    <div class="col-md-11">
+                                    <div class="col-md-auto">
                                         <input type="file" name="galeri[]" id="image-1" class="form-control" data-multiple-caption="{count} files selected" accept="image/*" />
                                         <label for="image-1" class="mw-100 mb-3">
                                         </label>

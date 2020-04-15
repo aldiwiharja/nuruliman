@@ -9,6 +9,7 @@
     <link href="{{ url('uploads/admin/favicon/favicon.ico') }}" rel="icon">
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url('backend/docs/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('backend/docs/css/baguetteBox.css') }}">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://sdk.pushy.me/web/1.0.5/pushy-sdk.js"></script>
@@ -20,6 +21,7 @@
     @yield('content')
     <!-- Essential javascripts for application to work-->
     <script src="{{ url('backend/docs/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url('backend/docs/js/baguetteBox.js') }}"></script>
     <script src="{{ url('backend/docs/js/popper.min.js') }}"></script>
     <script src="{{ url('backend/docs/js/bootstrap.min.js') }}"></script>
     <script src="{{ url('backend/docs/js/main.js') }}"></script>

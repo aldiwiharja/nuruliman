@@ -27,7 +27,7 @@
                             <ul>
                                 @foreach (\App\Program::all() as $program)
                                     @if ($program->kategori == "sekolah")
-                                        <li><a class="nav-load" href="{{ route('program.index',\Str::lower($program->name)) }}">{{ $program->name }}</a></li>
+                                        <li><a href="{{ route('program.index',\Str::lower($program->name)) }}">{{ $program->name }}</a></li>
                                     @endif
                                 @endforeach
                             </ul>
@@ -36,7 +36,7 @@
                             <ul>
                                 @foreach (\App\Program::all() as $program)
                                     @if ($program->kategori == "pesantren")
-                                        <li><a class="nav-load" href="{{ route('program.index',\Str::lower($program->name)) }}">{{ $program->name }}</a></li>
+                                        <li><a href="{{ route('program.index',\Str::lower($program->name)) }}">{{ $program->name }}</a></li>
                                     @endif
                                 @endforeach
                             </ul>

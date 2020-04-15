@@ -28,6 +28,8 @@
     <link href="{{ url('frontend') }}/assets/vendor/venobox/venobox.css" rel="stylesheet">
     <link href="{{ url('frontend') }}/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="{{ url('frontend') }}/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="{{ url('frontend') }}/assets/vendor/slick-master/slick/slick.css" rel="stylesheet">
+    <link href="{{ url('frontend') }}/assets/vendor/slick-master/slick/slick-theme.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="{{ url('frontend') }}/assets/css/style.css" rel="stylesheet">
@@ -260,6 +262,7 @@
 
     <!-- Vendor JS Files -->
     <script src="{{ url('frontend') }}/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="{{ url('frontend') }}/assets/vendor/slick-master/slick/slick.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
     <script src="{{ url('frontend') }}/assets/vendor/php-email-form/validate.js"></script>
@@ -300,6 +303,39 @@
                 $('#showDocs-body').html(data);
             })
         }
+        $('.autoplay').slick({
+            dots: true,
+            infinite: false,
+            speed: 300,
+            slidesToShow: 5,
+            slidesToScroll:3,
+            responsive: [
+                    {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                    },
+                    {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                    },
+                    {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                    }
+                ]
+        });
+
 
     </script>
 

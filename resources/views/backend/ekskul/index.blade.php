@@ -28,11 +28,20 @@
                             $bg = json_decode($e->galeri);
                         @endphp
                         <div class="col-md-4 mt-2">
-                            <div class="card" style="background-size: cover; height: 30vh;background-image: url({{ url($bg[0]) }})">
+                            <div class="card border-0" @if (count($bg) > 0) style="background-size: cover; height: 30vh;background-image: url({{ url($bg[0]) }})" @else style="background-size: cover; height: 30vh;background:#333;" @endif >
                                 <div class="card-body">
-                                    <h2 class="card-title text-white" style="text-shadow: 2px 1px #009688">{{ $e->name }}</h2>
-                                    <a href="{{ route('admin.ekskul.detail', encrypt($e->id)) }}" class="btn nav-item btn-primary">Detail</a>
-                                    <a href="" data-toggle="modal" data-target="#hapusEks{{ $e->id }}" class="btn btn-danger">Hapus</a>
+                                    <h2 class="card-title text-center p-1 text-white" style="text-shadow: 2px 1px #009688; background: rgba(0, 0, 0, 0.4)">{{ $e->name }}</h2>
+                                    <div class="text-center mt-5 p-2" style="background: rgba(0, 0, 0, 0.4)">
+                                        <a href="{{ route('admin.ekskul.detail', encrypt($e->id)) }}" class="btn nav-item btn-sm btn-outline-light">
+                                            <i class="fa fa-photo"></i> Galeri
+                                        </a>
+                                        <a href="{{ route('admin.ekskul.edit', encrypt($e->id)) }}" class="btn nav-item btn-sm btn-outline-light">
+                                            <i class="fa fa-plus"></i> Tambah Foto
+                                        </a>
+                                        <a href="" data-toggle="modal" data-target="#hapusEks{{ $e->id }}" class="btn btn-sm btn-outline-light">
+                                            <i class="fa fa-trash"></i> Hapus
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

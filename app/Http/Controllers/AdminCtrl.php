@@ -241,6 +241,17 @@ class AdminCtrl extends Controller
         $program->name = Str::upper($request->nama_program);
         $program->description = $request->desc_program;
         $program->kategori = $request->kategori_program;
+        if ($request->hasFile('banner_program')) {
+            $program->banner = $request->file('banner_program')->store('uploads/admin/program_banner');
+        }
+        if ($request->hasFile('galeri')) {
+            $arr = [];
+            foreach ($request->galeri as $key => $g) {
+                $path = $g->store('uploads/admin/program_galeri');
+                array_push($arr, $path);
+            }
+        }
+        $program->galeri = json_encode($arr);
         $program->save();
         return redirect('/admin/program')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }
@@ -257,17 +268,60 @@ class AdminCtrl extends Controller
         $program->name = Str::upper($request->nama_program);
         $program->kategori = $request->kategori_program;
         $program->description = $request->desc_program;
+        if ($request->hasFile('banner_program')) {
+            if (file_exists($program->banner)) {
+                unlink($program->banner);
+            }
+            $program->banner = $request->file('banner_program')->store('uploads/admin/program_banner');
+        }
+        $galeri = json_decode($program->galeri);
+        if ($request->hasFile('galeri')) {
+            $arr = [];
+            foreach ($request->galeri as $key => $g) {
+                $path = $g->store('uploads/admin/program_galeri');
+                array_push($arr, $path);
+            }
+        }
+        $result = array_merge($arr, $galeri);
+        $program->galeri = json_encode($result);
         $program->save();
         return redirect('/admin/program')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil diubah","success")</script>');
     }
 
     public function program_delete($id) {
         $program = Program::where('id', $id)->first();
+        $galeri = json_decode($program->galeri);
+        if (count($galeri) > 0) {
+            foreach ($galeri as $key => $g) {
+                if (file_exists($g)) {
+                    unlink($g);
+                }
+            }
+        }
         if (file_exists($program->banner)) {
             unlink($program->banner);
         }
         $program->delete();
         return back()->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil dihapus","success")</script>');
+    }
+
+    public function program_delete_one_photo($id, $key_blade)
+    {
+        $program = Program::where('id', $id)->first();
+        $galeri = json_decode($program->galeri);
+        $arr = [];
+        foreach ($galeri as $key => $g) {
+            if ((int)$key_blade !== $key) {
+                array_push($arr, $g);
+            }else {
+                if (file_exists($g)) {
+                    unlink($g);
+                }
+            }
+        }
+        $program->galeri = json_encode($arr);
+        $program->save();
+        return back();
     }
 
     public function setting()
@@ -379,6 +433,7 @@ class AdminCtrl extends Controller
             }
         }
         $ekskul->name = $request->nama_ekskul;
+        $ekskul->description = $request->desc_ekskul;
         $ekskul->galeri = json_encode($arr);
         $ekskul->save();
         return redirect('/admin/extrakurikuler')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
@@ -390,13 +445,57 @@ class AdminCtrl extends Controller
         return view('backend.ekskul.detail', compact('ekskul'));
     }
 
+    public function ekskul_edit(Request $request, $id)
+    {
+        $ekskul = Extrakurikuler::where('id', decrypt($id))->first();
+        return view('backend.ekskul.edit', compact('ekskul'));
+    }
+
+    public function ekskul_edit_proses(Request $request)
+    {
+        $ekskul = Extrakurikuler::where('id', $request->id)->first();
+        $galeri = json_decode($ekskul->galeri);
+        if ($request->hasFile('galeri')) {
+            $arr = [];
+            foreach ($request->galeri as $key => $g) {
+                $path = $g->store('uploads/admin/ekskul');
+                array_push($arr, $path);
+            }
+        }
+        $result = array_merge($arr, $galeri);
+        $ekskul->galeri = json_encode($result);
+        $ekskul->save();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data berhasil diubah","success")</script>');
+    }
+
+    public function ekskul_delete_one_photo(Request $request, $id, $key_blade)
+    {
+        $ekskul = Extrakurikuler::where('id', $id)->first();
+        $galeri = json_decode($ekskul->galeri);
+        $arr = [];
+        foreach ($galeri as $key => $g) {
+            if ((int)$key_blade !== $key) {
+                array_push($arr, $g);
+            }else {
+                if (file_exists($g)) {
+                    unlink($g);
+                }
+            }
+        }
+        $ekskul->galeri = json_encode($arr);
+        $ekskul->save();
+        return back()->with('msg', '<script>Swal.fire("Berhasil","Data berhasil dihapus","success")</script>');
+    }
+
     public function ekskul_delete(Request $request, $id)
     {
         $ekskul = Extrakurikuler::where('id', decrypt($id))->first();
         $galeri = json_decode($ekskul->galeri);
-        foreach ($galeri as $key => $g) {
-            if (file_exists($g)) {
-                unlink($g);
+        if (count($galeri) > 0) {
+            foreach ($galeri as $key => $g) {
+                if (file_exists($g)) {
+                    unlink($g);
+                }
             }
         }
         $ekskul->delete();

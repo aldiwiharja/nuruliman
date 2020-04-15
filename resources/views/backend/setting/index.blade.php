@@ -18,16 +18,13 @@
                     <h3>Setting Frontend</h3>
                     <div class="bs-component">
                       <ul class="nav nav-tabs">
-                        <li >
+                        <li>
                             <a class="nav-link active" data-toggle="tab" href="#slide">Banner</a>
                         </li>
-                        <li >
+                        <li>
                             <a class="nav-link" data-toggle="tab" href="#about">Sambutan Kepsek</a>
                         </li>
-                        <li >
-                            <a class="nav-link" data-toggle="tab" href="#program">Program Banner</a>
-                        </li>
-                        <li >
+                        <li>
                             <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
                         </li>
                       </ul>
@@ -122,51 +119,6 @@
                                             </button>
                                         </div>
                                     </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="program">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Nama Program</th>
-                                                <th>Banner</th>
-                                                <td>Action</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($programs as $key => $p)
-                                            <tr>
-                                                <td>{{ $key+1 }}</td>
-                                                <td>{{ $p->name }}</td>
-                                                <td>
-                                                    @if ($p->banner !== null)
-                                                        <img src="{{ url((string)$p->banner) }}" class="img-fluid" width="100">
-                                                    @else 
-                                                        <b class="text-danger">Tidak ada banner silahkan upload!</b>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <form action="{{ route('admin.program.upload') }}" enctype="multipart/form-data" method="POST">
-                                                        @csrf
-                                                        <div class="row">
-                                                            <div class="col-md-10">
-                                                                <input type="file" class="form-control" name="banner{{$p->id}}" id="banner{{$p->id}}">
-                                                                <input type="hidden" name="program_id" value="{{ $p->id }}">
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <button type="submit" class="btn nav-item btn-success">Upload</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>

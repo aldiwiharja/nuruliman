@@ -105,6 +105,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('/admin/extrakurikuler-add-proses', 'AdminCtrl@ekskul_add_proses')->name('admin.ekskul.add.proses');
 
     Route::get('/admin/extrakurikuler-detail/{id}', 'AdminCtrl@ekskul_detail')->name('admin.ekskul.detail');
+    Route::get('/admin/extrakurikuler-edit/{id}', 'AdminCtrl@ekskul_edit')->name('admin.ekskul.edit');
+    Route::post('/admin/extrakurikuler-edit-proses', 'AdminCtrl@ekskul_edit_proses')->name('admin.ekskul.edit.proses');
+    Route::get('/admin/extrakurikuler-delete-one-photo/{id}/{key}', 'AdminCtrl@ekskul_delete_one_photo')->name('admin.ekskul.delete.one.photo');
     Route::get('/admin/extrakurikuler-delete/{id}', 'AdminCtrl@ekskul_delete')->name('admin.ekskul.delete');
 
     // program
@@ -114,6 +117,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/admin/program-edit/{id}', 'AdminCtrl@program_edit')->name('admin.program.edit');
     Route::post('/admin/program-edit-proses', 'AdminCtrl@program_edit_proses')->name('admin.program.edit.proses');
     Route::get('/admin/program-delete/{id}', 'AdminCtrl@program_delete')->name('admin.program.delete');
+    Route::get('/admin/program-delete-one-photo/{id}/{key}', 'AdminCtrl@program_delete_one_photo')->name('admin.program.delete.one.photo');
 
     // Setting
     Route::get('/admin/setting', 'AdminCtrl@setting')->name('admin.setting');
