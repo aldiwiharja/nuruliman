@@ -250,8 +250,8 @@ class AdminCtrl extends Controller
                 $path = $g->store('uploads/admin/program_galeri');
                 array_push($arr, $path);
             }
+            $program->galeri = json_encode($arr);
         }
-        $program->galeri = json_encode($arr);
         $program->save();
         return redirect('/admin/program')->with('msg', '<script>Swal.fire("Berhasil","Data Berhasil ditambahkan","success")</script>');
     }
@@ -275,6 +275,9 @@ class AdminCtrl extends Controller
             $program->banner = $request->file('banner_program')->store('uploads/admin/program_banner');
         }
         $galeri = json_decode($program->galeri);
+        if ($galeri === null) {
+            $galeri = [];
+        }
         if ($request->hasFile('galeri')) {
             $arr = [];
             foreach ($request->galeri as $key => $g) {
@@ -293,7 +296,7 @@ class AdminCtrl extends Controller
     public function program_delete($id) {
         $program = Program::where('id', $id)->first();
         $galeri = json_decode($program->galeri);
-        if (count($galeri) > 0) {
+        if ($galeri !== null) {
             foreach ($galeri as $key => $g) {
                 if (file_exists($g)) {
                     unlink($g);

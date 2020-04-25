@@ -39,7 +39,9 @@
                                 <div class="form-group">
                                     <label>Banner</label>
                                     <input type="file" name="banner_program" class="form-control">
-                                    <img src="{{ url($program->banner) }}" alt="" class="img-fluid mt-1 w-25">
+                                    @if ($program->banner !== null)
+                                        <img src="{{ url($program->banner) }}" alt="" class="img-fluid mt-1 w-25">
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label>Galeri Poto</label>
@@ -59,18 +61,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    @foreach (json_decode($program->galeri) as $key => $g)
-                                        <div class="col-md-3 mt-2">
-                                            <div class="card border-0">
-                                                <img src="{{ url($g) }}" class="card-img-top">
-                                                <div class="p-2 bg-primary">
-                                                    <a href="{{ url('/admin/program-delete-one-photo/'.$program->id.'/'.$key) }}" class="text-white" style="text-decoration: none">
-                                                        <i class="fa fa-trash"></i> Hapus
-                                                    </a>
+                                    @if (json_decode($program->galeri) !== null)
+                                        @foreach (json_decode($program->galeri) as $key => $g)
+                                            <div class="col-md-3 mt-2">
+                                                <div class="card border-0">
+                                                    <img src="{{ url($g) }}" class="card-img-top">
+                                                    <div class="p-2 bg-primary">
+                                                        <a href="{{ url('/admin/program-delete-one-photo/'.$program->id.'/'.$key) }}" class="text-white" style="text-decoration: none">
+                                                            <i class="fa fa-trash"></i> Hapus
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
